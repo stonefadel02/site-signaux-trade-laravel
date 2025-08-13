@@ -14,6 +14,7 @@ Route::get('/dashboard', function () {
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SessionSignalController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -25,6 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllRead'])->name('notifications.markAllRead');
     Route::post('/notifications/{id}/mark-read', [NotificationController::class, 'markRead'])->name('notifications.markRead');
     Route::resource('users', UserController::class)->except(['edit']);
+
+    Route::resource('session-signals', SessionSignalController::class);
+
 });
 
 require __DIR__ . '/auth.php';
