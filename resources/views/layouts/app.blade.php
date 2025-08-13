@@ -25,12 +25,13 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col min-h-screen ">
             @include('layouts.navigation')
-           
+
 
             <!-- Page Content -->
-            <main class="flex-1 p-6">
-                {{ $slot }}
-              
+            <main class="flex-1 p-6 pt-0 mt-0">
+                {{ $slot ?? '' }}
+                @yield('content')
+
             </main>
         </div>
     </div>
