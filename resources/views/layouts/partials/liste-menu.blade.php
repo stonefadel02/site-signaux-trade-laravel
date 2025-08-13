@@ -9,7 +9,7 @@
         class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
         <i class="ti ti-layout-dashboard me-2"></i> Dashboard
     </a>
-    <a href="{{ route('profile.edit') }}"
+    <a href="{{ route('users.index') }}"
         class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
         <i class="ti ti-users me-2"></i> Utilisateurs
     </a>
@@ -18,5 +18,9 @@
     <a href="{{ route('profile.edit') }}"
         class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
         <i class="ti ti-user me-2"></i> Paramètre du compte
+    </a>
+    <a href="{{ route('profile.edit') }}"
+        class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+        <i class="ti ti-headset me-2"></i> Support
     </a>
 </nav>
