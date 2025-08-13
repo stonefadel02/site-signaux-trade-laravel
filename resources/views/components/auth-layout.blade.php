@@ -19,12 +19,12 @@
             </div>
 
             <div class="hidden rounded-r-xl bg-[#132954] p-12 py-30 text-white md:block">
-                <h2 class="text-[40px] font-bold leading-tight">
+                <h3 class="text-[30px] font-bold leading-tight">
                     VOS MEILLEURS SIGNAUX DE TRADING EN TEMPS RÉEL.
-                </h2>
+                </h3>
                 @php
                     $features = [
-                        ['name' => '30 signaux par jour', 'icon' => 'icons.repeat'], // Les icônes seront des composants Blade
+                        ['name' => '30 signaux par jour', 'icon' => 'icons.repeat'], 
                         ['name' => 'Signaux de trading fiables', 'icon' => 'icons.shield-check'],
                         ['name' => 'Flexibilité d’abonnement', 'icon' => 'icons.gem'],
                         ['name' => 'Accessibilité internationale', 'icon' => 'icons.globe'],
@@ -34,7 +34,31 @@
                     @foreach ($features as $feature)
                         <li class="flex items-center gap-4">
                             <div class="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-white/10">
-                                <svg class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"></svg>
+                                @switch($feature['icon'])
+                                    @case('icons.repeat')
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 11l4-4m0 0l-4-4m4 4H7a4 4 0 1 0 0 8h1.5M21 7h1.5a4 4 0 1 1 0 8H21m0-8v8" />
+                                        </svg>
+                                    @break
+
+                                    @case('icons.shield-check')
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m1 2a8.1 8.1 0 0 1-4 1.5C8 18 5 14 5 10a7 7 0 0 1 7-7h3a7 7 0 0 1 7 7c0 4-3 8-6 8a7 7 0 0 1-4-1.5M9 10l-1 1 4 4 1-1" />
+                                        </svg>
+                                    @break
+
+                                    @case('icons.gem')
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L5 12l7 10 7-10-7-10zm0 0v20" />
+                                        </svg>
+                                    @break
+
+                                    @case('icons.globe')
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zM12 12l2 2-2 2m0-4l-2 2 2 2" />
+                                        </svg>
+                                    @break
+                                @endswitch
                             </div>
                             <span class="text-[18px]">{{ $feature['name'] }}</span>
                         </li>
