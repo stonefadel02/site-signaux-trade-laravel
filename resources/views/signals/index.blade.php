@@ -9,11 +9,11 @@
                 <span>Liste des Signaux</span>
             </div>
             <div class="flex items-center gap-2">
-                <a href="{{ route('session-signals.create') }}"
-                    class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition">
+                <a href="javascript:void(0)"
+                    class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition" data-bs-toggle="modal" data-bs-target="#importModal">
                     <i class="ti ti-arrow-bar-up mr-2"></i> Importer
                 </a>
-                <a href="{{ route('session-signals.create') }}"
+                <a href="{{ route('signals-export') }}"
                     class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition">
                     <i class="ti ti-download mr-2"></i> Exporter
                 </a>
@@ -64,13 +64,23 @@
                         @forelse($signals as $signal)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->id }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->user_id }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->session_id }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->user->name }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->session->Titre }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->DateHeureEmission }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->Actifs }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->Direction }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->Resultat }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->Status }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">
+                                    <span class="
+                                        px-2 py-1 rounded-full font-semibold
+                                        {{ $signal->Status == 'EN COURS' ? 'bg-blue-100 text-blue-800' : '' }}
+                                        {{ $signal->Status == 'EN ATTENTE' ? 'bg-yellow-100 text-yellow-800' : '' }}
+                                        {{ $signal->Status == 'TERMINE' ? 'bg-green-100 text-green-800' : '' }}
+                                        {{ $signal->Status == 'ANNULE' ? 'bg-red-100 text-red-800' : '' }}
+                                    ">
+                                        {{ $signal->Status }}
+                                    </span>
+                                </td>
                                 <td class="px-4 py-3 flex gap-2">
                                     <div x-data="{ open: false }" class="relative inline-block text-left">
                                         <div>
@@ -131,4 +141,6 @@
             </div>
         </div>
     </div>
+   @include('signals.modalimporter')
 @endsection
+

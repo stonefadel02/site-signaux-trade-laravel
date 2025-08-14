@@ -39,6 +39,10 @@
                 class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
                 <i class="ti ti-activity me-2"></i> Signals
             </a>
+            <a href="{{ route('souscription.create') }}"
+                class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+                <i class="ti ti-wallet me-2"></i> Souscriptions
+            </a>
             <a href="{{ route('access-codes.index') }}"
                 class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
                 <i class="ti ti-activity me-2"></i> Code d'Access
