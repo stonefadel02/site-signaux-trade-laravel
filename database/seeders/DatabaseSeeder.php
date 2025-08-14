@@ -16,10 +16,13 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         $this->call(SessionSeeder::class);
         $this->call(PlanSeeder::class);
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $admin = User::updateOrCreate([
+            "email" => "admin@admin.com",
+        ], [
+            "name" => "Administrateur",
+            "email_verified_at" => now(),
+            "password" => bcrypt("password")
         ]);
+
     }
 }

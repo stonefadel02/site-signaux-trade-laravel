@@ -12,7 +12,8 @@ class SessionSignalController extends Controller
      */
     public function index()
     {
-        //
+        $sessions = SessionSignal::orderByDesc('id')->paginate();
+        return view('session_signals.index', compact('sessions'));
     }
 
     /**
@@ -20,7 +21,7 @@ class SessionSignalController extends Controller
      */
     public function create()
     {
-        //
+        return view('session_signals.create');
     }
 
     /**
@@ -28,7 +29,13 @@ class SessionSignalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'Titre' => 'required|string|max:255',
+            'HeureDebut' => 'required',
+            'HeureFin' => 'required',
+        ]);
+        $session = SessionSignal::create($validated);
+        return redirect()->route('session-signals.show', $session)->with('success', 'Session créée avec succès.');
     }
 
     /**
@@ -36,7 +43,7 @@ class SessionSignalController extends Controller
      */
     public function show(SessionSignal $sessionSignal)
     {
-        //
+        return view('session_signals.show', compact('sessionSignal'));
     }
 
     /**
@@ -44,7 +51,7 @@ class SessionSignalController extends Controller
      */
     public function edit(SessionSignal $sessionSignal)
     {
-        //
+        return view('session_signals.edit', compact('sessionSignal'));
     }
 
     /**
@@ -52,7 +59,13 @@ class SessionSignalController extends Controller
      */
     public function update(Request $request, SessionSignal $sessionSignal)
     {
-        //
+        $validated = $request->validate([
+            'Titre' => 'required|string|max:255',
+            'HeureDebut' => 'required',
+            'HeureFin' => 'required',
+        ]);
+        $sessionSignal->update($validated);
+        return redirect()->route('session-signals.show', $sessionSignal)->with('success', 'Session modifiée avec succès.');
     }
 
     /**
@@ -60,6 +73,10 @@ class SessionSignalController extends Controller
      */
     public function destroy(SessionSignal $sessionSignal)
     {
-        //
+        if ($sessionSignal->signals()->exists()) {
+            return redirect()->route('session-signals.index')->with('error', 'Impossible de supprimer : cette session est utilisée dans au moins un signal.');
+        }
+        $sessionSignal->delete();
+        return redirect()->route('session-signals.index')->with('success', 'Session supprimée avec succès.');
     }
 }

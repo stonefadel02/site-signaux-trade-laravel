@@ -12,7 +12,8 @@ class SignalController extends Controller
      */
     public function index()
     {
-        //
+        $signals = Signal::all();
+        return view('signals.index', compact('signals'));
     }
 
     /**
@@ -20,7 +21,7 @@ class SignalController extends Controller
      */
     public function create()
     {
-        //
+        return view('signals.create');
     }
 
     /**
@@ -28,7 +29,27 @@ class SignalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'session_id' => 'required|exists:session_signals,id',
+            'DateHeureEmission' => 'required|date',
+            'DateHeureExpire' => 'required|date',
+            'DureeTrade' => 'required',
+            'Actifs' => 'required|string',
+            'Timeframe' => 'nullable|string',
+            'PrixEntree' => 'required|numeric',
+            'PrixSortieReelle' => 'nullable|numeric',
+            'TakeProfit' => 'nullable|numeric',
+            'StopLoss' => 'nullable|numeric',
+            'Direction' => 'required|in:BUY,SELL',
+            'Resultat' => 'required|in:WIN,LOSE,PENDING,BREAK-EVEN',
+            'Pips' => 'nullable|integer',
+            'Confiance' => 'nullable|integer',
+            'Commentaire' => 'nullable|string',
+            'Status' => 'required|in:EN COURS,EN ATTENTE,TERMINE,ANNULE',
+        ]);
+        Signal::create($validated);
+        return redirect()->route('signals.index')->with('success', 'Signal créé avec succès.');
     }
 
     /**
@@ -36,7 +57,7 @@ class SignalController extends Controller
      */
     public function show(Signal $signal)
     {
-        //
+        return view('signals.show', compact('signal'));
     }
 
     /**
@@ -44,7 +65,7 @@ class SignalController extends Controller
      */
     public function edit(Signal $signal)
     {
-        //
+        return view('signals.edit', compact('signal'));
     }
 
     /**
@@ -52,7 +73,27 @@ class SignalController extends Controller
      */
     public function update(Request $request, Signal $signal)
     {
-        //
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'session_id' => 'required|exists:session_signals,id',
+            'DateHeureEmission' => 'required|date',
+            'DateHeureExpire' => 'required|date',
+            'DureeTrade' => 'required',
+            'Actifs' => 'required|string',
+            'Timeframe' => 'nullable|string',
+            'PrixEntree' => 'required|numeric',
+            'PrixSortieReelle' => 'nullable|numeric',
+            'TakeProfit' => 'nullable|numeric',
+            'StopLoss' => 'nullable|numeric',
+            'Direction' => 'required|in:BUY,SELL',
+            'Resultat' => 'required|in:WIN,LOSE,PENDING,BREAK-EVEN',
+            'Pips' => 'nullable|integer',
+            'Confiance' => 'nullable|integer',
+            'Commentaire' => 'nullable|string',
+            'Status' => 'required|in:EN COURS,EN ATTENTE,TERMINE,ANNULE',
+        ]);
+        $signal->update($validated);
+        return redirect()->route('signals.index')->with('success', 'Signal modifié avec succès.');
     }
 
     /**
@@ -60,6 +101,8 @@ class SignalController extends Controller
      */
     public function destroy(Signal $signal)
     {
-        //
+        $signal->delete();
+        return redirect()->route('signals.index')->with('success', 'Signal supprimé avec succès.');
     }
+
 }
