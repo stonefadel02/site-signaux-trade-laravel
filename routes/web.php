@@ -38,3 +38,5 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/stone.php';
+require __DIR__ . '/provice.php';
+require __DIR__ . '/sylvie.php';
