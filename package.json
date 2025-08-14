@@ -21,6 +21,11 @@
     "dependencies": {
         "@tabler/icons-webfont": "^3.34.1",
         "autoprefixer": "^10.4.21",
-        "tabler-icons": "^1.35.0"
+        "tabler-icons": "^1.35.0",
+        "@alpinejs/intersect": "^3.14.9",
+        "@fortawesome/fontawesome-free": "^7.0.0",
+        "alpinejs": "^3.14.9",
+        "embla-carousel": "^8.6.0",
+        "embla-carousel-autoplay": "^8.6.0"
     }
 }

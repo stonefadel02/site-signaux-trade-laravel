@@ -40,3 +40,11 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/stone.php';
 require __DIR__ . '/provice.php';
 require __DIR__ . '/sylvie.php';
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
+
+Route::get('/support', function () {
+    return view('support');
+})->name('support');
+
