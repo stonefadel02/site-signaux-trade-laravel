@@ -12,7 +12,8 @@ class PlanController extends Controller
      */
     public function index()
     {
-        //
+        $plans = Plan::orderByDesc('id')->paginate();
+        return view('plans.index', compact('plans'));
     }
 
     /**
@@ -20,7 +21,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        //
+        return view('plans.create');
     }
 
     /**
@@ -28,7 +29,20 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'Titre' => 'required|string|max:255',
+            'Prix' => 'required|numeric',
+            'Devise' => 'required|string|max:10',
+            'DureeEnJours' => 'required|integer',
+            'NombreDeSignaux' => 'required|integer',
+            'AutresAvantages' => 'nullable|string',
+            'Visibilite' => 'required|in:PUBLIQUE,PRIVEE',
+        ]);
+        $validated['AutresAvantages'] = $request->AutresAvantages
+            ? array_filter(array_map('trim', preg_split('/\r?\n/', $request->AutresAvantages)))
+            : [];
+        $plan = Plan::create($validated);
+        return redirect()->route('plans.show', $plan)->with('success', 'Plan créé avec succès.');
     }
 
     /**
@@ -36,7 +50,7 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
-        //
+        return view('plans.show', compact('plan'));
     }
 
     /**
@@ -44,7 +58,7 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
-        //
+        return view('plans.edit', compact('plan'));
     }
 
     /**
@@ -52,7 +66,20 @@ class PlanController extends Controller
      */
     public function update(Request $request, Plan $plan)
     {
-        //
+        $validated = $request->validate([
+            'Titre' => 'required|string|max:255',
+            'Prix' => 'required|numeric',
+            'Devise' => 'required|string|max:10',
+            'DureeEnJours' => 'required|integer',
+            'NombreDeSignaux' => 'required|integer',
+            'AutresAvantages' => 'nullable|string',
+            'Visibilite' => 'required|in:PUBLIQUE,PRIVEE',
+        ]);
+        $validated['AutresAvantages'] = $request->AutresAvantages
+            ? array_filter(array_map('trim', preg_split('/\r?\n/', $request->AutresAvantages)))
+            : [];
+        $plan->update($validated);
+        return redirect()->route('plans.show', $plan)->with('success', 'Plan modifié avec succès.');
     }
 
     /**
@@ -60,6 +87,7 @@ class PlanController extends Controller
      */
     public function destroy(Plan $plan)
     {
-        //
+        $plan->delete();
+        return redirect()->route('plans.index')->with('success', 'Plan supprimé avec succès.');
     }
 }

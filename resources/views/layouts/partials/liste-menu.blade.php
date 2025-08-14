@@ -9,10 +9,35 @@
         class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
         <i class="ti ti-layout-dashboard me-2"></i> Dashboard
     </a>
-    <a href="{{ route('users.index') }}"
-        class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
-        <i class="ti ti-users me-2"></i> Utilisateurs
-    </a>
+    <div x-data="{ open: false }" class="relative">
+        <button @click="open = !open"
+            class="flex items-center w-full px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium focus:outline-none">
+            <i class="ti ti-shield me-2"></i> Administration
+            <svg :class="{ 'rotate-180': open }" class="w-4 h-4 ml-auto transition-transform" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+        </button>
+        <div x-show="open" @click.away="open = false" class="mt-1 space-y-1 pl-2">
+            <a href="{{ route('users.index') }}"
+                class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+                <i class="ti ti-users me-2"></i> Utilisateurs
+            </a>
+            <a href="{{ route('session-signals.index') }}"
+                class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+                <i class="ti ti-calendar-clock me-2"></i> Sessions
+            </a>
+            <a href="{{ route('plans.index') }}"
+                class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+                <i class="ti ti-calendar-clock me-2"></i> Plans
+            </a>
+            <a href="{{ route('signals.index') }}"
+                class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+                <i class="ti ti-activity me-2"></i> Signals
+            </a>
+        </div>
+    </div>
+
     <div class="flex-1"></div>
     <hr class="my-2">
     <a href="{{ route('profile.edit') }}"

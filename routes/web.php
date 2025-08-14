@@ -13,10 +13,11 @@ Route::get('/dashboard', function () {
 
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SignalController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SessionSignalController;
-use App\Http\Controllers\SignalController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('session-signals', SessionSignalController::class);
     Route::resource('plans', PlanController::class);
     Route::resource('signals', SignalController::class);
+    Route::resource('paiements', PaiementController::class);
 });
 
 require __DIR__ . '/auth.php';
