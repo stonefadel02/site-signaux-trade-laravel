@@ -1,5 +1,6 @@
 {{-- resources/views/support.blade.php --}}
-<x-dashboard-layout>
+<x-app-layout>
+
     <div class="space-y-8">
 
         {{-- Section Support / Assistance --}}
@@ -48,4 +49,4 @@
         </div>
 
     </div>
-</x-dashboard-layout>
+</x-app-layout>
