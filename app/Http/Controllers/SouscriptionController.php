@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plan;
 use App\Models\Souscription;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SouscriptionController extends Controller
 {
@@ -20,7 +22,8 @@ class SouscriptionController extends Controller
      */
     public function create()
     {
-        //
+        $plans = Plan::all();
+        return view('souscription.create', compact('plans'));
     }
 
     /**
@@ -28,7 +31,27 @@ class SouscriptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'plan_id' => 'required|exists:plans,id',
+        ]);
+
+        $user = Auth::user();
+        $plan = Plan::findOrFail($request->plan_id);
+
+        $dateDebut = now();
+        $dateFin = $dateDebut->copy()->addDays($plan->DureeEnJours);
+
+        Souscription::create([
+            'user_id' => $user->id,
+            'plan_id' => $plan->id,
+            'Montant' => $plan->Prix,
+            'Devise' => $plan->Devise,
+            'DateHeureDebut' => $dateDebut,
+            'DateHeureFin' => $dateFin,
+            'Status' => 'ACTIVE',
+        ]);
+
+        return redirect()->route('souscription.create')->with('success', 'Souscription effectuée avec succès.');
     }
 
     /**

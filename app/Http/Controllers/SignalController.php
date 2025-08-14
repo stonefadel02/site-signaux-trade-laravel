@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Signal;
-use App\Models\SessionSignal;
+use Exception;
 use App\Models\User;
+use App\Models\Signal;
 use Illuminate\Http\Request;
+use App\Models\SessionSignal;
+use App\Exports\SignalsExport;
+use App\Imports\SignalsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SignalController extends Controller
 {
@@ -110,5 +114,37 @@ class SignalController extends Controller
         $signal->delete();
         return redirect()->route('signals.index')->with('success', 'Signal supprimé avec succès.');
     }
+
+    public function import(Request $request)
+    {
+       $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ], [
+            'file.required' => 'Veuillez sélectionner un fichier.',
+            'file.mimes' => 'Le fichier doit être au format XLS, XLSX ou CSV.',
+        ]);
+
+        try {
+            // 2. Import des données
+            Excel::import(new SignalsImport, $request->file('file'));
+
+            // 3. Message de succès
+            return redirect()
+                ->route('signals.index')
+                ->with('success', 'Les signaux ont été importés avec succès.');
+
+        } catch (Exception $e) {
+            // 4. Gestion des erreurs
+            return redirect()
+                ->route('signals.index')
+                ->with('error', 'Erreur lors de l’importation : ' . $e->getMessage());
+        }
+    }
+
+    public function export()
+    {
+        return Excel::download(new SignalsExport, 'signals.xlsx');
+    }
+
 
 }
