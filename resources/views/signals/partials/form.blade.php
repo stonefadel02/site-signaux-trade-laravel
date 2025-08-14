@@ -20,7 +20,7 @@
                 @foreach ($sessions as $session)
                     <option value="{{ $session->id }}"
                         {{ old('session_id', $signal->session_id ?? '') == $session->id ? 'selected' : '' }}>
-                        {{ $session->Titre }} ({{ $session->HeureDebut }} - {{ $session->HeureFin }})
+                        {{ $session->Titre }} 
                     </option>
                 @endforeach
             </select>
@@ -52,11 +52,22 @@
                 value="{{ old('PrixEntree', $signal->PrixEntree ?? '') }}" required>
         </div>
         <div>
-            <label for="Timeframe" class="block text-sm font-medium text-gray-700 mb-1">Timeframe</label>
-            <input type="text" name="Timeframe"
-                class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2"
-                value="{{ old('Timeframe', $signal->Timeframe ?? '') }}" placeholder="H1, M15...">
-        </div>
+    <label for="Timeframe" class="block text-sm font-medium text-gray-700 mb-1">Timeframe</label>
+    <select name="Timeframe" id="Timeframe"
+        class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2">
+      
+        <option value="M1"  {{ old('Timeframe', $signal->Timeframe ?? '') == 'M1'  ? 'selected' : '' }}>M1 — 1 minute</option>
+        <option value="M5"  {{ old('Timeframe', $signal->Timeframe ?? '') == 'M5'  ? 'selected' : '' }}>M5 — 5 minutes</option>
+        <option value="M15" {{ old('Timeframe', $signal->Timeframe ?? '') == 'M15' ? 'selected' : '' }}>M15 — 15 minutes</option>
+        <option value="M30" {{ old('Timeframe', $signal->Timeframe ?? '') == 'M30' ? 'selected' : '' }}>M30 — 30 minutes</option>
+        <option value="H1"  {{ old('Timeframe', $signal->Timeframe ?? '') == 'H1'  ? 'selected' : '' }}>H1 — 1 heure</option>
+        <option value="H4"  {{ old('Timeframe', $signal->Timeframe ?? '') == 'H4'  ? 'selected' : '' }}>H4 — 4 heures</option>
+        <option value="D1"  {{ old('Timeframe', $signal->Timeframe ?? '') == 'D1'  ? 'selected' : '' }}>D1 — 1 jour</option>
+        <option value="W1"  {{ old('Timeframe', $signal->Timeframe ?? '') == 'W1'  ? 'selected' : '' }}>W1 — 1 semaine</option>
+        <option value="MN"  {{ old('Timeframe', $signal->Timeframe ?? '') == 'MN'  ? 'selected' : '' }}>MN — 1 mois</option>
+    </select>
+</div>
+
         <div>
             <label for="Status" class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
             <select name="Status"
