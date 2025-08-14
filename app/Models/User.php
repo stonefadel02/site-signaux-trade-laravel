@@ -48,4 +48,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    function hasAccessToSignals(): bool
+    {
+        $dateNow = now()->toDateString();
+        return Souscription::where('user_id', $this->id)
+            ->where('DateHeureDebut', '<=', $dateNow)
+            ->where('DateHeureFin', '>=', $dateNow)
+            ->exists();
+    }
 }
