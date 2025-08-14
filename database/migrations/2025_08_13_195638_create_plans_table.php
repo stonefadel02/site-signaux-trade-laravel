@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('Devise');
             $table->integer('DureeEnJours');
             $table->integer('NombreDeSignaux');
-            $table->text('AutresAvantages')->default('[]')->nullable();
+            $table->text('AutresAvantages')->nullable();
             $table->enum('Visibilite', ['PUBLIQUE', 'PRIVEE'])->default('PUBLIQUE');
             $table->timestamps();
         });
