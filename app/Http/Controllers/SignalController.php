@@ -6,9 +6,72 @@ use App\Models\Signal;
 use App\Models\SessionSignal;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SignalController extends Controller
 {
+    /**
+     * Page publique des signaux pour les utilisateurs abonnés
+     */
+    public function publicIndex(Request $request)
+    {
+        $query = Signal::with(['user', 'session']);
+        
+        // Filtre par date (par défaut aujourd'hui)
+        $date = $request->get('date', now()->format('Y-m-d'));
+        if ($date) {
+            $query->whereDate('DateHeureEmission', $date);
+        }
+        
+        // Filtre par actif
+        if ($request->filled('actif')) {
+            $query->where('Actifs', 'like', '%' . $request->actif . '%');
+        }
+        
+        // Filtre par direction
+        if ($request->filled('direction')) {
+            $query->where('Direction', $request->direction);
+        }
+        
+        // Filtre par statut
+        if ($request->filled('status')) {
+            $query->where('Status', $request->status);
+        }
+        
+        // Filtre par résultat
+        if ($request->filled('resultat')) {
+            $query->where('Resultat', $request->resultat);
+        }
+        
+        // Trier par date d'émission décroissante
+        $signals = $query->orderBy('DateHeureEmission', 'desc')->paginate(20);
+        
+        // Statistiques du jour
+        $stats = [
+            'total' => Signal::whereDate('DateHeureEmission', $date)->count(),
+            'win' => Signal::whereDate('DateHeureEmission', $date)->where('Resultat', 'WIN')->count(),
+            'lose' => Signal::whereDate('DateHeureEmission', $date)->where('Resultat', 'LOSE')->count(),
+            'pending' => Signal::whereDate('DateHeureEmission', $date)->where('Resultat', 'PENDING')->count(),
+            'buy_signals' => Signal::whereDate('DateHeureEmission', $date)->where('Direction', 'BUY')->count(),
+            'sell_signals' => Signal::whereDate('DateHeureEmission', $date)->where('Direction', 'SELL')->count(),
+        ];
+        
+        $stats['win_rate'] = $stats['total'] > 0 && ($stats['win'] + $stats['lose']) > 0 
+            ? round(($stats['win'] / ($stats['win'] + $stats['lose'])) * 100, 1) 
+            : 0;
+            
+        // Actifs les plus tradés
+        $topActifs = Signal::select('Actifs', DB::raw('count(*) as total'))
+            ->whereDate('DateHeureEmission', $date)
+            ->groupBy('Actifs')
+            ->orderBy('total', 'desc')
+            ->limit(5)
+            ->get();
+        
+        return view('signals.public-index', compact('signals', 'stats', 'topActifs', 'date'));
+    }
+
     /**
      * Display a listing of the resource.
      */

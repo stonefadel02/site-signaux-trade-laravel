@@ -17,13 +17,14 @@
                 <!-- Informations principales -->
                 <div class="space-y-4">
                     <h2 class="text-lg font-semibold text-gray-800 border-b pb-2">Informations principales</h2>
-                    
+
                     <div>
                         <span class="font-medium text-gray-600">Plan associé :</span>
                         <div class="mt-1">
-                            @if($accessCode->plan)
+                            @if ($accessCode->plan)
                                 <span class="font-semibold text-blue-600">{{ $accessCode->plan->Titre }}</span>
-                                <div class="text-sm text-gray-500">{{ $accessCode->plan->Prix }} {{ $accessCode->plan->Devise }}</div>
+                                <div class="text-sm text-gray-500">{{ $accessCode->plan->Prix }}
+                                    {{ $accessCode->plan->Devise }}</div>
                             @else
                                 <span class="text-red-500">Plan supprimé</span>
                             @endif
@@ -33,7 +34,8 @@
                     <div>
                         <span class="font-medium text-gray-600">Code d'accès :</span>
                         <div class="mt-1">
-                            <span class="font-mono text-lg font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded">{{ $accessCode->Code }}</span>
+                            <span
+                                class="font-mono text-lg font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded">{{ $accessCode->Code }}</span>
                         </div>
                     </div>
 
@@ -48,7 +50,7 @@
                 <!-- Utilisation et statut -->
                 <div class="space-y-4">
                     <h2 class="text-lg font-semibold text-gray-800 border-b pb-2">Utilisation et statut</h2>
-                    
+
                     <div>
                         <span class="font-medium text-gray-600">Utilisations :</span>
                         <div class="mt-2">
@@ -57,8 +59,9 @@
                                 <span>{{ $accessCode->CompteurMax > 0 ? round(($accessCode->Compteur / $accessCode->CompteurMax) * 100) : 0 }}%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="bg-blue-600 h-3 rounded-full transition-all duration-300" 
-                                     style="width: {{ $accessCode->CompteurMax > 0 ? ($accessCode->Compteur / $accessCode->CompteurMax) * 100 : 0 }}%"></div>
+                                <div class="bg-blue-600 h-3 rounded-full transition-all duration-300"
+                                    style="width: {{ $accessCode->CompteurMax > 0 ? ($accessCode->Compteur / $accessCode->CompteurMax) * 100 : 0 }}%">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -66,10 +69,11 @@
                     <div>
                         <span class="font-medium text-gray-600">Date d'expiration :</span>
                         <div class="mt-1">
-                            @if($accessCode->ExpireLe)
+                            @if ($accessCode->ExpireLe)
                                 <span class="text-gray-800">{{ $accessCode->ExpireLe->format('d/m/Y') }}</span>
-                                @if($accessCode->ExpireLe->isPast())
-                                    <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                @if ($accessCode->ExpireLe->isPast())
+                                    <span
+                                        class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                         Expiré
                                     </span>
                                 @else
@@ -90,16 +94,19 @@
                                 $isExpired = $accessCode->ExpireLe && $accessCode->ExpireLe->isPast();
                                 $isExhausted = $accessCode->Compteur >= $accessCode->CompteurMax;
                             @endphp
-                            @if($isExpired)
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                            @if ($isExpired)
+                                <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                                     <i class="ti ti-clock-x mr-1"></i> Expiré
                                 </span>
                             @elseif($isExhausted)
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
+                                <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
                                     <i class="ti ti-ban mr-1"></i> Épuisé
                                 </span>
                             @else
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                                     <i class="ti ti-check mr-1"></i> Actif
                                 </span>
                             @endif
@@ -111,7 +118,7 @@
                         <div class="mt-1 text-gray-800">{{ $accessCode->created_at->format('d/m/Y à H:i') }}</div>
                     </div>
 
-                    @if($accessCode->updated_at != $accessCode->created_at)
+                    @if ($accessCode->updated_at != $accessCode->created_at)
                         <div>
                             <span class="font-medium text-gray-600">Modifié le :</span>
                             <div class="mt-1 text-gray-800">{{ $accessCode->updated_at->format('d/m/Y à H:i') }}</div>

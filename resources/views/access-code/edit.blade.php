@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('pageTitle', 'Access Code')
@@ -15,7 +14,7 @@
             </a>
         </div>
         <div class="bg-white rounded-lg shadow p-8">
-            
+
             <form action="{{ route('access-codes.update', $accessCode) }}" method="POST" class="space-y-5">
                 @csrf
                 @method('PUT')

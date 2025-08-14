@@ -16,21 +16,29 @@
             </div>
         </div>
 
-        
+
 
         <div class="bg-white rounded-lg shadow p-3 pt-5">
             <div class="overflow-x-auto rounded-lg shadow-none border">
                 <table class="min-w-full bg-white divide-y divide-gray-200">
                     <thead class="bg-gray-100">
                         <tr>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plan</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durée (jours)</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilisations</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expire le</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID
+                            </th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plan
+                            </th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code
+                            </th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durée
+                                (jours)</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Utilisations</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Expire le</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Statut</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -39,16 +47,20 @@
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $accessCode->id }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">
                                     <div class="font-medium">{{ $accessCode->plan->Titre ?? 'Plan supprimé' }}</div>
-                                    @if($accessCode->plan)
-                                        <div class="text-xs text-gray-500">{{ $accessCode->plan->Prix }} {{ $accessCode->plan->Devise }}</div>
+                                    @if ($accessCode->plan)
+                                        <div class="text-xs text-gray-500">{{ $accessCode->plan->Prix }}
+                                            {{ $accessCode->plan->Devise }}</div>
                                     @endif
                                 </td>
                                 <td class="px-4 py-3 text-sm font-mono font-bold text-blue-600">{{ $accessCode->Code }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $accessCode->DureeEnJours }}</td>
                                 <td class="px-4 py-3 text-sm">
-                                    <span class="text-gray-700">{{ $accessCode->Compteur }} / {{ $accessCode->CompteurMax }}</span>
+                                    <span class="text-gray-700">{{ $accessCode->Compteur }} /
+                                        {{ $accessCode->CompteurMax }}</span>
                                     <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
-                                        <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $accessCode->CompteurMax > 0 ? ($accessCode->Compteur / $accessCode->CompteurMax) * 100 : 0 }}%"></div>
+                                        <div class="bg-blue-600 h-2 rounded-full"
+                                            style="width: {{ $accessCode->CompteurMax > 0 ? ($accessCode->Compteur / $accessCode->CompteurMax) * 100 : 0 }}%">
+                                        </div>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-sm text-gray-700">
@@ -59,16 +71,19 @@
                                         $isExpired = $accessCode->ExpireLe && $accessCode->ExpireLe->isPast();
                                         $isExhausted = $accessCode->Compteur >= $accessCode->CompteurMax;
                                     @endphp
-                                    @if($isExpired)
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                    @if ($isExpired)
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                                             Expiré
                                         </span>
                                     @elseif($isExhausted)
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
                                             Épuisé
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                                             Actif
                                         </span>
                                     @endif
