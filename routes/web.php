@@ -34,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('plans', PlanController::class);
     Route::resource('signals', SignalController::class);
     Route::resource('paiements', PaiementController::class);
+    Route::get('/support', function () {
+        return view('support');
+    })->name('support');
 });
 
 require __DIR__ . '/auth.php';
@@ -44,7 +47,5 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-Route::get('/support', function () {
-    return view('support');
-})->name('support');
+
 
