@@ -16,6 +16,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SignalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaiementController;
+use App\Http\Controllers\AccessCodeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SessionSignalController;
 
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('plans', PlanController::class);
     Route::resource('signals', SignalController::class);
     Route::resource('paiements', PaiementController::class);
+    Route::resource('access-codes', AccessCodeController::class);
     Route::get('/support', function () {
         return view('support');
     })->name('support');

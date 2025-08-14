@@ -29,6 +29,7 @@
 
             <!-- Page Content -->
             <main class="flex-1 p-6 pt-0 mt-0">
+                @include('layouts.partials.alert')
                 {{ $slot ?? '' }}
                 @yield('content')
 

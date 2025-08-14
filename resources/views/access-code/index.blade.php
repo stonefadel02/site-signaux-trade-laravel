@@ -1,17 +1,17 @@
-@extends('{{layout}}')
+@extends('layouts.app')
 
-@section('pageTitle', '{{modelTitlePlural}}')
+@section('pageTitle', 'Access Codes')
 
 @section('content')
     <div class="max-w-7xl mx-auto py-6">
         <div class="flex items-center justify-between mb-6">
             <div class="">
-                <span>Liste des {{modelTitlePlural}} </span>
+                <span>Liste des Access Codes </span>
             </div>
             <div class="gap-2 flex items-center">
-                <a href="{{ route('{{modelRoute}}.create') }}"
+                <a href="{{ route('access-codes.create') }}"
                     class="inline-flex items-center px-3 py-1 bg-slate-700 text-white rounded-lg shadow hover:bg-blue-700 transition">
-                    <i class="ti ti-plus mr-2"></i> Nouveau {{modelTitle}}
+                    <i class="ti ti-plus mr-2"></i> Nouveau Access Code
                 </a>
             </div>
         </div>
@@ -24,15 +24,56 @@
                     <thead class="bg-gray-100">
                         <tr>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            {{tableHeader}}
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plan</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durée (jours)</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilisations</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expire le</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        @forelse(${{modelNamePluralLowerCase}} as ${{modelNameLowerCase}})
+                        @forelse($accessCodes as $accessCode)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ ${{modelNameLowerCase}}->id }}</td>
-                                {{tableBody}}
+                                <td class="px-4 py-3 text-sm text-gray-700">{{ $accessCode->id }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">
+                                    <div class="font-medium">{{ $accessCode->plan->Titre ?? 'Plan supprimé' }}</div>
+                                    @if($accessCode->plan)
+                                        <div class="text-xs text-gray-500">{{ $accessCode->plan->Prix }} {{ $accessCode->plan->Devise }}</div>
+                                    @endif
+                                </td>
+                                <td class="px-4 py-3 text-sm font-mono font-bold text-blue-600">{{ $accessCode->Code }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">{{ $accessCode->DureeEnJours }}</td>
+                                <td class="px-4 py-3 text-sm">
+                                    <span class="text-gray-700">{{ $accessCode->Compteur }} / {{ $accessCode->CompteurMax }}</span>
+                                    <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                        <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $accessCode->CompteurMax > 0 ? ($accessCode->Compteur / $accessCode->CompteurMax) * 100 : 0 }}%"></div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-gray-700">
+                                    {{ $accessCode->ExpireLe ? $accessCode->ExpireLe->format('d/m/Y') : 'Non définie' }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    @php
+                                        $isExpired = $accessCode->ExpireLe && $accessCode->ExpireLe->isPast();
+                                        $isExhausted = $accessCode->Compteur >= $accessCode->CompteurMax;
+                                    @endphp
+                                    @if($isExpired)
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            Expiré
+                                        </span>
+                                    @elseif($isExhausted)
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                            Épuisé
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Actif
+                                        </span>
+                                    @endif
+                                </td>
+
                                 <td class="px-4 py-3 flex gap-2">
                                     <div x-data="{ open: false }" class="relative inline-block text-left">
                                         <div>
@@ -60,15 +101,15 @@
                                             class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg z-50 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                             role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                             <div class="py-1" role="none">
-                                                <a href="{{ route('{{modelRoute}}.show', ${{modelNameLowerCase}}) }}"
+                                                <a href="{{ route('access-codes.show', $accessCode) }}"
                                                     class="inline-flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full">
                                                     <i class="ti ti-eye mr-2"></i> Voir
                                                 </a>
-                                                <a href="{{ route('{{modelRoute}}.edit', ${{modelNameLowerCase}}) }}"
+                                                <a href="{{ route('access-codes.edit', $accessCode) }}"
                                                     class="inline-flex items-center px-4 py-2 text-sm text-yellow-800 hover:bg-yellow-100 w-full">
                                                     <i class="ti ti-edit mr-2"></i> Modifier
                                                 </a>
-                                                <form action="{{ route('{{modelRoute}}.destroy', ${{modelNameLowerCase}}) }}"
+                                                <form action="{{ route('access-codes.destroy', $accessCode) }}"
                                                     method="POST" onsubmit="return confirm('Supprimer cet élément ?')"
                                                     class="w-full">
                                                     @csrf
@@ -92,7 +133,7 @@
                 </table>
             </div>
             <div class="px-4 py-3">
-                {{ ${{modelNamePluralLowerCase}}->links() }}
+                {{ $accessCodes->links() }}
             </div>
         </div>
     </div>
