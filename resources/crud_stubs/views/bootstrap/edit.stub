@@ -1,17 +1,17 @@
-@extends('layouts.app')
-@section('pageTitle', 'Modifier le signal')
+
+@extends('{{ layout }}')
+
+@section('pageTitle', '{{ modelTitle }}')
 
 @section('content')
     <div class="max-w-7xl mx-auto py-8">
         <div class="flex items-center justify-between mb-6">
             <div class="">
-                <span>Formulaire de modification d'un signal </span>
+                <span>Formulaire de modification d'un {{modelTitle}} </span>
             </div>
-            <a href="{{ route('signals.index') }}"
+            <a href="{{ route('{{modelRoute}}.index') }}"
                 class="inline-flex items-center px-3 py-1 bg-slate-700 text-white rounded-lg shadow hover:bg-blue-700 transition">
-
                 <i class="ti ti-chevron-left mr-2"></i> Retour
-
             </a>
         </div>
         <div class="bg-white rounded-lg shadow p-8">
@@ -24,19 +24,10 @@
                     </ul>
                 </div>
             @endif
-            <form action="{{ route('signals.update', $signal) }}" method="POST" class="space-y-5">
+            <form action="{{ route('{{modelRoute}}.update', ${{modelVariable}}) }}" method="POST" class="space-y-5">
                 @csrf
                 @method('PUT')
-                @include('signals.partials.form')
-                <div class="flex items-center gap-2">
-
-                    <button type="submit"
-                        class="inline-flex items-center px-3 py-1 bg-slate-700 text-white rounded-lg shadow hover:bg-blue-700 transition">Mettre
-                        à jour</button>
-                    <a href="{{ route('session-signals.index') }}"
-                        class="inline-flex items-center px-3 py-1 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">Annuler</a>
-                </div>
-
+                @include('{{ modelView }}.form')
             </form>
         </div>
     </div>

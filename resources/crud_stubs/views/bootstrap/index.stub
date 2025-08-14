@@ -1,26 +1,17 @@
-@extends('layouts.app')
+@extends('{{ layout }}')
 
-@section('pageTitle', 'Signaux')
+@section('pageTitle', '{{modelTitlePlural}}')
 
 @section('content')
-    <div class="max-w-7xl mx-auto py-6 ">
+    <div class="max-w-7xl mx-auto py-6">
         <div class="flex items-center justify-between mb-6">
             <div class="">
-                <span>Liste des Signaux</span>
+                <span>Liste des {{modelTitlePlural}} </span>
             </div>
-            <div class="flex items-center gap-2">
-                <a href="{{ route('session-signals.create') }}"
-                    class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition">
-                    <i class="ti ti-arrow-bar-up mr-2"></i> Importer
-                </a>
-                <a href="{{ route('session-signals.create') }}"
-                    class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition">
-                    <i class="ti ti-download mr-2"></i> Exporter
-                </a>
-
-                <a href="{{ route('signals.create') }}"
+            <div class="gap-2 flex items-center">
+                <a href="{{ route('{{modelRoute}}.create') }}"
                     class="inline-flex items-center px-3 py-1 bg-slate-700 text-white rounded-lg shadow hover:bg-blue-700 transition">
-                    <i class="ti ti-plus mr-2"></i> Nouveau signal
+                    <i class="ti ti-plus mr-2"></i> Nouveau {{modelTitle}}
                 </a>
             </div>
         </div>
@@ -35,42 +26,22 @@
                 {{ session('error') }}
             </div>
         @endif
+
         <div class="bg-white rounded-lg shadow p-3 pt-5">
             <div class="overflow-x-auto rounded-lg shadow-none border">
                 <table class="min-w-full bg-white divide-y divide-gray-200">
                     <thead class="bg-gray-100">
                         <tr>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID
-                            </th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User
-                            </th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Session</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Date/Heure Emission</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Actifs</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Direction</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Résultat</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Actions</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            {{tableHeader}}
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        @forelse($signals as $signal)
+                        @forelse(${{modelNamePluralLowerCase}} as ${{modelNameLowerCase}})
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->id }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->user_id }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->session_id }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->DateHeureEmission }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->Actifs }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->Direction }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->Resultat }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->Status }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">{{ ${{modelNameLowerCase}}->id }}</td>
+                                {{tableBody}}
                                 <td class="px-4 py-3 flex gap-2">
                                     <div x-data="{ open: false }" class="relative inline-block text-left">
                                         <div>
@@ -95,19 +66,20 @@
                                             x-transition:leave="transition ease-in duration-75"
                                             x-transition:leave-start="transform opacity-100 scale-100"
                                             x-transition:leave-end="transform opacity-0 scale-95"
-                                            class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg  z-50 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                            class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg z-50 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                             role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                             <div class="py-1" role="none">
-                                                <a href="{{ route('signals.show', $signal->id) }}"
+                                                <a href="{{ route('{{modelRoute}}.show', ${{modelNameLowerCase}}) }}"
                                                     class="inline-flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full">
                                                     <i class="ti ti-eye mr-2"></i> Voir
                                                 </a>
-                                                <a href="{{ route('signals.edit', $signal->id) }}"
+                                                <a href="{{ route('{{modelRoute}}.edit', ${{modelNameLowerCase}}) }}"
                                                     class="inline-flex items-center px-4 py-2 text-sm text-yellow-800 hover:bg-yellow-100 w-full">
                                                     <i class="ti ti-edit mr-2"></i> Modifier
                                                 </a>
-                                                <form action="{{ route('signals.destroy', $signal->id) }}" method="POST"
-                                                    onsubmit="return confirm('Supprimer cette session ?')" class="w-full">
+                                                <form action="{{ route('{{modelRoute}}.destroy', ${{modelNameLowerCase}}) }}"
+                                                    method="POST" onsubmit="return confirm('Supprimer cet élément ?')"
+                                                    class="w-full">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
@@ -118,16 +90,18 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9" class="px-4 py-3 text-center text-gray-400">Aucun signal trouvé.</td>
+                                <td colspan="100%" class="px-4 py-6 text-center text-gray-400">Aucun élément trouvé.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+            <div class="px-4 py-3">
+                {{ ${{modelNamePluralLowerCase}}->links() }}
             </div>
         </div>
     </div>

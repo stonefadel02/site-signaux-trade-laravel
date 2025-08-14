@@ -12,6 +12,34 @@
             </select>
         </div>
         <div>
+            <label for="session_id" class="block text-sm font-medium text-gray-700 mb-1">Session de trading *</label>
+            <select name="session_id"
+                class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2"
+                required>
+                <option value="">Sélectionnez une session</option>
+                @foreach ($sessions as $session)
+                    <option value="{{ $session->id }}"
+                        {{ old('session_id', $signal->session_id ?? '') == $session->id ? 'selected' : '' }}>
+                        {{ $session->Titre }} ({{ $session->HeureDebut }} - {{ $session->HeureFin }})
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div>
+            <label for="user_id" class="block text-sm font-medium text-gray-700 mb-1">Utilisateur *</label>
+            <select name="user_id"
+                class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2"
+                required>
+                <option value="">Sélectionnez un utilisateur</option>
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}"
+                        {{ old('user_id', $signal->user_id ?? auth()->id()) == $user->id ? 'selected' : '' }}>
+                        {{ $user->name }} ({{ $user->email }})
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div>
             <label for="Actifs" class="block text-sm font-medium text-gray-700 mb-1">Actif *</label>
             <input type="text" name="Actifs"
                 class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2"
@@ -33,7 +61,8 @@
             <label for="Status" class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
             <select name="Status"
                 class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2">
-                <option value="EN ATTENTE" {{ old('Status', $signal->Status ?? '') == 'EN ATTENTE' ? 'selected' : '' }}>
+                <option value="EN ATTENTE"
+                    {{ old('Status', $signal->Status ?? '') == 'EN ATTENTE' ? 'selected' : '' }}>
                     En attente</option>
                 <option value="EN COURS" {{ old('Status', $signal->Status ?? '') == 'EN COURS' ? 'selected' : '' }}>En
                     cours</option>
@@ -43,20 +72,51 @@
                 </option>
             </select>
         </div>
+        <div>
+            <label for="Resultat" class="block text-sm font-medium text-gray-700 mb-1">Résultat</label>
+            <select name="Resultat"
+                class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2">
+                <option value="PENDING"
+                    {{ old('Resultat', $signal->Resultat ?? 'PENDING') == 'PENDING' ? 'selected' : '' }}>
+                    🔄 En attente</option>
+                <option value="WIN" {{ old('Resultat', $signal->Resultat ?? '') == 'WIN' ? 'selected' : '' }}>
+                    ✅ Gagnant</option>
+                <option value="LOSE" {{ old('Resultat', $signal->Resultat ?? '') == 'LOSE' ? 'selected' : '' }}>
+                    ❌ Perdant</option>
+                <option value="BREAK-EVEN"
+                    {{ old('Resultat', $signal->Resultat ?? '') == 'BREAK-EVEN' ? 'selected' : '' }}>
+                    ⚖️ Break-even</option>
+            </select>
+        </div>
     </div>
     <div class="space-y-5">
         <div class="flex gap-4">
-            <div class="flex-1 bg-green-50 border border-green-200 rounded-lg p-4">
+            <div class="flex-1 bg-green-50 border border-green-200 rounded-lg p-3">
                 <div class="flex items-center gap-2 mb-1 text-green-700 font-semibold"><span>🟢</span> Take Profit</div>
                 <input type="number" step="0.0001" name="TakeProfit"
                     class="w-full border border-green-200 rounded-lg focus:ring-green-400 focus:border-green-400 py-2 bg-green-50"
                     value="{{ old('TakeProfit', $signal->TakeProfit ?? '') }}" placeholder="1.0925">
             </div>
-            <div class="flex-1 bg-red-50 border border-red-200 rounded-lg p-4">
+            <div class="flex-1 bg-red-50 border border-red-200 rounded-lg p-3">
                 <div class="flex items-center gap-2 mb-1 text-red-700 font-semibold"><span>🛡️</span> Stop Loss</div>
                 <input type="number" step="0.0001" name="StopLoss"
                     class="w-full border border-red-200 rounded-lg focus:ring-red-400 focus:border-red-400 py-2 bg-red-50"
                     value="{{ old('StopLoss', $signal->StopLoss ?? '') }}" placeholder="1.0850">
+            </div>
+        </div>
+        <div class="flex gap-4">
+            <div class="flex-1 bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <div class="flex items-center gap-2 mb-1 text-blue-700 font-semibold"><span>💰</span> Prix de sortie
+                    réelle</div>
+                <input type="number" step="0.0001" name="PrixSortieReelle"
+                    class="w-full border border-blue-200 rounded-lg focus:ring-blue-400 focus:border-blue-400 py-2 bg-blue-50"
+                    value="{{ old('PrixSortieReelle', $signal->PrixSortieReelle ?? '') }}" placeholder="1.0890">
+            </div>
+            <div class="flex-1 bg-purple-50 border border-purple-200 rounded-lg p-3">
+                <div class="flex items-center gap-2 mb-1 text-purple-700 font-semibold"><span>📊</span> Pips</div>
+                <input type="number" name="Pips"
+                    class="w-full border border-purple-200 rounded-lg focus:ring-purple-400 focus:border-purple-400 py-2 bg-purple-50"
+                    value="{{ old('Pips', $signal->Pips ?? '') }}" placeholder="25">
             </div>
         </div>
         <div class="flex gap-4">
@@ -77,10 +137,12 @@
                     required placeholder="jj/mm/aaaa --:--">
             </div>
             <div class="flex-1">
-                <label for="DureeTrade" class="block text-sm font-medium text-gray-700 mb-1">⏱️ Durée du trade *</label>
+                <label for="DureeTrade" class="block text-sm font-medium text-gray-700 mb-1">⏱️ Durée du trade
+                    *</label>
                 <input type="time" name="DureeTrade"
                     class="w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2"
-                    value="{{ old('DureeTrade', $signal->DureeTrade ?? '') }}" required placeholder="--:--">
+                    value="{{ old('DureeTrade', isset($signal) && $signal->DureeTrade ? date('H:i', strtotime($signal->DureeTrade)) : '') }}"
+                    required placeholder="--:--">
             </div>
         </div>
         <div>

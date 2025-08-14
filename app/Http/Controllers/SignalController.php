@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Signal;
+use App\Models\SessionSignal;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SignalController extends Controller
@@ -21,7 +23,9 @@ class SignalController extends Controller
      */
     public function create()
     {
-        return view('signals.create');
+        $sessions = SessionSignal::all();
+        $users = User::all();
+        return view('signals.create', compact('sessions', 'users'));
     }
 
     /**
@@ -65,7 +69,9 @@ class SignalController extends Controller
      */
     public function edit(Signal $signal)
     {
-        return view('signals.edit', compact('signal'));
+        $sessions = SessionSignal::all();
+        $users = User::all();
+        return view('signals.edit', compact('signal', 'sessions', 'users'));
     }
 
     /**

@@ -23,14 +23,6 @@ class PlanSeeder extends Seeder
                 "AutresAvantages" => '["Accès immédiat après paiement", "Code unique valable 24h"]'
             ],
             [
-                "Titre" => "Journalier",
-                "Prix" => 15.0,
-                "Devise" => "USD",
-                "DureeEnJours" => 1,
-                "NombreDeSignaux" => 30,
-                "AutresAvantages" => '["Accès immédiat après paiement", "Code unique valable 24h"]'
-            ],
-            [
                 "Titre" => "Hebdomadaire",
                 "Prix" => 84,
                 "Devise" => "USD",

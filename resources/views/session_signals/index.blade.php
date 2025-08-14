@@ -7,10 +7,14 @@
             <div class="">
                 <span>Liste des Sessions </span>
             </div>
-            <a href="{{ route('session-signals.create') }}"
-                class="inline-flex items-center px-3 py-1 bg-slate-700 text-white rounded-lg shadow hover:bg-blue-700 transition">
-                <i class="ti ti-plus mr-2"></i> Nouvelle session
-            </a>
+            <div class="gap-2 flex items-center">
+
+
+                <a href="{{ route('session-signals.create') }}"
+                    class="inline-flex items-center px-3 py-1 bg-slate-700 text-white rounded-lg shadow hover:bg-blue-700 transition">
+                    <i class="ti ti-plus mr-2"></i> Nouvelle session
+                </a>
+            </div>
         </div>
 
         @if (session('success'))
@@ -48,7 +52,8 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-3 text-sm text-gray-700">{{ $session->id }}</td>
                                 <td class="px-4 py-3 text-sm font-semibold text-gray-800">{{ $session->Titre }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-600">{{ $session->HeureDebut }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-600">{{ $session->HeureDebut }}
+                                </td>
                                 <td class="px-4 py-3 text-sm text-gray-600">{{ $session->HeureFin }}</td>
                                 <td class="px-4 py-3 flex gap-2">
                                     <div x-data="{ open: false }" class="relative inline-block text-left">
