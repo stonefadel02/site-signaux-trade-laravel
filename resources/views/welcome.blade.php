@@ -16,17 +16,37 @@
 
     <main>
         {{-- On assemble la page en appelant chaque composant de section --}}
-        <x-hero-section />
-        <x-features-section />
-        <x-signals-clarification-section />
-        <x-reasons-section />
-        <x-signal-types-section />
-        <x-how-to-use-section />
-        <x-testimonials-section />
-        <x-pricing-section />
-        <x-getting-started-section />
-        <x-contact-section />
-        <x-faq-section />
+       <section id="accueil">
+            <x-hero-section />
+        </section>
+        
+        <section id="fonctionnalites">
+            <x-features-section />
+            <x-signals-clarification-section />
+            <x-reasons-section />
+        </section>
+
+        <section id="comment-ca-marche">
+            <x-signal-types-section />
+            <x-how-to-use-section />
+            <x-getting-started-section />
+        </section>
+
+        <section id="temoignages">
+            <x-testimonials-section />
+        </section>
+
+        <section id="tarifs">
+            <x-pricing-section />
+        </section>
+
+        <section id="contact">
+            <x-contact-section />
+        </section>
+
+        <section id="faq">
+            <x-faq-section />
+        </section>
     </main>
 
     <x-footer />

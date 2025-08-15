@@ -4,9 +4,9 @@
 @php
 $reasons = [
     [
-        'name' => '30 signaux par jour',
+        'name' => '21 signaux par jour',
         'description' => [
-            '10 signaux matin, 10 après-midi, 10 soir',
+            '7 signaux matin, 7 après-midi, 7 soir',
             'Tous postés en temps réel pour saisir les opportunités dès qu\'elles se présentent',
         ],
         'icon_src' => 'c1.png',
@@ -46,7 +46,7 @@ $reasons = [
                 Les mille et une raisons
             </h2>
             <p class="mt-4 text-[22px] font-bold leading-8 text-white">
-                d'acheter les signaux de trading avec Triple1SignalsPerDay
+                d'acheter les signaux de trading avec Triple7SignalsPerDay
             </p>
         </div>
 

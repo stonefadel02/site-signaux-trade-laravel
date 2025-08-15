@@ -30,7 +30,7 @@ class AccessCodeController extends Controller
     {
         $accessCode = new AccessCode();
         $plans = Plan::where('Visibilite', true)->get();
-        
+
         // Générer un code aléatoire de 10 caractères
         $generatedCode = $this->generateAccessCode();
 

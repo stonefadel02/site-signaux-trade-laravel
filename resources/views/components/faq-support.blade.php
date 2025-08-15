@@ -1,4 +1,4 @@
-{{-- resources/views/components/faq-section-minimal.blade.php --}}
+{{-- resources/views/components/faq-support.blade.php --}}
 @php
 $faqs = [
     ['question' => 'Est-il bon de trader avec des signaux ?', 'answer' => 'Absolument ! Lorsque les fournisseurs sont fiables...'],
@@ -14,9 +14,9 @@ $faqs = [
     <div class="grid grid-cols-1 gap-x-8 gap-y-2 lg:grid-cols-2 lg:items-start">
         @foreach ($faqs as $index => $faq)
             <div x-data="{ open: {{ $index === 0 ? 'true' : 'false' }} }">
-                <button @click="open = !open" class="flex w-full items-center justify-between py-3 text-left text-sm font-medium text-gray-700 hover:text-cyan-600">
+                <button @click="open = !open" class="flex w-full items-center justify-between py-3 text-left text-sm font-medium text-gray-700 hover:text-[#0554F1]">
                     <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-circle-question h-5 w-5 text-cyan-500"></i>
+                        <i class="fa-solid fa-beat fa-circle-question  h-5 w-5 text-[#0554F1]"></i>
                         <span>{{ $faq['question'] }}</span>
                     </div>
                     <i class="fa-solid fa-chevron-up h-4 w-4 text-gray-400 transition-transform" :class="{ 'rotate-180': open }"></i>

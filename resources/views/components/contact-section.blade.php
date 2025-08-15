@@ -1,11 +1,11 @@
 {{-- resources/views/components/contact-section.blade.php --}}
 
 @php
-$contactDetails = [
-    ['icon_src' => 'g1.png', 'text' => 'Example@gmail.com'],
-    ['icon_src' => 'g2.png', 'text' => '+00 00 000 0000'],
-    ['icon_src' => 'g3.png', 'text' => 'Cotonou, Bénin'],
-];
+    $contactDetails = [
+        ['icon_src' => 'g1.png', 'text' => 'contact@triple7signalsperday.com'],
+        ['icon_src' => 'g2.png', 'text' => '+229 01 97 44 29 83'],
+        ['icon_src' => 'g3.png', 'text' => 'Cotonou, Bénin'],
+    ];
 @endphp
 
 <section class="bg-[#12141D] py-20 sm:py-32">
@@ -21,14 +21,11 @@ $contactDetails = [
             {{-- Informations de contact (email, téléphone, adresse) --}}
             <div class="mt-24 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($contactDetails as $index => $detail)
-                    <x-animated-div
-                        :delay="$index * 150"
-                        class=""
-                    >
-<div class="flex items-center justify-center gap-4">
+                    <x-animated-div :delay="$index * 150" class="">
+                        <div class="flex items-center justify-center gap-4">
                             <img src="{{ asset($detail['icon_src']) }}" alt="" class="h-20 w-20">
-                        <label class="text-[20px] text-white">{{ $detail['text'] }}</label>
-</div>
+                            <label class="text-[20px] text-white">{{ $detail['text'] }}</label>
+                        </div>
                     </x-animated-div>
                 @endforeach
             </div>
@@ -37,11 +34,7 @@ $contactDetails = [
             <div class="mt-16 grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
                 {{-- Colonne de gauche : Image --}}
                 <x-animated-div :delay="100" class="flex justify-center">
-                    <img
-                        src="{{ asset('headphones.png') }}"
-                        alt="Casque de support 3D"
-                        class="w-80 max-w-sm"
-                    />
+                    <img src="{{ asset('headphones.png') }}" alt="Casque de support 3D" class="w-80 max-w-sm" />
                 </x-animated-div>
 
                 {{-- Colonne de droite : Formulaire --}}
@@ -54,49 +47,27 @@ $contactDetails = [
                             @csrf
                             <div>
                                 <label for="name" class="sr-only">Votre Nom</label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    placeholder="Votre Nom"
-                                    class="block w-full rounded-[10px] border-0 bg-[#0D192F] px-4 py-3 text-white placeholder:text-[#4F4F4F] focus:ring-2 focus:ring-inset focus:ring-cyan-500 sm:text-sm"
-                                />
+                                <input type="text" name="name" id="name" placeholder="Votre Nom"
+                                    class="block w-full rounded-[10px] border-0 bg-[#0D192F] px-4 py-3 text-white placeholder:text-[#4F4F4F] focus:ring-2 focus:ring-inset focus:ring-cyan-500 sm:text-sm" />
                             </div>
                             <div>
                                 <label for="email" class="sr-only">Votre Email</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    placeholder="Votre Email"
-                                    class="block w-full rounded-[10px] border-0 bg-[#0D192F] px-4 py-3 text-white placeholder:text-[#4F4F4F] focus:ring-2 focus:ring-inset focus:ring-cyan-500 sm:text-sm"
-                                />
+                                <input type="email" name="email" id="email" placeholder="Votre Email"
+                                    class="block w-full rounded-[10px] border-0 bg-[#0D192F] px-4 py-3 text-white placeholder:text-[#4F4F4F] focus:ring-2 focus:ring-inset focus:ring-cyan-500 sm:text-sm" />
                             </div>
                             <div>
                                 <label for="phone" class="sr-only">Téléphone</label>
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    id="phone"
-                                    placeholder="Téléphone"
-                                    class="block w-full rounded-[10px] border-0 bg-[#0D192F] px-4 py-3 text-white placeholder:text-[#4F4F4F] focus:ring-2 focus:ring-inset focus:ring-cyan-500 sm:text-sm"
-                                />
+                                <input type="tel" name="phone" id="phone" placeholder="Téléphone"
+                                    class="block w-full rounded-[10px] border-0 bg-[#0D192F] px-4 py-3 text-white placeholder:text-[#4F4F4F] focus:ring-2 focus:ring-inset focus:ring-cyan-500 sm:text-sm" />
                             </div>
                             <div>
                                 <label for="message" class="sr-only">Message</label>
-                                <textarea
-                                    name="message"
-                                    id="message"
-                                    rows="4"
-                                    placeholder="Message"
-                                    class="block w-full rounded-[10px] border-0 border-none bg-[#0D192F] px-4 py-3 text-white placeholder:text-[#4F4F4F] focus:ring-2 focus:ring-inset focus:ring-cyan-500 sm:text-sm"
-                                ></textarea>
+                                <textarea name="message" id="message" rows="4" placeholder="Message"
+                                    class="block w-full rounded-[10px] border-0 border-none bg-[#0D192F] px-4 py-3 text-white placeholder:text-[#4F4F4F] focus:ring-2 focus:ring-inset focus:ring-cyan-500 sm:text-sm"></textarea>
                             </div>
                             <div>
-                                <button
-                                    type="submit"
-                                    class="flex w-1/3 cursor-pointer justify-center rounded-[10px] bg-[#00AFFF] px-3.5 py-2.5 text-center text-sm font-semibold shadow-sm hover:bg-cyan-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500"
-                                >
+                                <button type="submit"
+                                    class="flex w-1/3 cursor-pointer justify-center rounded-[10px] bg-[#00AFFF] px-3.5 py-2.5 text-center text-sm font-semibold shadow-sm hover:bg-cyan-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500">
                                     ENVOYER
                                 </button>
                             </div>

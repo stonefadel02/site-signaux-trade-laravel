@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SessionSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(PlanSeeder::class);
+        $this->call(AccessCodeSeeder::class);
         $admin = User::updateOrCreate([
             "email" => "admin@admin.com",
         ], [

@@ -2,10 +2,10 @@
 
 @php
 $usefulLinks = [
-    ['name' => 'Accueil', 'href' => '#'],
-    ['name' => 'Comment ça marche ?', 'href' => '#'],
-    ['name' => 'Accéder aux Signaux', 'href' => '#'],
-    ['name' => 'FAQ', 'href' => '#'],
+ ['name' => 'Accueil', 'href' => '#accueil'],
+    ['name' => 'Comment ça marche ?', 'href' => '#comment-ca-marche'],
+    ['name' => 'Accéder aux Signaux', 'href' => '#tarifs'], 
+    ['name' => 'FAQ', 'href' => '#faq'],
 ];
 
 $legalLinks = [
@@ -73,11 +73,11 @@ $socialLinks = [
                     <ul role="list" class="mt-4 space-y-5">
                         <li class="flex items-center gap-3">
                             <i class="fa-solid fa-beat-fade fa-phone h-5 w-5 flex-shrink-0 text-cyan-400"></i>
-                            <span class="text-sm text-white">+00 00 000 00 00</span>
+                            <span class="text-sm text-white">+229 01 97 44 29 83</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fa-solid fa-beat-fade fa-envelope h-5 w-5 flex-shrink-0 text-cyan-400"></i>
-                            <span class="text-sm text-white">contact@example.com</span>
+                            <span class="text-sm text-white">contact@triple7signalsperday.com</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fa-solid fa-beat-fade fa-map-pin h-5 w-5 flex-shrink-0 text-cyan-400"></i>
