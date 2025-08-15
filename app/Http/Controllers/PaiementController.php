@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Paiement;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Routing\Controller;
 
 class PaiementController extends Controller
 {
@@ -61,4 +64,25 @@ class PaiementController extends Controller
     {
         //
     }
+public function download($id, $format = 'a4')
+    {
+        // Récupérer le paiement avec relations utiles.
+        // On charge aussi le plan de la souscription pour éviter l'erreur "N/A"
+        $paiement = Paiement::with('user', 'souscription.plan')->findOrFail($id);
+
+        // dd($paiement->user, $paiement->souscription, $paiement->souscription->plan); // Supprimez ou commentez cette ligne
+
+        $data = compact('paiement');
+
+        $pdf = Pdf::loadView('factures.template', $data)
+            ->setPaper($format, 'portrait')
+            ->setWarnings(false);
+
+        // nom de fichier dynamique
+        $filename = 'factures.template' . $paiement->id . '-' . strtoupper($format) . '.pdf';
+
+        return $pdf->stream($filename);
+    }
 }
+
+

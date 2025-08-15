@@ -9,21 +9,27 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" ... />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap JS Bundle (inclut Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <!-- Bootstrap CSS -->
+
 
     {{-- favicon --}}
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/logo.png') }}">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('style')
+    @yield('styles')
     @yield('style1')
     @yield('style2')
 </head>
@@ -46,7 +52,10 @@
             </main>
         </div>
     </div>
-    @yield('script')
+    <<<<<<< HEAD @yield('script')=======<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    >>>>>>> origin/provice
 </body>
 
 </html>
