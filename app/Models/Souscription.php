@@ -37,6 +37,22 @@ class Souscription extends Model
     {
         return $this->hasMany(Paiement::class);
     }
+    function isValid(): bool
+    {
+        $dateNow = now();
+        $res =
+            $this->DateHeureDebut <= $dateNow &&
+            $this->DateHeureFin >= $dateNow;
+        if (!$res && $this->Status != 'EXPIRED') {
+            $this->Status = 'EXPIRED';
+            $this->save();
+        } elseif ($res && $this->Status != 'ACTIVE') {
+            $this->Status = 'ACTIVE';
+            $this->save();
+        }
+
+        return $res;
+    }
 
     public static function revenuMensuel()
     {

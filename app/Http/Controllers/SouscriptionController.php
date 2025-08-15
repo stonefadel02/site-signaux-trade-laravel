@@ -90,13 +90,20 @@ class SouscriptionController extends Controller
         //
     }
 
-   public function dashboard()
-{
-    $souscription = Souscription::where('user_id', Auth::id())
-        ->latest()
-        ->first();
+    public function dashboard()
+    {
+        $souscription = Souscription::where('user_id', Auth::id())
+            ->latest()
+            ->first();
 
-    return view('dashboard', compact('souscription'));
-}
+        return view('dashboard', compact('souscription'));
+    }
 
+    function souscrire()
+    {
+        $abonnementActif = auth()->user()->getActiveSouscription();
+        $lastSouscription = auth()->user()->getLastSouscription();
+        // Logique pour souscrire un utilisateur à un plan
+        return view('souscription.souscrire', compact('abonnementActif', 'lastSouscription'));
+    }
 }

@@ -17,7 +17,7 @@ class AccederAuxSignaux
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check() || (auth()->user() && !auth()->user()->hasAccessToSignals())) {
-            return redirect()->route('access-interdit')->with('error', 'Vous n\'avez pas accès aux signaux.');
+            return redirect()->route('souscrire')->with('error', 'Vous n\'avez pas accès aux signaux.');
         }
         // Si l'utilisateur a accès, continuer la requête
         // Log::info('Accès aux signaux autorisé pour l\'utilisateur : ' . auth()->user()->id);

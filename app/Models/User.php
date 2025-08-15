@@ -61,11 +61,24 @@ class User extends Authenticatable
 
     function hasAccessToSignals(): bool
     {
-        $dateNow = now()->toDateString();
+        $activeSouscription = $this->getActiveSouscription();
+        return $activeSouscription !== null;
+    }
+    function getActiveSouscription(): ?Souscription
+    {
+        $dateNow = now();
         return Souscription::where('user_id', $this->id)
-            ->where('DateHeureDebut', '<=', $dateNow)
+            ->where('Status', 'ACTIVE')
             ->where('DateHeureFin', '>=', $dateNow)
-            ->exists();
+            ->where('DateHeureDebut', '<=', $dateNow)
+            ->latest()
+            ->first();
+    }
+    function getLastSouscription(): ?Souscription
+    {
+        return Souscription::where('user_id', $this->id)
+            ->latest()
+            ->first();
     }
 }
 
