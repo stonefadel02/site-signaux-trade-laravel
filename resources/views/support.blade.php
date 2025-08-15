@@ -24,15 +24,15 @@
                             <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#0554F1]">
                                 <i class="fa-solid fa-beat-fade fa-envelope text-white"></i>
                             </div>
-                            <span class="text-sm text-gray-700">Example@gmail.com</span>
+                            <span class="text-sm text-gray-700">contact@triple7signalsperday.com</span>
                         </div>
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-center ml-11 gap-4">
                             <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#0554F1]">
                                 <i class="fa-solid fa-beat-fade fa-phone text-white"></i>
                             </div>
-                            <span class="text-sm  text-gray-700">+00 00 000 0000</span>
+                            <span class="text-sm  text-gray-700">+229 01 97 44 29 83</span>
                         </div>
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-center  gap-4">
                             <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#0554F1]">
                                 <i class="fa-solid fa-beat-fade fa-map-pin text-white"></i>
                             </div>
