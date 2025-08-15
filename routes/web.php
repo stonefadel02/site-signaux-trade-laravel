@@ -3,19 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlanController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SignalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaiementController;
+use App\Http\Controllers\AccessCodeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SessionSignalController;
 
@@ -34,7 +27,24 @@ Route::middleware('auth')->group(function () {
     Route::resource('plans', PlanController::class);
     Route::resource('signals', SignalController::class);
     Route::resource('paiements', PaiementController::class);
+    Route::resource('access-codes', AccessCodeController::class);
+    Route::get('/support', function () {
+        return view('support');
+    })->name('support');
+    Route::get('/signaux', [SignalController::class, 'publicIndex'])->name('signaux');
 });
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Route publique pour les signaux (accessible aux abonnés)
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/stone.php';
@@ -44,7 +54,5 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-Route::get('/support', function () {
-    return view('support');
-})->name('support');
+
 

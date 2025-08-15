@@ -12,82 +12,131 @@
     .container-custom-width {
         max-width: 900px;
     }
-    .flex-row {
-        display: flex;
-        gap: 20px;
-        width: 100%;
-    }
-    .status-box,
-    .plan-box,
-    .info-box {
-        border-radius: 8px;
-        padding: 40px;
-        font-size: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex: 1;
-        box-sizing: border-box;
-    }
-    .status-box {
-        background-color: #b9f6cc;
-        color: #010311;
-        border: 4px solid #21db5c;
-    }
-    .status-text {
-        flex-grow: 1;
-    }
-    .status-icon {
-        background-color: transparent;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #4ac859;
-        font-weight: bold;
-        font-size: 25px;
-        border: 4px solid #4ac859;
-    }
-    .plan-box {
-        background-color: #bbcaf9;
-        color: #04081c;
-        border: 4px solid #0c2dd5;
-    }
-    .plan-text {
-        flex-grow: 1;
-    }
-    .plan-icon {
-        font-weight: bold;
-        font-size: 28px;
-    }
-    .info-box {
-        background-color: #becbf4;
-        color: #171a2c;
-        flex-direction: column;
-        justify-content: center;
-        font-size: 18px;
-        border: 4px solid #0c2dd5;
-    }
-    .info-box ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    .info-box li {
-        margin-bottom: 6px;
-        position: relative;
-        padding-left: 20px;
-    }
-    .info-box li::before {
-        content: "✓";
-        color: #0c2dd5;
-        font-weight: bold;
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
+    /* Flex horizontal, boîtes qui prennent toute la place disponible également */
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            /* pour que les boîtes s'étendent */
+            width: 100%;
+        }
+
+        /* Boîtes avec flex-grow */
+        .status-box,
+        .plan-box,
+        .info-box {
+            border-radius: 20px;
+            padding: 40px;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex: 1; /* Chacune prend égal largeur */
+            box-sizing: border-box;
+        }
+
+        .status-box {
+            display: flex;
+            align-items: center;
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        /* ACTIVE */
+        .status-active {
+            background-color: #b9f6cc;
+            border: 4px solid #4ac859;
+        }
+        .icon-active {
+            color: #4ac859;
+            border: 4px solid #4ac859;
+        }
+
+        /* INACTIVE */
+        .status-inactive {
+            background-color: #fff3cd;
+            border: 4px solid #ffb84d;
+        }
+        .icon-inactive {
+            color: #ffb84d;
+            border: 4px solid #ffb84d;
+        }
+
+        /* EXPIRE */
+        .status-expire {
+            background-color: #ffcccc;
+            border: 4px solid #e60000;
+        }
+        .icon-expire {
+            color: #e60000;
+            border: 4px solid #e60000;
+        }
+
+        .status-text {
+            flex-grow: 1;
+        }
+
+        .status-icon {
+            background-color: transparent;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 25px;
+        }
+
+        .plan-box {
+            background-color: #bbcaf9;
+            color: #04081c;
+            border: 4px solid #0c2dd5;
+            
+        }
+
+        .plan-boxe {
+            background-color: #bbcaf9;
+            color: #0c2dd5;
+        }
+
+        .plan-text {
+            flex-grow: 1;
+        }
+
+        .plan-icon {
+            font-weight: bold;
+            font-size: 28px;
+        }
+
+        .info-box {
+            background-color: #becbf4;
+            color: #171a2c;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 18px;
+            border: 4px solid #0c2dd5;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-box li {
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .info-box li::before {
+            content: "✓";
+            color: #0c2dd5;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
     .footer-box {
         margin-top: 30px;
         padding: 20px;
@@ -205,6 +254,7 @@
         margin-left: 15px;
     }
 </style>
+@endsection
 
 @section('content')
 
@@ -213,52 +263,73 @@
 <div class="container-fullwidth">
 
     <div class="flex-row">
-        <div class="status-box">
-            <div class="status-text">
-                <div style="font-size: 20px; color: #4f4f4f; margin-bottom: 7px;">Statut de l'abonnement</div>
-                @if ($subscription)
-                    <div style="font-weight: 600;">{{ $subscription->Status }}</div> 
-                @else
-                    <div style="font-weight: 600;">Inactif</div> 
-                @endif
-            </div>
-            <div class="status-icon">&#10003;</div>
-        </div>
+            @php
+                $status = $subscription->Status ?? 'INACTIVE';
 
-        <div class="plan-box">
-            <div class="plan-text">
-                <div style="margin-bottom: 7px; font-size: 20px; color: #0c2dd5;">Plan Journalier</div>
-                <div style="font-weight: 600;">15 USDT</div>
-            </div>
-            <div class="plan-icon" style="color: #0c2dd5; font-size: 60px;">₿</div>
-        </div>
+                $statusClasses = [
+                    'ACTIVE' => [
+                        'box' => 'status-active',
+                        'icon' => 'icon-active'
+                    ],
+                    'INACTIVE' => [
+                        'box' => 'status-inactive',
+                        'icon' => 'icon-inactive'
+                    ],
+                    'EXPIRE' => [
+                        'box' => 'status-expire',
+                        'icon' => 'icon-expire'
+                    ]
+                ];
+            @endphp
 
-        <div class="info-box">
-            <ul>
-                <li>10 signaux par session</li>
-                <li>Accès immédiat après paiement</li>
-                <li>Code unique valable 24h</li>
-            </ul>
+            <div class="status-box {{ $statusClasses[$status]['box'] }}">
+                <div class="status-text">
+                    <div style="font-size: 20px; color: #4f4f4f; margin-bottom: 7px;">Statut de l'abonnement</div>
+                    <div style="font-weight: 600;">{{ $status }}</div>
+                </div>
+                <div class="status-icon {{ $statusClasses[$status]['icon'] }}">&#10003;</div>
+            </div>
+
+
+            <div class="plan-box">
+                <div class="plan-text">
+                    <div style="margin-bottom: 7px; font-size: 20px; color: #0c2dd5;">Plan {{$subscription->plan->Titre}}</div>
+                    <div style="font-weight: 600;">{{$subscription->Montant}} {{$subscription->Devise}}</div>
+                </div>
+                <div class="plan-icon" style="color: #0c2dd5; font-size: 60px;">₿</div>
+            </div>
+
+            <div class="info-box">
+                <ul>
+                    @php
+                        $avantages = json_decode($subscription->plan->AutresAvantages ?? '[]', true);
+                    @endphp
+
+                    @foreach($avantages as $avantage)
+                        <li>{{ $avantage }}</li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
-    </div>
 
     <div class="footer-box mb-3" >
         <div>
+
             <div class="expire-text">Expire le :</div>
-            <div style="font-weight: 600;">28 Juillet 2025</div>
+            <div style="font-weight: 600;"> {{$subscription->DateHeureFin}}</div>
         </div>
         <div>
             <button 
                 class="btn-primary-custom" 
                 type="button"
-                onclick="window.location.href=''">
+                onclick="window.location.href='{{ route('souscription.create')}}'">
                 Renouveler
             </button>
 
             <button 
                 class="btn-outline-primary-custom" 
                 type="button"
-                onclick="window.location.href=''">
+                onclick="window.location.href='{{ route('souscription.create') }}'">
                 Changer de Plan
             </button>
         </div>
@@ -269,7 +340,6 @@
             <i class="fab fa-bitcoin-sign icon mr-3" style="font-size: 24px;"></i>
             <h2 class="mb-0">Mes Paiements</h2>
             <div class="nav-links ml-auto d-flex gap-3">
-                <a href="#" class="active">Paiements</a>
                 <a href="#"><i class="fas fa-receipt icon mr-1"></i>Récents</a>
             </div>
         </div>

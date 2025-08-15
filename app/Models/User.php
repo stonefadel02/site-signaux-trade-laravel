@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements MustVerifyEmail 
+// class User extends Authenticatable implements MustVerifyEmail 
+class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -50,9 +51,19 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+
      public function souscriptions(): HasMany
     {
         return $this->hasMany(Souscription::class);
+    }
+
+    function hasAccessToSignals(): bool
+    {
+        $dateNow = now()->toDateString();
+        return Souscription::where('user_id', $this->id)
+            ->where('DateHeureDebut', '<=', $dateNow)
+            ->where('DateHeureFin', '>=', $dateNow)
+            ->exists();
     }
 }
 

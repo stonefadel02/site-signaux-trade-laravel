@@ -1,40 +1,23 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Signaux')
+@section('pageTitle', 'Access Codes')
 
 @section('content')
-    <div class="max-w-7xl mx-auto py-6 ">
+    <div class="max-w-7xl mx-auto py-6">
         <div class="flex items-center justify-between mb-6">
             <div class="">
-                <span>Liste des Signaux</span>
+                <span>Liste des Access Codes </span>
             </div>
-            <div class="flex items-center gap-2">
-                <a href="javascript:void(0)"
-                    class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition" data-bs-toggle="modal" data-bs-target="#importModal">
-                    <i class="ti ti-arrow-bar-up mr-2"></i> Importer
-                </a>
-                <a href="{{ route('signals-export') }}"
-                    class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition">
-                    <i class="ti ti-download mr-2"></i> Exporter
-                </a>
-
-                <a href="{{ route('signals.create') }}"
+            <div class="gap-2 flex items-center">
+                <a href="{{ route('access-codes.create') }}"
                     class="inline-flex items-center px-3 py-1 bg-slate-700 text-white rounded-lg shadow hover:bg-blue-700 transition">
-                    <i class="ti ti-plus mr-2"></i> Nouveau signal
+                    <i class="ti ti-plus mr-2"></i> Nouveau Access Code
                 </a>
             </div>
         </div>
 
-        @if (session('success'))
-            <div class="mb-4 p-4 rounded bg-green-100 text-green-800 border border-green-200">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="mb-4 p-4 rounded bg-red-100 text-red-800 border border-red-200">
-                {{ session('error') }}
-            </div>
-        @endif
+
+
         <div class="bg-white rounded-lg shadow p-3 pt-5">
             <div class="overflow-x-auto rounded-lg shadow-none border">
                 <table class="min-w-full bg-white divide-y divide-gray-200">
@@ -42,45 +25,70 @@
                         <tr>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID
                             </th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plan
                             </th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code
+                            </th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durée
+                                (jours)</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Session</th>
+                                Utilisations</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Date/Heure Emission</th>
+                                Expire le</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Actifs</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Direction</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Résultat</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status</th>
+                                Statut</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        @forelse($signals as $signal)
+                        @forelse($accessCodes as $accessCode)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->id }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->user->name }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->session->Titre }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->DateHeureEmission }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->Actifs }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->Direction }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-700">{{ $signal->Resultat }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">{{ $accessCode->id }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">
-                                    <span class="
-                                        px-2 py-1 rounded-full font-semibold
-                                        {{ $signal->Status == 'EN COURS' ? 'bg-blue-100 text-blue-800' : '' }}
-                                        {{ $signal->Status == 'EN ATTENTE' ? 'bg-yellow-100 text-yellow-800' : '' }}
-                                        {{ $signal->Status == 'TERMINE' ? 'bg-green-100 text-green-800' : '' }}
-                                        {{ $signal->Status == 'ANNULE' ? 'bg-red-100 text-red-800' : '' }}
-                                    ">
-                                        {{ $signal->Status }}
-                                    </span>
+                                    <div class="font-medium">{{ $accessCode->plan->Titre ?? 'Plan supprimé' }}</div>
+                                    @if ($accessCode->plan)
+                                        <div class="text-xs text-gray-500">{{ $accessCode->plan->Prix }}
+                                            {{ $accessCode->plan->Devise }}</div>
+                                    @endif
                                 </td>
+                                <td class="px-4 py-3 text-sm font-mono font-bold text-blue-600">{{ $accessCode->Code }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-700">{{ $accessCode->DureeEnJours }}</td>
+                                <td class="px-4 py-3 text-sm">
+                                    <span class="text-gray-700">{{ $accessCode->Compteur }} /
+                                        {{ $accessCode->CompteurMax }}</span>
+                                    <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                        <div class="bg-blue-600 h-2 rounded-full"
+                                            style="width: {{ $accessCode->CompteurMax > 0 ? ($accessCode->Compteur / $accessCode->CompteurMax) * 100 : 0 }}%">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-gray-700">
+                                    {{ $accessCode->ExpireLe ? $accessCode->ExpireLe->format('d/m/Y') : 'Non définie' }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    @php
+                                        $isExpired = $accessCode->ExpireLe && $accessCode->ExpireLe->isPast();
+                                        $isExhausted = $accessCode->Compteur >= $accessCode->CompteurMax;
+                                    @endphp
+                                    @if ($isExpired)
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                            Expiré
+                                        </span>
+                                    @elseif($isExhausted)
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                                            Épuisé
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Actif
+                                        </span>
+                                    @endif
+                                </td>
+
                                 <td class="px-4 py-3 flex gap-2">
                                     <div x-data="{ open: false }" class="relative inline-block text-left">
                                         <div>
@@ -105,19 +113,20 @@
                                             x-transition:leave="transition ease-in duration-75"
                                             x-transition:leave-start="transform opacity-100 scale-100"
                                             x-transition:leave-end="transform opacity-0 scale-95"
-                                            class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg  z-50 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                            class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg z-50 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                             role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                             <div class="py-1" role="none">
-                                                <a href="{{ route('signals.show', $signal->id) }}"
+                                                <a href="{{ route('access-codes.show', $accessCode) }}"
                                                     class="inline-flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full">
                                                     <i class="ti ti-eye mr-2"></i> Voir
                                                 </a>
-                                                <a href="{{ route('signals.edit', $signal->id) }}"
+                                                <a href="{{ route('access-codes.edit', $accessCode) }}"
                                                     class="inline-flex items-center px-4 py-2 text-sm text-yellow-800 hover:bg-yellow-100 w-full">
                                                     <i class="ti ti-edit mr-2"></i> Modifier
                                                 </a>
-                                                <form action="{{ route('signals.destroy', $signal->id) }}" method="POST"
-                                                    onsubmit="return confirm('Supprimer cette session ?')" class="w-full">
+                                                <form action="{{ route('access-codes.destroy', $accessCode) }}"
+                                                    method="POST" onsubmit="return confirm('Supprimer cet élément ?')"
+                                                    class="w-full">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
@@ -128,19 +137,19 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9" class="px-4 py-3 text-center text-gray-400">Aucun signal trouvé.</td>
+                                <td colspan="100%" class="px-4 py-6 text-center text-gray-400">Aucun élément trouvé.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
+            <div class="px-4 py-3">
+                {{ $accessCodes->links() }}
+            </div>
         </div>
     </div>
-   @include('signals.modalimporter')
 @endsection
-

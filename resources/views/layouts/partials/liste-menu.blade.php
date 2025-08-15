@@ -9,6 +9,10 @@
         class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
         <i class="ti ti-layout-dashboard me-2"></i> Dashboard
     </a>
+    <a href="{{ route('signaux') }}"
+        class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+        <i class="ti ti-activity me-2"></i> Signaux
+    </a>
     <div x-data="{ open: false }" class="relative">
         <button @click="open = !open"
             class="flex items-center w-full px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium focus:outline-none">
@@ -34,6 +38,18 @@
             <a href="{{ route('signals.index') }}"
                 class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
                 <i class="ti ti-activity me-2"></i> Signals
+            </a>
+            <a href="{{ route('souscription.create') }}"
+                class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+                <i class="ti ti-wallet me-2"></i> Souscriptions
+            </a>
+            <a href="{{ route('abonnement') }}"
+                class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+                <i class="ti ti-wallet me-2"></i>Mes Abonnements
+            </a>
+            <a href="{{ route('access-codes.index') }}"
+                class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+                <i class="ti ti-activity me-2"></i> Code d'Access
             </a>
         </div>
     </div>
