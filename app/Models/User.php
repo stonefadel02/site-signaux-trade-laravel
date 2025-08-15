@@ -77,7 +77,7 @@ class User extends Authenticatable
     function getLastSouscription(): ?Souscription
     {
         return Souscription::where('user_id', $this->id)
-            ->latest()
+            ->orderBy('DateHeureFin', 'desc')
             ->first();
     }
 }

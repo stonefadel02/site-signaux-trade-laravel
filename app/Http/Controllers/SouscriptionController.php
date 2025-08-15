@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
+use App\Models\AccessCode;
 use App\Models\Souscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -101,9 +102,67 @@ class SouscriptionController extends Controller
 
     function souscrire()
     {
-        $abonnementActif = auth()->user()->getActiveSouscription();
-        $lastSouscription = auth()->user()->getLastSouscription();
+        $lastAbonnement = auth()->user()->getActiveSouscription() ?? auth()->user()->getLastSouscription();
+
         // Logique pour souscrire un utilisateur à un plan
-        return view('souscription.souscrire', compact('abonnementActif', 'lastSouscription'));
+        return view('souscription.souscrire', compact('lastAbonnement'));
+    }
+
+
+    /**
+     * Save a new subscription for the user.
+     *
+     * @param int $user
+     * @param int $plan_id
+     * @param string $accessCode
+     */
+    public static function saveSouscription(int $user, int $plan_id, string $accessCode = '')
+    {
+        $user = Auth::user();
+
+        $nbreJours = 0;
+        $montant = 0;
+        $devise = '';
+
+        if ($accessCode != '') {
+            $codeModel = AccessCode::where('Code', $accessCode)->firstOrFail();
+            $plan = $codeModel->plan;
+            $nbreJours = $codeModel->DureeEnJours;
+            $montant = 0;
+            $devise = $plan->Devise;
+
+        } else {
+            $plan = Plan::findOrFail($plan_id);
+            $nbreJours = $plan->DureeEnJours;
+            $montant = $plan->Prix;
+            $devise = $plan->Devise;
+        }
+
+        $dateNow = now();
+        $dateFin = $dateNow->copy()->addDays($nbreJours);
+
+        // Mettre à jour le statut de toutes les souscriptions de l'utilisateur, tous mettre a expiré d'abord
+        Souscription::where('user_id', $user->id)
+            ->update(['Status' => 'EXPIRED']);
+
+        // Desactiver toutes les souscriptions actives de l'utilisateur
+        Souscription::where('user_id', $user->id)
+            ->where('DateHeureFin', '>=', $dateNow)
+            ->where('DateHeureDebut', '<=', $dateNow)
+            ->update(['Status' => 'INACTIVE', 'DateHeureFin' => $dateNow]);
+
+        // Créer une nouvelle souscription
+
+        Souscription::create([
+            'user_id' => $user->id,
+            'plan_id' => $plan->id,
+            'Montant' => $montant,
+            'Devise' => $devise,
+            'DateHeureDebut' => $dateNow,
+            'DateHeureFin' => $dateFin,
+            'AccessCode' => $accessCode,
+            'Status' => 'ACTIVE',
+        ]);
+
     }
 }

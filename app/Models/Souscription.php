@@ -15,6 +15,7 @@ class Souscription extends Model
         'DateHeureDebut',
         'DateHeureFin',
         'Status',
+        'AccessCode'
     ];
 
     protected $casts = [
@@ -40,16 +41,13 @@ class Souscription extends Model
     function isValid(): bool
     {
         $dateNow = now();
-        $res =
+        $res = $this->Status === 'ACTIVE' &&
             $this->DateHeureDebut <= $dateNow &&
             $this->DateHeureFin >= $dateNow;
-        if (!$res && $this->Status != 'EXPIRED') {
-            $this->Status = 'EXPIRED';
-            $this->save();
-        } elseif ($res && $this->Status != 'ACTIVE') {
-            $this->Status = 'ACTIVE';
-            $this->save();
-        }
+        // if (!$res && $this->Status != 'ACTIVE') {
+        //     $this->Status = 'EXPIRED';
+        //     $this->save();
+        // }
 
         return $res;
     }
@@ -62,5 +60,10 @@ class Souscription extends Model
             ->whereMonth('created_at', $now->month)
             ->whereYear('created_at', $now->year)
             ->sum('Montant');
+    }
+
+    static function nouvelleSouscription()
+    {
+        return new Souscription();
     }
 }

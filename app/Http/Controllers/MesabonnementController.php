@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Souscription; // Assurez-vous que ce modèle existe
 
-class MesabonnementController extends Controller
+class MesAbonnementController extends Controller
 {
     /**
      * Affiche la page des abonnements avec les paiements et la souscription de l'utilisateur.
@@ -24,11 +24,11 @@ class MesabonnementController extends Controller
         $userId = Auth::id();
 
         // Récupère la dernière souscription de l'utilisateur authentifié.
-        
-        $subscription = Auth::user()->souscriptions()->latest()->first();
+
+        $subscription = auth()->user()->getActiveSouscription() ?? auth()->user()->getLastSouscription();
 
         // Récupère les paiements de l'utilisateur, en chargeant la souscription associée (eager loading).
-       
+
         $paiements = Paiement::with('souscription')
             ->where('user_id', $userId)
             ->orderBy('DateHeurePaiement', 'desc')
@@ -38,5 +38,11 @@ class MesabonnementController extends Controller
         return view('abonnement.Mesabonnement', compact('paiements', 'subscription'));
     }
 
-   
+    function index()
+    {
+        $lastSouscription = auth()->user()->getActiveSouscription() ?? auth()->user()->getLastSouscription();
+        return view('abonnement.index', compact('lastSouscription'));
+    }
+
+
 }
