@@ -9,10 +9,16 @@
                 <span>Liste des Signaux</span>
             </div>
             <div class="flex items-center gap-2">
-                <a href="javascript:void(0)"
-                    class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition" data-bs-toggle="modal" data-bs-target="#importModal">
-                    <i class="ti ti-arrow-bar-up mr-2"></i> Importer
-                </a>
+                <div x-data="{ openImportModal: false }">
+                    <!-- Bouton pour ouvrir le modal -->
+                    <a href="javascript:void(0)" @click="openImportModal = true"
+                    class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition">
+                        <i class="ti ti-arrow-bar-up mr-2"></i> Importer
+                    </a>
+
+                    <!-- Inclure le modal -->
+                    @include('signals.modalimporter')
+                </div>
                 <a href="{{ route('signals-export') }}"
                     class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition">
                     <i class="ti ti-download mr-2"></i> Exporter
@@ -25,16 +31,6 @@
             </div>
         </div>
 
-        @if (session('success'))
-            <div class="mb-4 p-4 rounded bg-green-100 text-green-800 border border-green-200">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="mb-4 p-4 rounded bg-red-100 text-red-800 border border-red-200">
-                {{ session('error') }}
-            </div>
-        @endif
         <div class="bg-white rounded-lg shadow p-3 pt-5">
             <div class="overflow-x-auto rounded-lg shadow-none border">
                 <table class="min-w-full bg-white divide-y divide-gray-200">
@@ -141,6 +137,5 @@
             </div>
         </div>
     </div>
-   @include('signals.modalimporter')
 @endsection
 

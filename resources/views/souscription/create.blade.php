@@ -1,5 +1,38 @@
 @extends('layouts.app')
 
+@section('script')
+    <script>
+    function openPlanModal(planId, titre, prix, duree, avantages) {
+        document.getElementById('modalPlanId').value = planId;
+        document.getElementById('modalPlanTitre').innerText = titre;
+        document.getElementById('modalPlanPrix').innerText = prix;
+        document.getElementById('modalPlanDuree').innerText = duree;
+
+        const ul = document.getElementById('modalPlanAvantages');
+        ul.innerHTML = '';
+        avantages.forEach(av => {
+            const li = document.createElement('li');
+            li.innerText = av;
+            ul.appendChild(li);
+        });
+
+        document.getElementById('planModal').classList.remove('hidden');
+    }
+
+    // Fermeture du modal
+    document.getElementById('closePlanModal').addEventListener('click', () => {
+        document.getElementById('planModal').classList.add('hidden');
+    });
+    document.getElementById('closePlanModalBtn').addEventListener('click', () => {
+        document.getElementById('planModal').classList.add('hidden');
+    });
+    document.getElementById('planModalOverlay').addEventListener('click', () => {
+        document.getElementById('planModal').classList.add('hidden');
+    });
+</script>
+
+@endsection
+
 @section('style')
     <style>
         /* Conteneur principal en full width avec padding */
@@ -410,17 +443,6 @@
 @section('content')      
     <div class="container-fullwidth">
 
-        @if (session('success'))
-            <div class="mb-4 p-4 rounded bg-green-100 text-green-800 border border-green-200">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="mb-4 p-4 rounded bg-red-100 text-red-800 border border-red-200">
-                {{ session('error') }}
-            </div>
-        @endif
-
         <div class="flex-row">
             @php
                 $status = $souscription->Status ?? 'INACTIVE';
@@ -474,32 +496,40 @@
             <h2>Changer de Plan</h2>
             <p class="subtitle">Choisissez votre nouveau Plan</p>
 
-            <div class="plans-grid">
-                @forelse ($plans as $plan)
-                <div class="plan-card" data-plan-id="{{ $plan->id }}">
-                    <h3>{{ $plan->Titre }}</h3>
-                    <div class="price">{{ $plan->Prix }} {{$plan->Devise}}<span class="price-period">/{{ $plan->DureeEnJours }} J</span></div>
-                    <div class="discount">(+30% sur signal)</div>
+            <div x-data="{ openPlanModal: false, planId: '', planTitre: '', planPrix: '', planDuree: '', planAvantages: [] }">
 
-                    <hr style="border: none; height: 2px; background-color: #007bff; margin: 8px 0;">
-                    
-                    <ul class="features my-2">
-                        @php
-                            $avantages = json_decode($plan->AutresAvantages, true) ?? [];
-                        @endphp
-                        @foreach ($avantages as $avantage)
-                            <li>{{ $avantage }}</li>
-                        @endforeach
-                    </ul>
-                    
-                    <button class="choose-btn">CHOISIR</button>
+                <div class="plans-grid">
+                    @forelse ($plans as $plan)
+                        <div class="plan-card" data-plan-id="{{ $plan->id }}">
+                            <h3>{{ $plan->Titre }}</h3>
+                            <div class="price">{{ $plan->Prix }} {{$plan->Devise}}<span class="price-period">/{{ $plan->DureeEnJours }} J</span></div>
+                            <div class="discount">(+30% sur signal)</div>
+
+                            <hr style="border: none; height: 2px; background-color: #007bff; margin: 8px 0;">
+                            
+                            <ul class="features my-2">
+                                @php
+                                    $avantages = json_decode($plan->AutresAvantages, true) ?? [];
+                                @endphp
+                                @foreach ($avantages as $avantage)
+                                    <li>{{ $avantage }}</li>
+                                @endforeach
+                            </ul>
+                            
+                            <button class="choose-btn"
+                                onclick="openPlanModal({{ $plan->id }}, '{{ $plan->Titre }}', '{{ $plan->Prix }} {{$plan->Devise}}', '{{ $plan->DureeEnJours }}', {{ json_encode(json_decode($plan->AutresAvantages, true) ?? []) }})">
+                                CHOISIR
+                            </button>
+                        </div>
+                    @empty
+                        <p class="text-center">Aucun plan disponible.</p>
+                    @endforelse
                 </div>
-            @empty
-                <p class="text-center">Aucun plan disponible.</p>
-            @endforelse
+
+                @include('souscription.recapitulatifmodal')
 
             </div>
-            @include('souscription.recapitulatifmodal')
+
         </div>
 
     </div>

@@ -1,33 +1,48 @@
-<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="importModalLabel">Importer des données</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-info">
-                    <strong>Informations :</strong><br>
-                    - Le fichier doit être au format Excel : XLS, XLSX<br>
-                    - Le fichier doit contenir les colonnes suivantes : Session, Date et heure d'émission, Date et heure d'expiration, Durée du trade, Timeframe, Prix d'entrée, Actif<br>
-                    <hr>
-                    <p>Si besoin, vous pouvez télécharger le fichier modèle vierge et remplir ensuite avec les données.</p>
-                    <a href="{{ url('/download-template') }}" class="btn btn-sm btn-secondary mb-3 rounded-05">Télécharger le fichier modèle</a>
-                </div>
-
-                <form id="import-form" action="{{ route('import-signals') }}" method="POST" enctype="multipart/form-data" class="me-2">
-                    @csrf
-                    <label for="fileInput" class="form-label">Choisir un fichier</label>
-                    <input type="file" id="fileInput" name="file" accept=".xlsx, .xls" required
-                        class="border border-gray-300 rounded px-2 py-1 w-full">
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary rounded-05" data-bs-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-sm btn-primary rounded-05">Importer</button>
-                    </div>
-                </form>
-            </div>
+<!-- Modal -->
+<div x-show="openImportModal"
+     x-transition
+     class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-500 backdrop-blur-sm">
+     
+    <!-- Contenu du modal -->
+    <div @click.away="openImportModal = false" 
+         class="bg-white rounded-lg w-full max-w-2xl p-6 mx-2">
+        
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">Importer des données</h2>
+            <button @click="openImportModal = false" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
         </div>
+
+        <!-- Info -->
+        <div class="bg-blue-50 border border-blue-200 rounded p-3 mb-4 text-lg text-blue-800">
+            <strong>Informations :</strong><br>
+            - Le fichier doit être au format Excel : XLS, XLSX<br>
+            - Colonnes attendues : Session, Date et heure d'émission, Date et heure d'expiration, Durée du trade, Timeframe, Prix d'entrée, Actif<br>
+            <hr class="my-2">
+            <p>Si besoin, vous pouvez télécharger le fichier modèle vierge et remplir ensuite avec les données.</p>
+            <a href="{{ url('/download-template') }}"
+                class="inline-block mt-2 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded shadow transition">
+                Télécharger le fichier modèle
+            </a>
+
+
+        </div>
+
+        <!-- Formulaire -->
+        <form action="{{ route('import-signals') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <label for="fileInput" class="block mb-2 text-lg font-medium text-gray-700">Choisir un fichier</label>
+            <input type="file" id="fileInput" name="file" accept=".xlsx, .xls" required
+                   class="border border-gray-300 rounded px-2 py-1 w-full mb-4">
+
+            <!-- Footer -->
+            <div class="flex justify-end gap-2">
+                <button type="button" @click="openImportModal = false"
+                        class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">Fermer</button>
+                <button type="submit"
+                        class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">Importer</button>
+            </div>
+        </form>
+
     </div>
 </div>
-

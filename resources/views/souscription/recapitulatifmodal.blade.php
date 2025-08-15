@@ -1,58 +1,30 @@
-<!-- Modal -->
-<div class="modal fade" id="planModal" tabindex="-1" aria-labelledby="planModalLabel" aria-hidden="true">
-  <div class="modal-dialog ">
-    <div class="modal-content">
+<div id="planModal" class="fixed inset-0 flex items-center justify-center z-50 hidden px-4">
+    <div id="planModalOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="bg-white rounded-lg w-full max-w-lg p-6 shadow-lg relative">
         <form id="souscriptionForm" method="POST" action="{{ route('souscription.store') }}">
             @csrf
             <input type="hidden" name="plan_id" id="modalPlanId">
-            <div class="modal-header">
-                <h5 class="modal-title" id="planModalLabel">Récapitulatif du plan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold">Récapitulatif du plan</h2>
+                <button type="button" id="closePlanModal" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
             </div>
+
             <div class="modal-body">
-                <p><strong>Titre : </strong> <span id="modalPlanTitre"></span></p>
-                <p><strong>Prix : </strong> <span id="modalPlanPrix"></span></p>
-                <p><strong>Durée : </strong> <span id="modalPlanDuree"></span> jours</p>
-                <ul id="modalPlanAvantages"></ul>
+                <p><strong>Titre :</strong> <span id="modalPlanTitre"></span></p>
+                <p><strong>Prix :</strong> <span id="modalPlanPrix"></span></p>
+                <p><strong>Durée :</strong> <span id="modalPlanDuree"></span> jours</p>
+                <ul id="modalPlanAvantages" class="list-disc list-inside mt-2 mb-4"></ul>
             </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-sm btn-primary" id="enregistrerPlan">Passer au paiement</button>
-                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Fermer</button>
+
+            <div class="flex justify-end gap-2">
+                <button type="submit" class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    Passer au paiement
+                </button>
+                <button type="button" id="closePlanModalBtn" class="px-3 py-1 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">
+                    Fermer
+                </button>
             </div>
-       </form>
+        </form>
     </div>
-  </div>
 </div>
-<script>
-    const planButtons = document.querySelectorAll('.choose-btn');
-
-    planButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const card = btn.closest('.plan-card');
-            const titre = card.querySelector('h3').innerText;
-            const prix = card.querySelector('.price').innerText;
-            const duree = card.querySelector('.price-period').innerText;
-            const avantages = Array.from(card.querySelectorAll('.features li')).map(li => li.innerText);
-            const planId = card.dataset.planId; // ajouter data-plan-id dans la card
-
-            // Remplir le modal
-            document.getElementById('modalPlanId').value = planId;
-            document.getElementById('modalPlanTitre').innerText = titre;
-            document.getElementById('modalPlanPrix').innerText = prix;
-            document.getElementById('modalPlanDuree').innerText = duree;
-            
-            const ul = document.getElementById('modalPlanAvantages');
-            ul.innerHTML = '';
-            avantages.forEach(av => {
-                const li = document.createElement('li');
-                li.innerText = av;
-                ul.appendChild(li);
-            });
-
-            // Ouvrir le modal
-            const modal = new bootstrap.Modal(document.getElementById('planModal'));
-            modal.show();
-        });
-    });
-</script>
-
