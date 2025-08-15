@@ -1,15 +1,21 @@
-import "./bootstrap";
-import intersect from "@alpinejs/intersect";
 
-import Alpine from "alpinejs";
+import './bootstrap';
+
+
+import Alpine from 'alpinejs';
+import intersect from '@alpinejs/intersect';
+import collapse from '@alpinejs/collapse'; 
+Alpine.plugin(intersect);
+Alpine.plugin(collapse);
 
 window.Alpine = Alpine;
 
 Alpine.start();
-Alpine.plugin(intersect);
-window.Alpine = Alpine;
 
-import EmblaCarousel from "embla-carousel";
-import Autoplay from "embla-carousel-autoplay";
-window.Autoplay = Autoplay;
+
+import EmblaCarousel from 'embla-carousel';
+import Autoplay from 'embla-carousel-autoplay';
+
 window.EmblaCarousel = EmblaCarousel;
+window.Autoplay = Autoplay;
+import './carousel.js';

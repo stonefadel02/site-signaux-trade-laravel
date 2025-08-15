@@ -40,7 +40,7 @@
              <div class="mt-10 flex max-w-[320px] items-center gap-4 rounded-lg bg-gradient-to-r from-[#25283A] to-[#3A51A1] p-3 backdrop-blur-sm">
                  <i class="fa-solid fa-beat fa-chart-bar ml-5 text-cyan-300 text-6xl"></i>
                  <span class="text-[33px] font-semibold text-white">
-                     10 signaux par session
+                     7 signaux par session
                  </span>
              </div>
          </div>
