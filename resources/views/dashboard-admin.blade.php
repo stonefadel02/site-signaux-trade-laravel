@@ -95,7 +95,7 @@
         }
 
         .icon-text i {
-            font-size: 20px;
+            font-size: 30px;
             color: #e5e5e5; /* Gris clair qui tend vers blanc */
         }
 
@@ -145,29 +145,29 @@
         <div class="header-widgets">
             <div class="widget">
                 <div class="icon-text">
-                    <i class="fas fa-users"></i>
+                    <i class="ti ti-users-group"></i>
                     <span>Utilisateurs</span>
                 </div>
                 <div class="number">{{ $users }}</div>
             </div>
             <div class="widget">
                 <div class="icon-text">
-                    <i class="fas fa-wallet"></i>
+                    <i class="ti ti-wallet"></i>
                     <span>Abonnements actifs</span>
                 </div>
                 <div class="number">{{ $abonnements }}</div>
             </div>
             <div class="widget">
-                <div class="icon-text" style="display:flex; align-items:center; gap:8px;">
-                    <span style="color:#e5e5e5; font-size:25px; font-weight:bold; line-height:1;">₿</span>
-                    <span style="font-weight:600; color:#212529;">Revenus mensuels</span>
+                <div class="icon-text">
+                    <i class="ti ti-currency-bitcoin"></i>
+                    <span>Revenus mensuels</span>
                 </div>
                 <div class="number">{{ $revenuMensuel }} USDT</div>
             </div>
             <div class="widget">
-                <div class="icon-text" style="display:flex; align-items:center; gap:8px;">
-                    <span style="color:#e5e5e5; font-size:25px; font-weight:bold; line-height:1;">₿</span>
-                    <span style="font-weight:600; color:#212529;">Accès signaux (7)</span>
+                <div class="icon-text">
+                    <i class="ti ti-currency-bitcoin"></i>
+                    <span>Accès signaux (7)</span>
                 </div>
                 <div class="number">0</div>
             </div>

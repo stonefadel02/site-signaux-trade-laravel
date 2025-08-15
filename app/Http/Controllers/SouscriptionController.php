@@ -93,8 +93,7 @@ class SouscriptionController extends Controller
    public function dashboard()
 {
     $souscription = Souscription::where('user_id', Auth::id())
-        ->where('Status', 'ACTIVE')
-        ->latest('DateHeureDebut')
+        ->latest()
         ->first();
 
     return view('dashboard', compact('souscription'));

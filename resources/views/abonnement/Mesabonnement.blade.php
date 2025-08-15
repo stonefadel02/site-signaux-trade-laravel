@@ -337,10 +337,12 @@
 
     <div class="container" style="margin-top: 40px; width: 100%; max-width: none; padding: 40px; box-sizing: border-box;">
         <div class="header d-flex align-items-center mb-4">
-            <i class="fab fa-bitcoin-sign icon mr-3" style="font-size: 24px;"></i>
+                <i class="ti ti-currency-bitcoin p-4 text-5xl"></i>
+
             <h2 class="mb-0">Mes Paiements</h2>
             <div class="nav-links ml-auto d-flex gap-3">
-                <a href="#"><i class="fas fa-receipt icon mr-1"></i>Récents</a>
+                <a href="#"><i class="ti ti-filter-pause"></i>
+Récents</a>
             </div>
         </div>
 
@@ -367,30 +369,42 @@
                     @endif
 
                     {{-- Dropdown menu pour téléchargement PDF --}}
-                    <div class="dropdown ml-3">
-                        <button 
-                            class="btn btn-outline-primary dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton{{ $paiement->id }}"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Télécharger PDF
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $paiement->id }}">
-                            <li>
-                                <a class="dropdown-item" href="{{ route('payments.download', ['id' => $paiement->id, 'format' => 'a4']) }} " target="out_blank">
-                                    
-                                    Format A4
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('payments.download', ['id' => $paiement->id, 'format' => 'a6']) }}"target="out_blank">
-                                    
-                                    Format A6
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="relative ml-3" x-data="{ open: false }" @keydown.escape="open = false" @click.away="open = false">
+                    <button
+                        @click.prevent="open = !open"
+                        type="button"
+                        class="border border-blue-500 text-blue-700 rounded px-4 py-2 text-lg hover:bg-blue-100 focus:outline-none focus:ring focus:ring-blue-300"
+                        aria-haspopup="true"
+                        :aria-expanded="open.toString()"
+                        id="dropdownMenuButton{{ $paiement->id }}">
+                        <i class="ti ti-download"></i>
+                        Télécharger PDF
+                    </button>
+
+                    <ul
+                        x-show="open"
+                        x-transition
+                        class="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded shadow-lg z-50"
+                        role="menu"
+                        aria-labelledby="dropdownMenuButton{{ $paiement->id }}"
+                        style="display:none;"
+                    >
+                        <li>
+                            <a href="{{ route('payments.download', ['id' => $paiement->id, 'format' => 'a4']) }}" target="_blank"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-black cursor-pointer"
+                            role="menuitem">
+                            Format A4
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('payments.download', ['id' => $paiement->id, 'format' => 'a6']) }}" target="_blank"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-black cursor-pointer"
+                            role="menuitem">
+                            Format A6
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 </div>
             @empty
                 <p>Aucun paiement trouvé.</p>
