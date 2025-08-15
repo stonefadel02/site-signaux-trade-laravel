@@ -43,9 +43,40 @@
         }
 
         .status-box {
+            display: flex;
+            align-items: center;
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        /* ACTIVE */
+        .status-active {
             background-color: #b9f6cc;
-            color: #0c2dd5;
             border: 4px solid #4ac859;
+        }
+        .icon-active {
+            color: #4ac859;
+            border: 4px solid #4ac859;
+        }
+
+        /* INACTIVE */
+        .status-inactive {
+            background-color: #fff3cd;
+            border: 4px solid #ffb84d;
+        }
+        .icon-inactive {
+            color: #ffb84d;
+            border: 4px solid #ffb84d;
+        }
+
+        /* EXPIRE */
+        .status-expire {
+            background-color: #ffcccc;
+            border: 4px solid #e60000;
+        }
+        .icon-expire {
+            color: #e60000;
+            border: 4px solid #e60000;
         }
 
         .status-text {
@@ -60,10 +91,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #4ac859;
             font-weight: bold;
             font-size: 25px;
-            border: 4px solid #4ac859;
         }
 
         .plan-box {
@@ -393,27 +422,51 @@
         @endif
 
         <div class="flex-row">
-            <div class="status-box">
+            @php
+                $status = $souscription->Status ?? 'INACTIVE';
+
+                $statusClasses = [
+                    'ACTIVE' => [
+                        'box' => 'status-active',
+                        'icon' => 'icon-active'
+                    ],
+                    'INACTIVE' => [
+                        'box' => 'status-inactive',
+                        'icon' => 'icon-inactive'
+                    ],
+                    'EXPIRE' => [
+                        'box' => 'status-expire',
+                        'icon' => 'icon-expire'
+                    ]
+                ];
+            @endphp
+
+            <div class="status-box {{ $statusClasses[$status]['box'] }}">
                 <div class="status-text">
                     <div style="font-size: 20px; color: #4f4f4f; margin-bottom: 7px;">Statut de l'abonnement</div>
-                    <div style="font-weight: 600;">Active</div>
+                    <div style="font-weight: 600;">{{ $status }}</div>
                 </div>
-                <div class="status-icon">&#10003;</div>
+                <div class="status-icon {{ $statusClasses[$status]['icon'] }}">&#10003;</div>
             </div>
+
 
             <div class="plan-box">
                 <div class="plan-text">
-                    <div style="margin-bottom: 7px; font-size: 20px; color: #0c2dd5;">Plan Journalier</div>
-                    <div style="font-weight: 600;">15 USDT</div>
+                    <div style="margin-bottom: 7px; font-size: 20px; color: #0c2dd5;">Plan {{$souscription->plan->Titre}}</div>
+                    <div style="font-weight: 600;">{{$souscription->Montant}} {{$souscription->Devise}}</div>
                 </div>
                 <div class="plan-icon" style="color: #0c2dd5; font-size: 60px;">₿</div>
             </div>
 
             <div class="info-box">
                 <ul>
-                    <li>10 signaux par session</li>
-                    <li>Accès immédiat après paiement</li>
-                    <li>Code unique valable 24h</li>
+                    @php
+                        $avantages = json_decode($souscription->plan->AutresAvantages ?? '[]', true);
+                    @endphp
+
+                    @foreach($avantages as $avantage)
+                        <li>{{ $avantage }}</li>
+                    @endforeach
                 </ul>
             </div>
         </div>

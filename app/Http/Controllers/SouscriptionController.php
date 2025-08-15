@@ -22,8 +22,12 @@ class SouscriptionController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
         $plans = Plan::all();
-        return view('souscription.create', compact('plans'));
+        $souscription = Souscription::where('user_id', $user->id)
+            ->latest()
+            ->first();
+        return view('souscription.create', compact('plans', 'souscription'));
     }
 
     /**

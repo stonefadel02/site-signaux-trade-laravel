@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Souscription extends Model
@@ -35,5 +36,15 @@ class Souscription extends Model
     public function paiements()
     {
         return $this->hasMany(Paiement::class);
+    }
+
+    public static function revenuMensuel()
+    {
+        $now = Carbon::now();
+
+        return self::where('Status', 'ACTIVE')
+            ->whereMonth('created_at', $now->month)
+            ->whereYear('created_at', $now->year)
+            ->sum('Montant');
     }
 }
