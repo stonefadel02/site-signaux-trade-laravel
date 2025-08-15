@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         $this->call(SessionSeeder::class);
+        $this->call(RoleSeeder::class);
         $this->call(PlanSeeder::class);
         $admin = User::updateOrCreate([
             "email" => "admin@admin.com",
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
             "email_verified_at" => now(),
             "password" => bcrypt("password")
         ]);
+        $admin->assignRole('Super-admin');
 
     }
 }
