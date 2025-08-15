@@ -8,7 +8,7 @@ $plans = [
         'frequency' => '/jour',
         'priceSubtext' => '(0,5 $ par signal)',
         'features' => [
-            '10 signaux par session',
+            '7 signaux par session',
             'Accès immédiat après paiement',
             'Code unique valable 24h',
         ],
@@ -21,7 +21,7 @@ $plans = [
         'frequency' => '/semaine',
         'priceSubtext' => '(Économisez 21 $ vs le tarif journalier)',
         'features' => [
-            '210 signaux sur 7 jours (30 signaux/jour)',
+            '147 signaux sur 7 jours (21 signaux/jour)',
             'Accès illimité pendant 7 jours',
             'Support prioritaire',
         ],
@@ -34,7 +34,7 @@ $plans = [
         'frequency' => '/mois',
         'priceSubtext' => '(Économisez 135 $ vs le tarif journalier)',
         'features' => [
-            '900 signaux sur 30 jours (30 signaux/jour)',
+            '630 signaux sur 30 jours (21 signaux/jour)',
             'Accès illimité + historique des signaux',
             'Statistiques de performance incluses',
         ],

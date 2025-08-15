@@ -22,14 +22,14 @@
           {{-- Colonne de droite : Texte --}}
           <div class="mx-2 text-center lg:text-left">
             <h2 class="text-3xl font-bold tracking-tight text-white sm:text-[40px]">
-              Jusqu'à <span class="text-[#009AF0]">30 signaux</span> de
+              Jusqu'à <span class="text-[#009AF0]">21 signaux</span> de
               trading par jour, matin, après-midi et soirée
             </h2>
             <p class="mt-6 text-lg leading-8 text-gray-300">
               Vous êtes trader débutant ou confirmé ? Vous cherchez des
               signaux de trading fiables, précis et mis à jour régulièrement
-              ? Découvrez Triple10SignalsPerDay, votre nouvelle plateforme
-              de référence pour obtenir 30 signaux de trading par jour,
+              ? Découvrez Triple7SignalsPerDay, votre nouvelle plateforme
+              de référence pour obtenir 21 signaux de trading par jour,
               répartis en 3 sessions : matin, après-midi et soirée.
             </p>
           </div>

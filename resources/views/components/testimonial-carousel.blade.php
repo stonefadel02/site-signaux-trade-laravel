@@ -3,13 +3,13 @@
 @php
 $testimonials = [
     [
-        'quote' => "Je suis bluffé par la précision ! Avant Triple1, je passais des heures à analyser des Graphes sans grand succès. Maintenant, je suis les signaux des experts et mes opérations sont bien plus rentables.",
+        'quote' => "Je suis bluffé par la précision ! Avant Triple7SignalsPerDay, je passais des heures à analyser des Graphes sans grand succès. Maintenant, je suis les signaux des experts et mes opérations sont bien plus rentables.",
         'name' => 'Alex METONOU',
         'role' => 'Étudiant',
         'imageSrc' => 'testi.png',
     ],
     [
-        'quote' => "En tant que développeuse, mon temps est précieux. Les signaux de Triple1 sont clairs, rapides à exécuter et surtout, rentables. L'interface est simple et efficace. Je recommande à 100% !",
+        'quote' => "En tant que développeuse, mon temps est précieux. Les signaux de Triple7SignalsPerDay sont clairs, rapides à exécuter et surtout, rentables. L'interface est simple et efficace. Je recommande à 100% !",
         'name' => 'Elodie K.',
         'role' => 'Développeuse',
         'imageSrc' => 'testi.png',
@@ -35,7 +35,7 @@ $testimonials = [
     }"
     class="relative"
 >
-    <div class="overflow-hidden" x-ref="emblaViewport">
+    <div class="overflow-hidden" x-ref="viewport">
         <div class="flex">
             @foreach ($testimonials as $testimonial)
                 {{-- Chaque slide --}}

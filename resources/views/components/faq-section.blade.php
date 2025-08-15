@@ -4,7 +4,7 @@
 $faqs = [
     [
         'question' => 'Est-il bon de trader avec des signaux ?',
-        'answer' => 'Absolument ! Lorsque les fournisseurs sont fiables, les signaux peuvent transformer votre stratégie. Chez Triple1SignalsPerDay, nous croyons au trading éducatif et performant pour vous aider à prendre des décisions éclairées.',
+        'answer' => 'Absolument ! Lorsque les fournisseurs sont fiables, les signaux peuvent transformer votre stratégie. Chez Triple7SignalsPerDay, nous croyons au trading éducatif et performant pour vous aider à prendre des décisions éclairées.',
     ],
     [
         'question' => 'Comparatif signaux de trading : pourquoi nous choisir ?',
