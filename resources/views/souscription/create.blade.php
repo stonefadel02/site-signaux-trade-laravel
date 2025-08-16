@@ -2,35 +2,34 @@
 
 @section('script')
     <script>
-    function openPlanModal(planId, titre, prix, duree, avantages) {
-        document.getElementById('modalPlanId').value = planId;
-        document.getElementById('modalPlanTitre').innerText = titre;
-        document.getElementById('modalPlanPrix').innerText = prix;
-        document.getElementById('modalPlanDuree').innerText = duree;
+        function openPlanModal(planId, titre, prix, duree, avantages) {
+            document.getElementById('modalPlanId').value = planId;
+            document.getElementById('modalPlanTitre').innerText = titre;
+            document.getElementById('modalPlanPrix').innerText = prix;
+            document.getElementById('modalPlanDuree').innerText = duree;
 
-        const ul = document.getElementById('modalPlanAvantages');
-        ul.innerHTML = '';
-        avantages.forEach(av => {
-            const li = document.createElement('li');
-            li.innerText = av;
-            ul.appendChild(li);
+            const ul = document.getElementById('modalPlanAvantages');
+            ul.innerHTML = '';
+            avantages.forEach(av => {
+                const li = document.createElement('li');
+                li.innerText = av;
+                ul.appendChild(li);
+            });
+
+            document.getElementById('planModal').classList.remove('hidden');
+        }
+
+        // Fermeture du modal
+        document.getElementById('closePlanModal').addEventListener('click', () => {
+            document.getElementById('planModal').classList.add('hidden');
         });
-
-        document.getElementById('planModal').classList.remove('hidden');
-    }
-
-    // Fermeture du modal
-    document.getElementById('closePlanModal').addEventListener('click', () => {
-        document.getElementById('planModal').classList.add('hidden');
-    });
-    document.getElementById('closePlanModalBtn').addEventListener('click', () => {
-        document.getElementById('planModal').classList.add('hidden');
-    });
-    document.getElementById('planModalOverlay').addEventListener('click', () => {
-        document.getElementById('planModal').classList.add('hidden');
-    });
-</script>
-
+        document.getElementById('closePlanModalBtn').addEventListener('click', () => {
+            document.getElementById('planModal').classList.add('hidden');
+        });
+        document.getElementById('planModalOverlay').addEventListener('click', () => {
+            document.getElementById('planModal').classList.add('hidden');
+        });
+    </script>
 @endsection
 
 @section('style')
@@ -42,9 +41,11 @@
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
+
         .container {
             width: 100%;
-            max-width: none; /* POUR PRENDRE TOUTE LA LARGEUR */
+            max-width: none;
+            /* POUR PRENDRE TOUTE LA LARGEUR */
             padding: 80px 40px;
             box-sizing: border-box;
             background-color: #ffffff;
@@ -71,7 +72,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex: 1; /* Chacune prend égal largeur */
+            flex: 1;
+            /* Chacune prend égal largeur */
             box-sizing: border-box;
         }
 
@@ -87,6 +89,7 @@
             background-color: #b9f6cc;
             border: 4px solid #4ac859;
         }
+
         .icon-active {
             color: #4ac859;
             border: 4px solid #4ac859;
@@ -97,6 +100,7 @@
             background-color: #fff3cd;
             border: 4px solid #ffb84d;
         }
+
         .icon-inactive {
             color: #ffb84d;
             border: 4px solid #ffb84d;
@@ -107,6 +111,7 @@
             background-color: #ffcccc;
             border: 4px solid #e60000;
         }
+
         .icon-expire {
             color: #e60000;
             border: 4px solid #e60000;
@@ -132,7 +137,7 @@
             background-color: #bbcaf9;
             color: #04081c;
             border: 4px solid #0c2dd5;
-            
+
         }
 
         .plan-boxe {
@@ -218,229 +223,243 @@
             cursor: pointer;
             margin-left: 10px;
         }
-        
 
-            .status-box .status-text div:last-child {
-                font-weight: 600;
-                color: #000000; /* texte noir */
-            }
 
-            .container {
-                max-width: 1000px; /* même que flex-row */
-                margin: 40px auto 0 auto; /* descend un peu et centre */
-                padding: 40px;
-            }
+        .status-box .status-text div:last-child {
+            font-weight: 600;
+            color: #000000;
+            /* texte noir */
+        }
 
-            h2 {
-                color: #333;
-                margin-bottom: 5px;
-                font-size: 24px;
-            }
+        .container {
+            max-width: 1000px;
+            /* même que flex-row */
+            margin: 40px auto 0 auto;
+            /* descend un peu et centre */
+            padding: 40px;
+        }
 
-            .subtitle {
-                color: #888;
-                margin-bottom: 30px;
-                font-size: 14px;
-            }
+        h2 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
 
-            .plans-grid {
-                display: flex;
-                gap: 30px; /* espace entre les cards */
-                flex-wrap: wrap;
-                justify-content: center; /* centre les cards horizontalement */
-            }
+        .subtitle {
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
 
-            .plan-card {
-                flex: 1 1 30%; /* prend environ 30% de la ligne, s’adapte si nécessaire */
-                min-width: 250px; /* largeur minimale pour que la card ne devienne pas trop petite */
-                max-width: 320px; /* largeur maximale */
-                background: linear-gradient(135deg, #1a2332 0%, #0f1419 100%);
-                color: #fff;
-                padding: 35px 25px;
-                border-radius: 5px;
-                min-height: 350px;
-                display: flex;
-                flex-direction: column;
-                position: relative;
-                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            }
+        .plans-grid {
+            display: flex;
+            gap: 30px;
+            /* espace entre les cards */
+            flex-wrap: wrap;
+            justify-content: center;
+            /* centre les cards horizontalement */
+        }
 
-            .plan-card h3 {
-                font-size: 18px;
-                margin-bottom: 15px;
-                font-weight: 500;
-            }
+        .plan-card {
+            flex: 1 1 30%;
+            /* prend environ 30% de la ligne, s’adapte si nécessaire */
+            min-width: 250px;
+            /* largeur minimale pour que la card ne devienne pas trop petite */
+            max-width: 320px;
+            /* largeur maximale */
+            background: linear-gradient(135deg, #1a2332 0%, #0f1419 100%);
+            color: #fff;
+            padding: 35px 25px;
+            border-radius: 5px;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
 
-            .price {
-                font-size: 28px;
-                font-weight: bold;
-                margin-bottom: 5px;
-            }
+        .plan-card h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
 
-            .price-period {
-                font-size: 14px;
-                color: #888;
-                margin-bottom: 10px;
-            }
+        .price {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
 
-            .discount {
-                font-size: 12px;
-                color: #4a9eff;
-                margin-bottom: 20px;
-            }
+        .price-period {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+        }
 
-            .features {
-                list-style: none;
-                margin-bottom: 30px;
-                flex-grow: 1;
-            }
+        .discount {
+            font-size: 12px;
+            color: #4a9eff;
+            margin-bottom: 20px;
+        }
 
-            .features li {
-                display: flex;
-                align-items: center;
-                margin-bottom: 12px;
-                font-size: 13px;
-                color: #ccc;
-            }
+        .features {
+            list-style: none;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
 
-            .features li::before {
-                content: "✓";
-                color: #ffd700;
-                font-weight: bold;
-                margin-right: 10px;
-                font-size: 14px;
-            }
+        .features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #ccc;
+        }
 
-            .choose-btn {
-                background-color: #1e3a5f;
-                color: #4a9eff;
-                border: 1px solid #2d4a6b;
-                padding: 8px 16px; /* réduit le bouton */
-                border-radius: 6px;
-                cursor: pointer;
-                font-weight: bold;
-                font-size: 12px;
-                letter-spacing: 0.5px;
-                transition: all 0.3s ease;
-                text-transform: uppercase;
-                align-self: flex-start; /* bouton à gauche */
-            }
-            .choose-btn:hover {
-                background-color: #4a9eff;
-                color: white;
-                transform: translateY(-2px);
-            }
+        .features li::before {
+            content: "✓";
+            color: #ffd700;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 14px;
+        }
 
-            .choose-btn.recommended {
-                background-color: #4a9eff;
-                color: white;
-                border-color: #4a9eff;
-            }
+        .choose-btn {
+            background-color: #1e3a5f;
+            color: #4a9eff;
+            border: 1px solid #2d4a6b;
+            padding: 8px 16px;
+            /* réduit le bouton */
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            align-self: flex-start;
+            /* bouton à gauche */
+        }
 
-            .plan-card.recommended {
-                border: 2px solid #4a9eff;
-                transform: scale(1.02);
-            }
+        .choose-btn:hover {
+            background-color: #4a9eff;
+            color: white;
+            transform: translateY(-2px);
+        }
 
-            .choose-btn:hover ~ .plan-card,
-            .choose-btn:hover {
-                /* ça ne fonctionne pas pour le parent, donc on utilise cette méthode */
-            }
+        .choose-btn.recommended {
+            background-color: #4a9eff;
+            color: white;
+            border-color: #4a9eff;
+        }
 
-            /* Solution correcte : utiliser le parent .plan-card:hover sur tout le card */
-            .plan-card:hover {
-                border: 2px solid #4a9eff; /* même que card "recommandée" */
-                transform: scale(1.02);
-                transition: all 0.3s ease;
-            }
+        .plan-card.recommended {
+            border: 2px solid #4a9eff;
+            transform: scale(1.02);
+        }
 
-            /* Modal custom avec fond blanc */
-            .modal-content {
-                border-radius: 15px;
-                background-color: #ffffff; /* fond blanc */
-                color: #1a1a1a; /* texte sombre */
-                box-shadow: 0 15px 40px rgba(0,0,0,0.2); /* ombre douce */
-                padding: 20px;
-            }
+        .choose-btn:hover~.plan-card,
+        .choose-btn:hover {
+            /* ça ne fonctionne pas pour le parent, donc on utilise cette méthode */
+        }
 
-            .modal-header {
-                border-bottom: none;
-                padding-bottom: 10px;
-            }
+        /* Solution correcte : utiliser le parent .plan-card:hover sur tout le card */
+        .plan-card:hover {
+            border: 2px solid #4a9eff;
+            /* même que card "recommandée" */
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
 
-            .modal-title {
-                font-size: 22px;
-                font-weight: 600;
-                color: #4a9eff; /* titre bleu */
-            }
+        /* Modal custom avec fond blanc */
+        .modal-content {
+            border-radius: 15px;
+            background-color: #ffffff;
+            /* fond blanc */
+            color: #1a1a1a;
+            /* texte sombre */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            /* ombre douce */
+            padding: 20px;
+        }
 
-            .modal-body p {
-                font-size: 16px;
-                margin-bottom: 10px;
-            }
+        .modal-header {
+            border-bottom: none;
+            padding-bottom: 10px;
+        }
 
-            .modal-body ul {
-                list-style: none;
-                padding-left: 0;
-            }
+        .modal-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #4a9eff;
+            /* titre bleu */
+        }
 
-            .modal-body ul li {
-                position: relative;
-                padding-left: 25px;
-                margin-bottom: 8px;
-                font-size: 15px;
-                color: #333;
-            }
+        .modal-body p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
 
-            .modal-body ul li::before {
-                content: "✓";
-                position: absolute;
-                left: 0;
-                color: #4a9eff; /* coche bleu */
-                font-weight: bold;
-            }
+        .modal-body ul {
+            list-style: none;
+            padding-left: 0;
+        }
 
-            .modal-footer {
-                border-top: none;
-                padding-top: 15px;
-                display: flex;
-                justify-content: flex-end;
-                gap: 10px;
-            }
+        .modal-body ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: #333;
+        }
 
-            .modal-footer .btn-primary {
-                background-color: #4a9eff;
-                border: none;
-                padding: 10px 18px;
-                border-radius: 8px;
-                font-weight: bold;
-                transition: 0.3s;
-                color: white;
-            }
+        .modal-body ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4a9eff;
+            /* coche bleu */
+            font-weight: bold;
+        }
 
-            .modal-footer .btn-primary:hover {
-                background-color: #4a9eff;
-            }
+        .modal-footer {
+            border-top: none;
+            padding-top: 15px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
 
-            .modal-footer .btn-secondary {
-                background-color: #969191;
-                border: none;
-                padding: 10px 18px;
-                border-radius: 8px;
-                transition: 0.3s;
-                color: #333;
-            }
+        .modal-footer .btn-primary {
+            background-color: #4a9eff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+            color: white;
+        }
 
-            .modal-footer .btn-secondary:hover {
-                background-color: #e0e0e0;
-            }
+        .modal-footer .btn-primary:hover {
+            background-color: #4a9eff;
+        }
 
-            
-    
+        .modal-footer .btn-secondary {
+            background-color: #969191;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: 0.3s;
+            color: #333;
+        }
+
+        .modal-footer .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
     </style>
 @endsection
 
-@section('content')      
+@section('content')
     <div class="container-fullwidth">
 
         <div class="flex-row">
@@ -450,47 +469,19 @@
                 $statusClasses = [
                     'ACTIVE' => [
                         'box' => 'status-active',
-                        'icon' => 'icon-active'
+                        'icon' => 'icon-active',
                     ],
                     'INACTIVE' => [
                         'box' => 'status-inactive',
-                        'icon' => 'icon-inactive'
+                        'icon' => 'icon-inactive',
                     ],
                     'EXPIRE' => [
                         'box' => 'status-expire',
-                        'icon' => 'icon-expire'
-                    ]
+                        'icon' => 'icon-expire',
+                    ],
                 ];
             @endphp
 
-            <div class="status-box {{ $statusClasses[$status]['box'] }}">
-                <div class="status-text">
-                    <div style="font-size: 20px; color: #4f4f4f; margin-bottom: 7px;">Statut de l'abonnement</div>
-                    <div style="font-weight: 600;">{{ $status }}</div>
-                </div>
-                <div class="status-icon {{ $statusClasses[$status]['icon'] }}">&#10003;</div>
-            </div>
-
-
-            <div class="plan-box">
-                <div class="plan-text">
-                    <div style="margin-bottom: 7px; font-size: 20px; color: #0c2dd5;">Plan {{$souscription->plan->Titre}}</div>
-                    <div style="font-weight: 600;">{{$souscription->Montant}} {{$souscription->Devise}}</div>
-                </div>
-                <div class="plan-icon" style="color: #0c2dd5; font-size: 60px;">₿</div>
-            </div>
-
-            <div class="info-box">
-                <ul>
-                    @php
-                        $avantages = json_decode($souscription->plan->AutresAvantages ?? '[]', true);
-                    @endphp
-
-                    @foreach($avantages as $avantage)
-                        <li>{{ $avantage }}</li>
-                    @endforeach
-                </ul>
-            </div>
         </div>
         <div class="container" style="margin-top: 40px; width: 100%; max-width: none; padding: 40px; box-sizing: border-box;">
             <h2>Changer de Plan</h2>
@@ -502,11 +493,12 @@
                     @forelse ($plans as $plan)
                         <div class="plan-card" data-plan-id="{{ $plan->id }}">
                             <h3>{{ $plan->Titre }}</h3>
-                            <div class="price">{{ $plan->Prix }} {{$plan->Devise}}<span class="price-period">/{{ $plan->DureeEnJours }} J</span></div>
+                            <div class="price">{{ $plan->Prix }} {{ $plan->Devise }}<span
+                                    class="price-period">/{{ $plan->DureeEnJours }} J</span></div>
                             <div class="discount">(+30% sur signal)</div>
 
                             <hr style="border: none; height: 2px; background-color: #007bff; margin: 8px 0;">
-                            
+
                             <ul class="features my-2">
                                 @php
                                     $avantages = json_decode($plan->AutresAvantages, true) ?? [];
@@ -515,9 +507,9 @@
                                     <li>{{ $avantage }}</li>
                                 @endforeach
                             </ul>
-                            
+
                             <button class="choose-btn"
-                                onclick="openPlanModal({{ $plan->id }}, '{{ $plan->Titre }}', '{{ $plan->Prix }} {{$plan->Devise}}', '{{ $plan->DureeEnJours }}', {{ json_encode(json_decode($plan->AutresAvantages, true) ?? []) }})">
+                                onclick="openPlanModal({{ $plan->id }}, '{{ $plan->Titre }}', '{{ $plan->Prix }} {{ $plan->Devise }}', '{{ $plan->DureeEnJours }}', {{ json_encode(json_decode($plan->AutresAvantages, true) ?? []) }})">
                                 CHOISIR
                             </button>
                         </div>

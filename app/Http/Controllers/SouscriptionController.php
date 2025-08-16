@@ -107,6 +107,23 @@ class SouscriptionController extends Controller
         // Logique pour souscrire un utilisateur à un plan
         return view('souscription.souscrire', compact('lastAbonnement'));
     }
+    function storeCode(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|string',
+        ]);
+
+        $accessCode = AccessCode::where('Code', $request->code)->first();
+
+        if (!$accessCode) {
+            return redirect()->back()->withErrors(['code' => 'Le code d\'accès est invalide.']);
+        }
+
+        // Enregistrer la souscription avec le code d'accès
+        self::saveSouscription(Auth::id(), $accessCode->plan_id, $accessCode->Code);
+
+        return redirect()->route('mon-abonnement')->with('success', 'Souscription réussie avec le code d\'accès.');
+    }
 
 
     /**

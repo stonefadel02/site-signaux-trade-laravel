@@ -41,7 +41,12 @@ class MesAbonnementController extends Controller
     function index()
     {
         $lastSouscription = auth()->user()->getActiveSouscription() ?? auth()->user()->getLastSouscription();
-        return view('abonnement.index', compact('lastSouscription'));
+        $souscriptions = Souscription::where('user_id', Auth::id())
+            ->with('plan')
+            ->with('paiements')
+            ->orderBy('DateHeureDebut', 'desc')
+            ->get();
+        return view('abonnement.index', compact('lastSouscription', 'souscriptions'));
     }
 
 

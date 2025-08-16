@@ -22,7 +22,19 @@ class Plan extends Model
         'DureeEnJours' => 'integer',
         'NombreDeSignaux' => 'integer',
     ];
-
+    public function getFrequence()
+    {
+        switch ($this->DureeEnJours) {
+            case 1:
+                return 'Jour';
+            case 7:
+                return 'Semaine';
+            case 30:
+                return 'Mois';
+            default:
+                return $this->Titre;
+        }
+    }
     public function souscriptions()
     {
         return $this->hasMany(Souscription::class);
@@ -41,5 +53,16 @@ class Plan extends Model
     public function signals()
     {
         return $this->hasManyThrough(Signal::class, SignalPlan::class, 'plan_id', 'id', 'id', 'signal_id');
+    }
+
+    function getFeatures(): array
+    {
+        $rest = [];
+        $rest[] = round($this->NombreDeSignaux / 30) . ' Signaux par Jour';
+        $rest[] = 'Accès illimité pendant ' . $this->NombreDeSignaux . ' Jour(s)';
+        foreach (json_decode($this->AutresAvantages) as $avantage) {
+            $rest[] = $avantage;
+        }
+        return $rest;
     }
 }

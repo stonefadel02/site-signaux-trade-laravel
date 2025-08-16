@@ -10,6 +10,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('mon-abonnement', [MesAbonnementController::class, 'index'])->name('mon-abonnement');
     Route::get('/signaux', [SignalController::class, 'publicIndex'])->name('signaux')->middleware(AccederAuxSignaux::class);
     Route::get('/souscrire', [SouscriptionController::class, 'souscrire'])->name('souscrire');
+    Route::post('/souscription/store-code', [SouscriptionController::class, 'storeCode'])->name('souscription.store-code');
     // Route::get('/signaux/access-interdit', function () {
     //     return view('signals.accessInterdit');
     // })->name('access-interdit');
