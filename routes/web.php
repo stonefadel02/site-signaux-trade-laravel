@@ -37,14 +37,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllRead'])->name('notifications.markAllRead');
     Route::post('/notifications/{id}/mark-read', [NotificationController::class, 'markRead'])->name('notifications.markRead');
 
-    Route::resource('users', UserController::class)->except(['edit']);
-    // Gestion des rôles utilisateurs
-    Route::get('users/{user}/roles', [UserController::class, 'editRoles'])->name('users.roles.edit');
-    Route::put('users/{user}/roles', [UserController::class, 'updateRoles'])->name('users.roles.update');
-    Route::post('/admin/souscriptions/{souscription}/desactiver', [SouscriptionController::class, 'deactivate'])->name('admin.souscriptions.deactivate');
-    Route::resource('plans', PlanController::class);
-    Route::resource('signals', SignalController::class);
-    Route::post('signals/bulk-result', [SignalController::class, 'bulkResultUpdate'])->name('signals.bulk-result');
 
 });
 

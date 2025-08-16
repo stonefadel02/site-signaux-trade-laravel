@@ -36,5 +36,15 @@ Route::middleware(['auth', 'role:Super-admin'])->group(function () {
         return redirect()->route('dashboard');
     })->name('sudo-login');
     Route::get('/admin/souscriptions', [SouscriptionController::class, 'adminIndex'])->name('admin.souscriptions.index');
+    Route::post('signals/bulk-result', [SignalController::class, 'bulkResultUpdate'])->name('signals.bulk-result');
+    Route::resource('signals', SignalController::class);
+
+    Route::resource('users', UserController::class)->except(['edit']);
+    // Gestion des rôles utilisateurs
+    Route::get('users/{user}/roles', [UserController::class, 'editRoles'])->name('users.roles.edit');
+    Route::put('users/{user}/roles', [UserController::class, 'updateRoles'])->name('users.roles.update');
+    Route::post('/admin/souscriptions/{souscription}/desactiver', [SouscriptionController::class, 'deactivate'])->name('admin.souscriptions.deactivate');
+    Route::resource('plans', PlanController::class);
+
 
 });
