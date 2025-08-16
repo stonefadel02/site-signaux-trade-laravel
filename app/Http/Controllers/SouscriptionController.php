@@ -170,7 +170,7 @@ class SouscriptionController extends Controller
 
         // Créer une nouvelle souscription
 
-        Souscription::create([
+        $res = Souscription::create([
             'user_id' => $user->id,
             'plan_id' => $plan->id,
             'Montant' => $montant,
@@ -180,6 +180,7 @@ class SouscriptionController extends Controller
             'AccessCode' => $accessCode,
             'Status' => 'ACTIVE',
         ]);
+        return $res;
 
     }
 }

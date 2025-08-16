@@ -25,7 +25,7 @@
             <div class="flex items-center justify-between p-4 border border-blue-400 bg-blue-100 rounded-lg w-full">
                 <div>
                     <p class="text-sm text-blue-600">Plan {{ $lastSouscription->plan->Nom }}</p>
-                    <p class="text-lg font-bold">{{ $lastSouscription->Montant }} {{ $lastSouscription->Devise }}</p>
+                    <p class="text-lg font-bold">{{ $lastSouscription->plan->Prix }} {{ $lastSouscription->Devise }}</p>
                 </div>
                 <div class="text-blue-600 text-4xl font-bold">
                     ₿

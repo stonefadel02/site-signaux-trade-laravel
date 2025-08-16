@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('paiements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('souscription_id')->references('id')->on('souscriptions')->onDelete('cascade');
+            $table->foreignId('souscription_id')->nullable()->references('id')->on('souscriptions')->onDelete('cascade');
             $table->decimal('Montant', 10, 4);
             $table->string('Devise');
             $table->string('ModeDePaiement');
