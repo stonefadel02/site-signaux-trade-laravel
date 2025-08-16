@@ -66,4 +66,9 @@ class Souscription extends Model
     {
         return new Souscription();
     }
+
+    function toString()
+    {
+        return $this->plan->Titre . ' (' . $this->DateHeureDebut->format('d/m/Y') . ' - ' . $this->DateHeureFin->format('d/m/Y') . ')';
+    }
 }

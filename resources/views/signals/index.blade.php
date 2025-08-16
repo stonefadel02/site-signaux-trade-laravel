@@ -32,33 +32,34 @@
             </div>
             <div class="mt-6">
                 <div x-show="tab === 'liste'">
-                    <div class="bg-white rounded-lg shadow p-3 pt-5">
-                        <div class="flex items-center justify-between mb-6">
-                            <div class="">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="">
 
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div x-data="{ openImportModal: false }">
-                                    <!-- Bouton pour ouvrir le modal -->
-                                    <a href="javascript:void(0)" @click="openImportModal = true"
-                                        class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition">
-                                        <i class="ti ti-arrow-bar-up mr-2"></i> Importer
-                                    </a>
-
-                                    <!-- Inclure le modal -->
-                                    @include('signals.modalimporter')
-                                </div>
-                                <a href="{{ route('signals-export') }}"
-                                    class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition">
-                                    <i class="ti ti-download mr-2"></i> Exporter
-                                </a>
-
-                                <a href="{{ route('signals.create') }}"
-                                    class="inline-flex items-center px-3 py-1 bg-slate-700 text-white rounded-lg shadow hover:bg-blue-700 transition">
-                                    <i class="ti ti-plus mr-2"></i> Nouveau signal
-                                </a>
-                            </div>
                         </div>
+                        <div class="flex items-center gap-2">
+                            <div x-data="{ openImportModal: false }">
+                                <!-- Bouton pour ouvrir le modal -->
+                                <a href="javascript:void(0)" @click="openImportModal = true"
+                                    class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition">
+                                    <i class="ti ti-arrow-bar-up mr-2"></i> Importer
+                                </a>
+
+                                <!-- Inclure le modal -->
+                                @include('signals.modalimporter')
+                            </div>
+                            <a href="{{ route('signals-export') }}"
+                                class="inline-flex items-center px-3 py-1 bg-white text-gray-700 rounded-lg shadow hover:bg-blue-200 transition">
+                                <i class="ti ti-download mr-2"></i> Exporter
+                            </a>
+
+                            <a href="{{ route('signals.create') }}"
+                                class="inline-flex items-center px-3 py-1 bg-slate-700 text-white rounded-lg shadow hover:bg-blue-700 transition">
+                                <i class="ti ti-plus mr-2"></i> Nouveau signal
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-3 pt-5">
+
                         <div class="overflow-x-auto rounded-lg shadow-none border">
                             <table class="min-w-full bg-white divide-y divide-gray-200">
                                 <thead class="bg-gray-100">
@@ -167,7 +168,77 @@
                     </div>
                 </div>
                 <div x-show="tab === 'resultat'">
-
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <h2 class="text-lg font-semibold mb-4 flex items-center gap-2"><span>⏳</span> Signaux en attente de
+                            résultat</h2>
+                        @if (session('success'))
+                            <div class="mb-4 px-4 py-2 rounded bg-green-100 text-green-700 text-sm">
+                                {{ session('success') }}</div>
+                        @elseif(session('info'))
+                            <div class="mb-4 px-4 py-2 rounded bg-blue-100 text-blue-700 text-sm">{{ session('info') }}
+                            </div>
+                        @endif
+                        @if ($pendingSignals->isEmpty())
+                            <p class="text-sm text-gray-500">Aucun signal à mettre à jour maintenant.</p>
+                        @else
+                            <form method="POST" action="{{ route('signals.bulk-result') }}" class="space-y-4">
+                                @csrf
+                                <div class="overflow-x-auto border rounded">
+                                    <table class="min-w-full text-xs md:text-sm divide-y divide-gray-200">
+                                        <thead class="bg-gray-50">
+                                            <tr>
+                                                <th class="px-2 py-2 text-left">ID</th>
+                                                <th class="px-2 py-2 text-left">Session</th>
+                                                <th class="px-2 py-2 text-left">Actif</th>
+                                                <th class="px-2 py-2 text-left">Entrée</th>
+                                                <th class="px-2 py-2 text-left">Expiration</th>
+                                                <th class="px-2 py-2 text-left">Résultat</th>
+                                                <th class="px-2 py-2 text-left">Prix sortie réelle</th>
+                                                <th class="px-2 py-2 text-left">Pips</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-100">
+                                            @foreach ($pendingSignals as $ps)
+                                                <tr class="hover:bg-gray-50">
+                                                    <td class="px-2 py-1 font-medium">{{ $ps->id }}</td>
+                                                    <td class="px-2 py-1">{{ $ps->session->Titre ?? '-' }}</td>
+                                                    <td class="px-2 py-1">
+                                                        {{ $ps->actif->Nom ?? ($ps->actif->toString() ?? '-') }}</td>
+                                                    <td class="px-2 py-1">{{ $ps->PrixEntree }}</td>
+                                                    <td class="px-2 py-1 text-xs">{{ $ps->DateHeureExpire }}</td>
+                                                    <td class="px-2 py-1">
+                                                        <select name="updates[{{ $ps->id }}][Resultat]"
+                                                            class="border rounded px-1 py-1 text-xs">
+                                                            <option value="">--</option>
+                                                            <option value="WIN">WIN</option>
+                                                            <option value="LOSE">LOSE</option>
+                                                            <option value="BREAK-EVEN">BREAK-EVEN</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="px-2 py-1">
+                                                        <input type="number" step="0.0001"
+                                                            name="updates[{{ $ps->id }}][PrixSortieReelle]"
+                                                            class="w-24 border rounded px-1 py-1 text-xs" />
+                                                    </td>
+                                                    <td class="px-2 py-1">
+                                                        <input type="number" name="updates[{{ $ps->id }}][Pips]"
+                                                            class="w-20 border rounded px-1 py-1 text-xs" />
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <button type="submit"
+                                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Enregistrer les
+                                        résultats</button>
+                                    <span class="text-xs text-gray-500">Seuls les signaux avec un résultat sélectionné
+                                        seront pris en compte.</span>
+                                </div>
+                            </form>
+                        @endif
+                    </div>
                 </div>
 
             </div>

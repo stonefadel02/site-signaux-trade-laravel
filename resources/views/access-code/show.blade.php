@@ -3,7 +3,7 @@
 @section('pageTitle', 'Détail du code d\'accès')
 
 @section('content')
-    <div class="max-w-4xl mx-auto py-8">
+    <div class="max-w-7xl mx-auto py-8">
         <div class="flex items-center justify-between mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Détail du code d'accès</h1>
             <a href="{{ route('access-codes.index') }}"
@@ -145,6 +145,53 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-8">
+        <div class="bg-white rounded-lg shadow p-8">
+            <h2 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4 flex items-center gap-2"><span>📜</span>
+                Souscriptions utilisant ce code</h2>
+            @if ($accessCode->souscriptions->isEmpty())
+                <p class="text-sm text-gray-500">Aucune souscription n'a encore utilisé ce code.</p>
+            @else
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 py-2 text-left">Utilisateur</th>
+                                <th class="px-3 py-2 text-left">Email</th>
+                                <th class="px-3 py-2 text-left">Début</th>
+                                <th class="px-3 py-2 text-left">Fin</th>
+                                <th class="px-3 py-2 text-left">Statut</th>
+                                <th class="px-3 py-2 text-left">Créé le</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            @foreach ($accessCode->souscriptions as $s)
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-3 py-2">{{ $s->user?->name ?? '—' }}</td>
+                                    <td class="px-3 py-2">{{ $s->user?->email ?? '—' }}</td>
+                                    <td class="px-3 py-2">{{ $s->DateHeureDebut?->format('d/m/Y H:i') }}</td>
+                                    <td class="px-3 py-2">{{ $s->DateHeureFin?->format('d/m/Y H:i') }}</td>
+                                    <td class="px-3 py-2">
+                                        @php
+                                            $color = match ($s->Status) {
+                                                'ACTIVE' => 'bg-green-100 text-green-700',
+                                                'INACTIVE' => 'bg-yellow-100 text-yellow-700',
+                                                'EXPIRED', 'EXPIRE' => 'bg-red-100 text-red-700',
+                                                default => 'bg-gray-100 text-gray-600',
+                                            };
+                                        @endphp
+                                        <span
+                                            class="px-2 py-1 rounded text-xs font-semibold {{ $color }}">{{ $s->Status }}</span>
+                                    </td>
+                                    <td class="px-3 py-2">{{ $s->created_at?->format('d/m/Y H:i') }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

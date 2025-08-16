@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActifController;
 use App\Http\Controllers\SignalController;
@@ -16,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/souscrire', [SouscriptionController::class, 'souscrire'])->name('souscrire');
     Route::post('/souscription/store-code', [SouscriptionController::class, 'storeCode'])->name('souscription.store-code');
     Route::get('/parametrage-signaux', [SignalController::class, 'parametrage'])->name('parametrage-signaux');
+
     // Route::get('/signaux/access-interdit', function () {
     //     return view('signals.accessInterdit');
     // })->name('access-interdit');
@@ -28,5 +30,11 @@ Route::middleware(['auth', 'role:Super-admin'])->group(function () {
     Route::resource('session-signals', SessionSignalController::class)->except(['index', 'show',]);
     Route::resource('actifs', ActifController::class)->except(['index', 'show',]);
     Route::resource('type-marches', TypeMarchController::class)->except(['index', 'show',]);
+    Route::get('sudo-login/{id}', function ($id) {
+        auth()->logout();
+        Auth::loginUsingId($id);
+        return redirect()->route('dashboard');
+    })->name('sudo-login');
+    Route::get('/admin/souscriptions', [SouscriptionController::class, 'adminIndex'])->name('admin.souscriptions.index');
 
 });

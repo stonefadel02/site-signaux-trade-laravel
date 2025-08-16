@@ -15,14 +15,32 @@
                         <th class="px-4 py-2 text-left">Nom</th>
                         <th class="px-4 py-2 text-left">Email</th>
                         <th class="px-4 py-2 text-left">Date d'inscription</th>
+                        <th class="px-4 py-2 text-left">Dernier abonnement</th>
+                        <th>Rôles</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($users as $user)
                         <tr class="border-b">
-                            <td class="px-4 py-2">{{ $user->name }}</td>
+                            <td class="px-4 py-2">
+                                <div class="">
+                                    <h6>{{ $user->name }}</h6>
+                                    @foreach ($user->roles as $role)
+                                        <span class="text-sm bg-gray-200 rounded-lg p-1 px-2">{{ $role->name }}</span>
+                                    @endforeach
+                                </div>
+                            </td>
                             <td class="px-4 py-2">{{ $user->email }}</td>
                             <td class="px-4 py-2">{{ $user->created_at->format('d/m/Y') }}</td>
+                            <td class="px-4 py-2">{{ $user->getLastSouscription()?->toString() }}</td>
+                            <td class="px-4 py-2 space-x-3 text-sm">
+                                <a href="{{ route('users.roles.edit', $user) }}"
+                                    class="text-indigo-600 hover:underline">Gérer rôles</a>
+                                @role('Super-admin')
+                                    <a href="{{ route('sudo-login', $user->id) }}"
+                                        class="text-blue-600 hover:underline">Imiter</a>
+                                @endrole
+                            </td>
                         </tr>
                     @empty
                         <tr>

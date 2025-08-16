@@ -6,7 +6,9 @@ use App\Models\Plan;
 use App\Models\AccessCode;
 use App\Models\Souscription;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class SouscriptionController extends Controller
 {
@@ -16,6 +18,74 @@ class SouscriptionController extends Controller
     public function index()
     {
         //
+    }
+    /**
+     * Listing administrateur de toutes les souscriptions avec filtres.
+     */
+    public function adminIndex(Request $request)
+    {
+        $query = Souscription::query()->with(['user', 'plan']);
+
+        // Recherche globale
+        $search = trim($request->get('q', ''));
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('user', function ($u) use ($search) {
+                    $u->where('email', 'like', "%$search%")
+                        ->orWhere('name', 'like', "%$search%");
+                })
+                    ->orWhere('AccessCode', 'like', "%$search%")
+                    ->orWhere('Montant', 'like', "%$search%");
+            });
+        }
+
+        // Filtre période
+        $from = $request->get('from');
+        $to = $request->get('to');
+        if ($from && $to) {
+            $fromDate = Carbon::parse($from)->startOfDay();
+            $toDate = Carbon::parse($to)->endOfDay();
+            $query->whereBetween('DateHeureDebut', [$fromDate, $toDate]);
+        } elseif ($from) {
+            $fromDate = Carbon::parse($from)->startOfDay();
+            $query->where('DateHeureDebut', '>=', $fromDate);
+        } elseif ($to) {
+            $toDate = Carbon::parse($to)->endOfDay();
+            $query->where('DateHeureDebut', '<=', $toDate);
+        }
+
+        // Tri chrono (du plus récent au plus ancien)
+        $souscriptions = $query->orderBy('DateHeureDebut', 'desc')->paginate(25)->withQueryString();
+
+        // Stats simples (optionnel)
+        $total = (clone $query)->count();
+        $montantTotal = (clone $query)->sum('Montant');
+
+        return view('souscription.admin-index', [
+            'souscriptions' => $souscriptions,
+            'search' => $search,
+            'from' => $from,
+            'to' => $to,
+            'total' => $total,
+            'montantTotal' => $montantTotal,
+        ]);
+    }
+
+    /**
+     * Désactiver (mettre INACTIVE) une souscription manuellement.
+     */
+    public function deactivate(Souscription $souscription)
+    {
+        if ($souscription->Status === 'ACTIVE') {
+            $souscription->Status = 'INACTIVE';
+            // Option: marquer fin immédiate
+            if ($souscription->DateHeureFin->gt(now())) {
+                $souscription->DateHeureFin = now();
+            }
+            $souscription->save();
+            return back()->with('success', 'Souscription désactivée.');
+        }
+        return back()->with('info', 'Souscription déjà inactive ou expirée.');
     }
 
     /**
@@ -113,7 +183,11 @@ class SouscriptionController extends Controller
             'code' => 'required|string',
         ]);
 
-        $accessCode = AccessCode::where('Code', $request->code)->first();
+        $accessCode = AccessCode::where('Code', $request->code)
+            ->where('Compteur', '<', DB::raw('CompteurMax'))
+            ->where('ExpireLe', '>', now())
+            ->whereNotIn("Code", Souscription::where('user_id', Auth::id())->pluck('AccessCode')->toArray())
+            ->first();
 
         if (!$accessCode) {
             return redirect()->back()->withErrors(['code' => 'Le code d\'accès est invalide.']);
@@ -121,6 +195,7 @@ class SouscriptionController extends Controller
 
         // Enregistrer la souscription avec le code d'accès
         self::saveSouscription(Auth::id(), $accessCode->plan_id, $accessCode->Code);
+        $accessCode->increment('Compteur'); // Incrémente le compteur d'utilisation
 
         return redirect()->route('mon-abonnement')->with('success', 'Souscription réussie avec le code d\'accès.');
     }
@@ -160,7 +235,7 @@ class SouscriptionController extends Controller
 
         // Mettre à jour le statut de toutes les souscriptions de l'utilisateur, tous mettre a expiré d'abord
         Souscription::where('user_id', $user->id)
-            ->update(['Status' => 'EXPIRED']);
+            ->update(['Status' => 'EXPIRE']);
 
         // Desactiver toutes les souscriptions actives de l'utilisateur
         Souscription::where('user_id', $user->id)

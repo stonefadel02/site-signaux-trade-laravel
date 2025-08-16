@@ -49,4 +49,10 @@ class AccessCode extends Model
         return $this->belongsTo(\App\Models\Plan::class, 'plan_id', 'id');
     }
 
+    public function souscriptions()
+    {
+        // Relation via champ string AccessCode dans souscriptions
+        return $this->hasMany(Souscription::class, 'AccessCode', 'Code')->with('user');
+    }
+
 }

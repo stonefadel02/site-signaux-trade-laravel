@@ -64,7 +64,13 @@ class AccessCodeController extends Controller
      */
     public function show($id): View
     {
-        $accessCode = AccessCode::with('plan')->findOrFail($id);
+        $accessCode = AccessCode::with([
+            'plan',
+            'souscriptions' => function ($q) {
+                $q->orderBy('DateHeureDebut', 'desc');
+            },
+            'souscriptions.user'
+        ])->findOrFail($id);
 
         return view('access-code.show', compact('accessCode'));
     }

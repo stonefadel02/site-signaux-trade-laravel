@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -71,5 +73,37 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Formulaire de gestion des rôles d'un utilisateur.
+     */
+    public function editRoles(User $user)
+    {
+        $roles = Role::orderBy('name')->get();
+        $userRoleNames = $user->roles->pluck('name')->toArray();
+        return view('users.roles', compact('user', 'roles', 'userRoleNames'));
+    }
+
+    /**
+     * Met à jour les rôles (assignation & retrait) d'un utilisateur.
+     */
+    public function updateRoles(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'roles' => 'nullable|array',
+            'roles.*' => 'exists:roles,name'
+        ]);
+
+        $roles = $validated['roles'] ?? [];
+
+        // Optionnel : empêcher qu'un super-admin retire son propre rôle super-admin
+        if (auth()->id() === $user->id && !in_array('Super-admin', $roles) && $user->hasRole('Super-admin')) {
+            return back()->with('error', "Vous ne pouvez pas retirer votre propre rôle 'Super-admin'.");
+        }
+
+        $user->syncRoles($roles);
+
+        return redirect()->route('users.roles.edit', $user)->with('success', 'Rôles mis à jour avec succès.');
     }
 }

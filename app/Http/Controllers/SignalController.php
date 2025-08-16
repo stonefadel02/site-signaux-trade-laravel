@@ -32,8 +32,13 @@ class SignalController extends Controller
      */
     public function index()
     {
-        $signals = Signal::all();
-        return view('signals.index', compact('signals'));
+        $signals = Signal::with(['session', 'actif'])->orderBy('DateHeureEmission', 'desc')->paginate(30);
+        $pendingSignals = Signal::with(['session', 'actif'])
+            ->where('Resultat', 'PENDING')
+            ->where('DateHeureExpire', '<=', now())
+            ->orderBy('DateHeureExpire', 'asc')
+            ->get();
+        return view('signals.index', compact('signals', 'pendingSignals'));
     }
 
     /**
@@ -206,5 +211,44 @@ class SignalController extends Controller
     function parametrage()
     {
         return view('signals.parametrage.index');
+    }
+
+    /**
+     * Mise à jour en lot des résultats de signaux en attente.
+     */
+    public function bulkResultUpdate(Request $request)
+    {
+        $updates = $request->input('updates', []);
+        if (empty($updates)) {
+            return redirect()->back()->with('info', 'Aucune mise à jour.');
+        }
+
+        $count = 0;
+        foreach ($updates as $id => $row) {
+            $signal = Signal::find($id);
+            if (!$signal)
+                continue;
+            if ($signal->Resultat !== 'PENDING')
+                continue; // ne pas écraser déjà renseigné
+
+            $validator = validator($row, [
+                'Resultat' => 'required|in:WIN,LOSE,BREAK-EVEN',
+                'PrixSortieReelle' => 'nullable|numeric',
+                'Pips' => 'nullable|integer',
+            ]);
+            if ($validator->fails())
+                continue; // ignorer lignes invalides
+
+            $data = $validator->validated();
+            // Par cohérence forcer BREAK-EVEN => Pips = 0 si non fourni
+            if (($data['Resultat'] ?? '') === 'BREAK-EVEN' && empty($data['Pips'])) {
+                $data['Pips'] = 0;
+            }
+            $signal->fill($data);
+            $signal->save();
+            $count++;
+        }
+
+        return redirect()->back()->with('success', "Résultats mis à jour pour $count signal(s).");
     }
 }

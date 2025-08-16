@@ -11,6 +11,7 @@ use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\AccessCodeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SessionSignalController;
+use App\Http\Controllers\SouscriptionController;
 use App\Models\Signal;
 
 Route::get('/', function () {
@@ -37,9 +38,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/notifications/{id}/mark-read', [NotificationController::class, 'markRead'])->name('notifications.markRead');
 
     Route::resource('users', UserController::class)->except(['edit']);
+    // Gestion des rôles utilisateurs
+    Route::get('users/{user}/roles', [UserController::class, 'editRoles'])->name('users.roles.edit');
+    Route::put('users/{user}/roles', [UserController::class, 'updateRoles'])->name('users.roles.update');
+    Route::post('/admin/souscriptions/{souscription}/desactiver', [SouscriptionController::class, 'deactivate'])->name('admin.souscriptions.deactivate');
     Route::resource('plans', PlanController::class);
     Route::resource('signals', SignalController::class);
-    Route::resource('paiements', PaiementController::class);
+    Route::post('signals/bulk-result', [SignalController::class, 'bulkResultUpdate'])->name('signals.bulk-result');
+
 });
 
 

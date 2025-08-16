@@ -38,10 +38,10 @@
                     <i class="ti ti-calendar-clock me-2"></i> Plans
                 </a>
 
-                {{-- <a href="{{ route('souscription.create') }}"
-                class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
-                <i class="ti ti-wallet me-2"></i> Souscriptions
-            </a> --}}
+                <a href="{{ route('admin.souscriptions.index') }}"
+                    class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
+                    <i class="ti ti-wallet me-2"></i> Souscriptions
+                </a>
                 <a href="{{ route('parametrage-signaux') }}"
                     class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
                     <i class="ti ti-calendar-clock me-2"></i> Parametrage Signaux
@@ -53,7 +53,7 @@
 
                 <a href="{{ route('signals.index') }}"
                     class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
-                    <i class="ti ti-activity me-2"></i> Signals
+                    <i class="ti ti-activity me-2"></i> Signaux
                 </a>
             </div>
         </div>
