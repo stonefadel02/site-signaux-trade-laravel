@@ -14,22 +14,23 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('session_id')->references('id')->on('session_signals')->onDelete('cascade');
-            $table->dateTime('DateHeureEmission');
-            $table->dateTime('DateHeureExpire');
+            $table->dateTime('DateHeureEmission'); // savoir quand le signal a été émis.
+            $table->dateTime('DateHeureExpire'); // la validité du signal
             $table->time('DureeTrade');
-            $table->string('Actifs');
-            $table->string('Timeframe')->nullable();
-            $table->double('PrixEntree');
-            $table->double('PrixSortieReelle')->nullable();
-            $table->double('TakeProfit')->nullable();
-            $table->double('StopLoss')->nullable();
+            $table->foreignId('Actif')->constrained('actifs')->onDelete('cascade');
             $table->enum('Direction', ['BUY', 'SELL'])->default('BUY');
-            $table->enum('Resultat', ['WIN', 'LOSE', 'PENDING', "BREAK-EVEN"])->default('PENDING');
-            $table->integer('Pips')->nullable();
+            // $table->string('Timeframe')->nullable(); desormais table pivot
+            $table->decimal('PrixEntree', 15, 6); // Prix d'entrée du signal
+            $table->decimal('TakeProfit', 15, 6)->nullable();
+            $table->decimal('StopLoss', 15, 6)->nullable();
             $table->integer('Confiance')->nullable();
             $table->text('Commentaire')->nullable();
-            $table->enum('Status', ['EN COURS', "EN ATTENTE", 'TERMINE', 'ANNULE'])->default('EN COURS');
-
+            // Additional fields for signal results
+            $table->decimal('Pips', 10, 2)->nullable();
+            $table->enum('Resultat', ['WIN', 'LOSE', 'PENDING', "BREAK-EVEN"])->default('PENDING');
+            $table->decimal('PrixSortieReelle', 15, 6)->nullable();
+            // $table->enum('Status', ['EN COURS', "EN ATTENTE", 'TERMINE', 'ANNULE'])->default('EN COURS');
+            $table->softDeletes(); // For soft delete functionality
             $table->timestamps();
         });
     }

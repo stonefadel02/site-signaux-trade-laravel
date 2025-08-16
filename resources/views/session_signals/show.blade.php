@@ -20,7 +20,7 @@
                     <button type="submit"
                         class="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition">Supprimer</button>
                 </form>
-                <a href="{{ route('session-signals.index') }}"
+                <a href="{{ route('parametrage-signaux', ['tab' => 'sessions']) }}"
                     class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">Retour</a>
             </div>
         </div>

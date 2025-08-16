@@ -13,8 +13,8 @@ class SessionSignal extends Model
     ];
 
     protected $casts = [
-        'HeureDebut' => 'datetime:H:i:s',
-        'HeureFin' => 'datetime:H:i:s',
+        // 'HeureDebut' => 'datetime:H:i:s',
+        // 'HeureFin' => 'datetime:H:i:s',
     ];
 
     public function signals()

@@ -209,5 +209,8 @@ class SignalController extends Controller
         return Excel::download(new SignalsExport, 'signals.xlsx');
     }
 
-
+    function parametrage()
+    {
+        return view('signals.parametrage.index');
+    }
 }

@@ -37,7 +37,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/notifications/{id}/mark-read', [NotificationController::class, 'markRead'])->name('notifications.markRead');
 
     Route::resource('users', UserController::class)->except(['edit']);
-    Route::resource('session-signals', SessionSignalController::class);
     Route::resource('plans', PlanController::class);
     Route::resource('signals', SignalController::class);
     Route::resource('paiements', PaiementController::class);

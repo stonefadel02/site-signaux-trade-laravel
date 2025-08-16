@@ -33,7 +33,7 @@
                     <button type="submit"
                         class="inline-flex items-center px-3 py-1 bg-slate-700 text-white rounded-lg shadow hover:bg-blue-700 transition">Mettre
                         à jour</button>
-                    <a href="{{ route('session-signals.index') }}"
+                    <a href="{{ route('parametrage-signaux', ['tab' => 'sessions']) }}"
                         class="inline-flex items-center px-3 py-1 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">Annuler</a>
                 </div>
 

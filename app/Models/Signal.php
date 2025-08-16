@@ -4,11 +4,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Signal extends Model
 {
     /** @use HasFactory<\Database\Factories\SignalFactory> */
     use HasFactory;
+    use SoftDeletes;
 
 
     protected $fillable = [
@@ -17,8 +19,7 @@ class Signal extends Model
         'DateHeureEmission',
         'DateHeureExpire',
         'DureeTrade',
-        'Actifs',
-        'Timeframe',
+        'Actif',
         'PrixEntree',
         'PrixSortieReelle',
         'TakeProfit',
@@ -28,7 +29,6 @@ class Signal extends Model
         'Pips',
         'Confiance',
         'Commentaire',
-        'Status',
     ];
 
     protected $casts = [
@@ -57,4 +57,14 @@ class Signal extends Model
     {
         return $this->hasMany(SignalPlan::class);
     }
+
+    public function actif()
+    {
+        return $this->belongsTo(Actif::class, 'Actifs');
+    }
+    public function timeframes()
+    {
+        return $this->belongsToMany(Timeframe::class, 'signal_timeframes', 'SignalId', 'Timeframe');
+    }
+
 }

@@ -7,11 +7,9 @@
             <div class="">
                 <span>Formulaire d'ajout d'une session </span>
             </div>
-            <a href="{{ route('session-signals.index') }}"
+            <a href="{{ route('parametrage-signaux', ['tab' => 'sessions']) }}"
                 class="inline-flex items-center px-3 py-1 bg-slate-700 text-white rounded-lg shadow hover:bg-blue-700 transition">
-
                 <i class="ti ti-chevron-left mr-2"></i> Retour
-
             </a>
         </div>
         <div class="bg-white rounded-lg shadow p-8">

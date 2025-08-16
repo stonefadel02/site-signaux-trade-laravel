@@ -35,7 +35,7 @@ class SessionSignalController extends Controller
             'HeureFin' => 'required',
         ]);
         $session = SessionSignal::create($validated);
-        return redirect()->route('session-signals.show', $session)->with('success', 'Session créée avec succès.');
+        return redirect()->route('parametrage-signaux', ['tab' => 'sessions'])->with('success', 'Session créée avec succès.');
     }
 
     /**
@@ -65,7 +65,7 @@ class SessionSignalController extends Controller
             'HeureFin' => 'required',
         ]);
         $sessionSignal->update($validated);
-        return redirect()->route('session-signals.show', $sessionSignal)->with('success', 'Session modifiée avec succès.');
+        return redirect()->route('parametrage-signaux', ['tab' => 'sessions'])->with('success', 'Session modifiée avec succès.');
     }
 
     /**
@@ -74,9 +74,9 @@ class SessionSignalController extends Controller
     public function destroy(SessionSignal $sessionSignal)
     {
         if ($sessionSignal->signals()->exists()) {
-            return redirect()->route('session-signals.index')->with('error', 'Impossible de supprimer : cette session est utilisée dans au moins un signal.');
+            return redirect()->route('parametrage-signaux', ['tab' => 'sessions'])->with('error', 'Impossible de supprimer : cette session est utilisée dans au moins un signal.');
         }
         $sessionSignal->delete();
-        return redirect()->route('session-signals.index')->with('success', 'Session supprimée avec succès.');
+        return redirect()->route('parametrage-signaux', ['tab' => 'sessions'])->with('success', 'Session supprimée avec succès.');
     }
 }

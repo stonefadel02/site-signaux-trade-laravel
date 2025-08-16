@@ -20,6 +20,7 @@ class SignalFactory extends Factory
             'DateHeureExpire' => $this->faker->dateTimeBetween('now', '+1 month'),
             'DureeTrade' => $this->faker->time('H:i:s'),
             'Actifs' => $this->faker->randomElement(['EURUSD', 'GBPUSD', 'USDJPY', 'BTCUSD']),
+            'TypeMarche' => $this->faker->randomElement(['Forex', 'Crypto', 'Stocks']),
             'Timeframe' => $this->faker->randomElement(['M1', 'M5', 'M15', 'H1', 'H4', 'D1']),
             'PrixEntree' => $this->faker->randomFloat(4, 1, 2),
             'PrixSortieReelle' => $this->faker->optional()->randomFloat(4, 1, 2),
