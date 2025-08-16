@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Actif extends Model
 {
-    
+
     protected $perPage = 20;
 
     /**
@@ -39,7 +39,7 @@ class Actif extends Model
     {
         return $this->belongsTo(\App\Models\TypeMarch::class, 'TypeMarche', 'Nom');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -47,5 +47,10 @@ class Actif extends Model
     {
         return $this->hasMany(\App\Models\Signal::class, 'id', 'Actif');
     }
-    
+
+    function toString(): string
+    {
+        return $this->Symbole . ' (' . $this->TypeMarche . ')';
+    }
+
 }

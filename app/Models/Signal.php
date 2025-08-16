@@ -19,7 +19,7 @@ class Signal extends Model
         'DateHeureEmission',
         'DateHeureExpire',
         'DureeTrade',
-        'Actif',
+        'Actif', // FK vers table actifs
         'PrixEntree',
         'PrixSortieReelle',
         'TakeProfit',
@@ -60,11 +60,19 @@ class Signal extends Model
 
     public function actif()
     {
-        return $this->belongsTo(Actif::class, 'Actifs');
+        // clé étrangère correcte dans la migration: Actif
+        return $this->belongsTo(Actif::class, 'Actif');
     }
+
     public function timeframes()
     {
-        return $this->belongsToMany(Timeframe::class, 'signal_timeframes', 'SignalId', 'Timeframe');
+        // Relation many-to-many via pivot personnalisé (clé primaire string sur timeframe)
+        return $this->belongsToMany(Timeframe::class, 'signal_timeframes', 'SignalId', 'Timeframe', 'id', 'Nom');
+    }
+
+    public function plans()
+    {
+        return $this->belongsToMany(Plan::class, 'signal_plans', 'signal_id', 'plan_id');
     }
 
 }

@@ -7,10 +7,12 @@ use App\Models\User;
 use App\Models\Signal;
 use Illuminate\Http\Request;
 use App\Models\SessionSignal;
+use App\Models\Timeframe;
+use App\Models\Plan;
+use App\Models\Actif;
 use App\Exports\SignalsExport;
 use App\Imports\SignalsImport;
 use Maatwebsite\Excel\Facades\Excel;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class SignalController extends Controller
@@ -92,7 +94,10 @@ class SignalController extends Controller
     {
         $sessions = SessionSignal::all();
         $users = User::all();
-        return view('signals.create', compact('sessions', 'users'));
+        $timeframes = Timeframe::all();
+        $plans = Plan::all();
+        $actifs = Actif::all();
+        return view('signals.create', compact('sessions', 'users', 'timeframes', 'plans', 'actifs'));
     }
 
     /**
@@ -104,22 +109,40 @@ class SignalController extends Controller
             'user_id' => 'required|exists:users,id',
             'session_id' => 'required|exists:session_signals,id',
             'DateHeureEmission' => 'required|date',
-            'DateHeureExpire' => 'required|date',
+            'DateHeureExpire' => 'required|date|after_or_equal:DateHeureEmission',
             'DureeTrade' => 'required',
-            'Actifs' => 'required|string',
-            'Timeframe' => 'nullable|string',
+            'Actif' => 'required|exists:actifs,id',
+            'timeframes' => 'nullable|array',
+            'timeframes.*' => 'exists:timeframes,Nom',
+            'plans' => 'nullable|array',
+            'plans.*' => 'exists:plans,id',
             'PrixEntree' => 'required|numeric',
             'PrixSortieReelle' => 'nullable|numeric',
             'TakeProfit' => 'nullable|numeric',
             'StopLoss' => 'nullable|numeric',
             'Direction' => 'required|in:BUY,SELL',
-            'Resultat' => 'required|in:WIN,LOSE,PENDING,BREAK-EVEN',
+            'Resultat' => 'nullable|in:WIN,LOSE,PENDING,BREAK-EVEN',
             'Pips' => 'nullable|integer',
-            'Confiance' => 'nullable|integer',
+            'Confiance' => 'nullable|integer|min:1|max:100',
             'Commentaire' => 'nullable|string',
-            'Status' => 'required|in:EN COURS,EN ATTENTE,TERMINE,ANNULE',
         ]);
-        Signal::create($validated);
+
+        $data = collect($validated)->except(['timeframes', 'plans'])->toArray();
+        // Si résultat non fourni on laisse la valeur par défaut DB (PENDING)
+        if (empty($data['Resultat'])) {
+            unset($data['Resultat']);
+        }
+
+        DB::transaction(function () use ($validated, $data) {
+            $signal = Signal::create($data);
+            if (!empty($validated['timeframes'])) {
+                $signal->timeframes()->sync($validated['timeframes']);
+            }
+            if (!empty($validated['plans'])) {
+                $signal->plans()->sync($validated['plans']);
+            }
+        });
+
         return redirect()->route('signals.index')->with('success', 'Signal créé avec succès.');
     }
 
@@ -138,7 +161,12 @@ class SignalController extends Controller
     {
         $sessions = SessionSignal::all();
         $users = User::all();
-        return view('signals.edit', compact('signal', 'sessions', 'users'));
+        $timeframes = Timeframe::all();
+        $plans = Plan::all();
+        $actifs = Actif::all();
+        // Précharger relations
+        $signal->load(['timeframes', 'plans']);
+        return view('signals.edit', compact('signal', 'sessions', 'users', 'timeframes', 'plans', 'actifs'));
     }
 
     /**
@@ -150,22 +178,39 @@ class SignalController extends Controller
             'user_id' => 'required|exists:users,id',
             'session_id' => 'required|exists:session_signals,id',
             'DateHeureEmission' => 'required|date',
-            'DateHeureExpire' => 'required|date',
+            'DateHeureExpire' => 'required|date|after_or_equal:DateHeureEmission',
             'DureeTrade' => 'required',
-            'Actifs' => 'required|string',
-            'Timeframe' => 'nullable|string',
+            'Actif' => 'required|exists:actifs,id',
+            'timeframes' => 'nullable|array',
+            'timeframes.*' => 'exists:timeframes,Nom',
+            'plans' => 'nullable|array',
+            'plans.*' => 'exists:plans,id',
             'PrixEntree' => 'required|numeric',
             'PrixSortieReelle' => 'nullable|numeric',
             'TakeProfit' => 'nullable|numeric',
             'StopLoss' => 'nullable|numeric',
             'Direction' => 'required|in:BUY,SELL',
-            'Resultat' => 'required|in:WIN,LOSE,PENDING,BREAK-EVEN',
+            'Resultat' => 'nullable|in:WIN,LOSE,PENDING,BREAK-EVEN',
             'Pips' => 'nullable|integer',
-            'Confiance' => 'nullable|integer',
+            'Confiance' => 'nullable|integer|min:1|max:100',
             'Commentaire' => 'nullable|string',
-            'Status' => 'required|in:EN COURS,EN ATTENTE,TERMINE,ANNULE',
         ]);
-        $signal->update($validated);
+
+        $data = collect($validated)->except(['timeframes', 'plans'])->toArray();
+        if (empty($data['Resultat'])) {
+            unset($data['Resultat']);
+        }
+
+        DB::transaction(function () use ($signal, $validated, $data) {
+            $signal->update($data);
+            if (array_key_exists('timeframes', $validated)) {
+                $signal->timeframes()->sync($validated['timeframes'] ?? []);
+            }
+            if (array_key_exists('plans', $validated)) {
+                $signal->plans()->sync($validated['plans'] ?? []);
+            }
+        });
+
         return redirect()->route('signals.index')->with('success', 'Signal modifié avec succès.');
     }
 
