@@ -7,7 +7,7 @@ use App\Http\Controllers\SignalController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SouscriptionController;
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'role:Super-admin'])->group(function () {
 
     Route::post('/import-signals', [SignalController::class, 'import'])->name('import-signals');
 
