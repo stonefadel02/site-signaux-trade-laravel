@@ -367,30 +367,42 @@
                     @endif
 
                     {{-- Dropdown menu pour téléchargement PDF --}}
-                    <div class="dropdown ml-3">
-                        <button 
-                            class="btn btn-outline-primary dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton{{ $paiement->id }}"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Télécharger PDF
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $paiement->id }}">
-                            <li>
-                                <a class="dropdown-item" href="{{ route('payments.download', ['id' => $paiement->id, 'format' => 'a4']) }} " target="out_blank">
-                                    
-                                    Format A4
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('payments.download', ['id' => $paiement->id, 'format' => 'a6']) }}"target="out_blank">
-                                    
-                                    Format A6
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+<div class="relative ml-3" x-data="{ open: false }" @keydown.escape="open = false" @click.away="open = false">
+    <button
+        @click.prevent="open = !open"
+        type="button"
+        class="border border-blue-500 text-blue-700 rounded px-4 py-2 text-lg hover:bg-blue-100 focus:outline-none focus:ring focus:ring-blue-300"
+        aria-haspopup="true"
+        :aria-expanded="open.toString()"
+        id="dropdownMenuButton{{ $paiement->id }}">
+        Télécharger PDF
+    </button>
+
+    <ul
+        x-show="open"
+        x-transition
+        class="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded shadow-lg z-50"
+        role="menu"
+        aria-labelledby="dropdownMenuButton{{ $paiement->id }}"
+        style="display:none;"
+    >
+        <li>
+            <a href="{{ route('payments.download', ['id' => $paiement->id, 'format' => 'a4']) }}" target="_blank"
+               class="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white cursor-pointer"
+               role="menuitem">
+               Format A4
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('payments.download', ['id' => $paiement->id, 'format' => 'a6']) }}" target="_blank"
+               class="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-white cursor-pointer"
+               role="menuitem">
+               Format A6
+            </a>
+        </li>
+    </ul>
+</div>
+
                 </div>
             @empty
                 <p>Aucun paiement trouvé.</p>

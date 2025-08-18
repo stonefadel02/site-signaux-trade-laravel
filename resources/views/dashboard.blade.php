@@ -1,4 +1,77 @@
-@extends('layouts.app')
+[13:00, 15/08/2025] Sylvie Z: @extends('layouts.app')
+
+@section('style')
+    <style>
+        .dashboard-container {
+            width: 100%;           /* Prend toute la largeur possible */
+            max-width: 1200px;     /* Tu peux ajuster selon ton écran */
+            margin: 0 auto;        /* Centrer horizontalement */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;         /* Padding pour que le contenu ne colle pas aux bords */
+        }
+
+        .card {
+            width: 100%;
+            background-color: #fff;
+            padding: 30px 20px; /* padding vertical plus grand */
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            min-height: 180px; /* optionnel : force…
+[15:42, 15/08/2025] Sylvie Z: /* Flex horizontal, boîtes qui prennent toute la place disponible également */
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            /* pour que les boîtes s'étendent */
+            width: 100%;
+        }
+
+        /* Boîtes avec flex-grow */
+        .status-box,
+        .plan-box,
+        .info-box {
+            border-radius: 20px;
+            padding: 40px;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex: 1; /* Chacune prend égal largeur */
+            box-sizing: border-box;
+        }
+
+        .status-box {
+            display: flex;
+            align-items: center;
+            padding: 40px;
+            border-radius: 20px;
+  …
+[15:43, 15/08/2025] Sylvie Z: <div class="flex-row">
+            @php
+                $status = $souscription->Status ?? 'INACTIVE';
+
+                $statusClasses = [
+                    'ACTIVE' => [
+                        'box' => 'status-active',
+                        'icon' => 'icon-active'
+                    ],
+                    'INACTIVE' => [
+                        'box' => 'status-inactive',
+                        'icon' => 'icon-inactive'
+                    ],
+                    'EXPIRE' => [
+                        'box' => 'status-expire',
+                        'icon' => 'icon-expire'
+                    ]
+                ];
+            @endphp
+
+            <div class="status-box {{ $statusClasses[$status]['box'] }}">
+                <div class="status-text">
+   …
+[17:48, 15/08/2025] Sylvie Z: <script src="//unpkg.com/alpinejs" defer></script>
+[18:49, 15/08/2025] Sylvie Z: @extends('layouts.app')
 
 @section('style')
     <style>
@@ -292,4 +365,4 @@ use Carbon\Carbon;
         </div>
 
     </div>
-@endsection
+@endsectiony
