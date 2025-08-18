@@ -16,6 +16,7 @@ use App\Http\Controllers\SessionSignalController;
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('mon-abonnement', [MesAbonnementController::class, 'index'])->name('mon-abonnement');
     Route::get('/signaux', [SignalController::class, 'publicIndex'])->name('signaux')->middleware(AccederAuxSignaux::class);
+    Route::get('/signaux/{signal}', [SignalController::class, 'publicShow'])->name('signals.public.show');
     Route::get('/souscrire', [SouscriptionController::class, 'souscrire'])->name('souscrire');
     Route::post('/souscription/store-code', [SouscriptionController::class, 'storeCode'])->name('souscription.store-code');
     Route::get('/parametrage-signaux', [SignalController::class, 'parametrage'])->name('parametrage-signaux');
@@ -28,6 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::middleware(['auth', 'role:Super-admin'])->group(function () {
     Route::get('/parametrage-signaux', [SignalController::class, 'parametrage'])->name('parametrage-signaux');
+
     Route::resource('timeframes', TimeframeController::class)->except(['index', 'show',]);
     Route::resource('session-signals', SessionSignalController::class)->except(['index', 'show',]);
     Route::resource('actifs', ActifController::class)->except(['index', 'show',]);

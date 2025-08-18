@@ -14,6 +14,7 @@ use App\Exports\SignalsExport;
 use App\Imports\SignalsImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class SignalController extends Controller
 {
@@ -22,9 +23,46 @@ class SignalController extends Controller
      */
     public function publicIndex(Request $request)
     {
+        $user = Auth::user();
+        $souscription = $user->getActiveSouscription();
+
+        $signals = collect();
+
+        if ($souscription && $souscription->plan) {
+
+            $signals = Signal::whereHas('plans', function ($query) use ($souscription) {
+                $query->where('plan_id', $souscription->plan_id);
+            })
+
+                ->with(['session', 'actif'])
+                ->latest('DateHeureEmission')
+                ->paginate(20);
+
+                
+        }
 
 
-        return view('signals.public-index', );
+
+        return view('signals.public-index', compact('signals', 'souscription'));
+    }
+
+    public function publicShow(Signal $signal)
+    {
+        $user = Auth::user();
+        $souscription = $user->getActiveSouscription();
+
+        if (!$souscription) {
+            return redirect()->route('signals.public')->with('error', 'Vous devez avoir un abonnement actif pour voir les détails.');
+        }
+
+        $planId = $souscription->plan_id;
+        $isSignalInPlan = $signal->plans()->where('plan_id', $planId)->exists();
+
+        if (!$isSignalInPlan) {
+            return redirect()->route('signals.public')->with('error', 'Ce signal n\'est pas inclus dans votre plan actuel.');
+        }
+
+        return view('signals.public-show', compact('signal'));
     }
 
     /**
@@ -40,6 +78,8 @@ class SignalController extends Controller
             ->get();
         return view('signals.index', compact('signals', 'pendingSignals'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.

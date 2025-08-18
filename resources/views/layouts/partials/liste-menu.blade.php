@@ -65,7 +65,7 @@
         class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
         <i class="ti ti-user me-2"></i> Paramètre du compte
     </a>
-    <a href="{{ route('support') }}"
+    <a href="support"
         class="flex items-center px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium">
         <i class="ti ti-headset me-2"></i> Support
     </a>

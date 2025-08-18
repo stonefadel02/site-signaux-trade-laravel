@@ -3,54 +3,43 @@
 @section('script')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
-    const ctx = document.getElementById('accessChart').getContext('2d');
-    const accessChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['0', '2025', '2026', '2027', '2028', '2029', '2030', '2031', '2032'],
-            datasets: [{
-                label: 'Nombre d\'accès',
-                data: [70, 60, 100, 190, 200, 240, 180, 220, 210, 350, 360, 360, 180, 185, 170, 180, 280, 350, 300, 180, 180, 150, 190],
-                borderColor: '#00FF7F',
-                borderWidth: 2,
-                fill: false,
-                tension: 0.4
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    ticks: {
-                        stepSize: 70,
-                        callback: function(value) {
-                            if ([30, 100, 200, 350, 500].includes(value)) {
-                                return value;
-                            }
-                            return '';
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch("{{ route('admin.signal-stats') }}")
+            .then(response => response.json())
+            .then(apiData => {
+                const ctx = document.getElementById('accessChart').getContext('2d');
+                if (ctx) { 
+                    const accessChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: apiData.labels,
+                            datasets: [{
+                                label: 'Nombre de signaux créés',
+                                data: apiData.data,
+                                borderColor: '#00FF7F',
+                                borderWidth: 2,
+                                fill: false,
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                            },
+                            responsive: true,
+                            maintainAspectRatio: false
                         }
-                    },
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.05)'
-                    }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    }
+                    });
                 }
-            },
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    mode: 'index',
-                    intersect: false,
-                }
-            },
-            responsive: true,
-            maintainAspectRatio: false
-        }
+            });
     });
 </script>
 @endsection
@@ -90,18 +79,21 @@
             gap: 8px;
             font-size: 16px;
             margin-bottom: 10px;
-            font-weight: 600; /* Texte en gras */
+            font-weight: 600;
+            /* Texte en gras */
             color: #212529;
         }
 
         .icon-text i {
             font-size: 30px;
-            color: #e5e5e5; /* Gris clair qui tend vers blanc */
+            color: #e5e5e5;
+            /* Gris clair qui tend vers blanc */
         }
 
         .number {
             font-size: 32px;
-            font-weight: 700; /* Gras */
+            font-weight: 700;
+            /* Gras */
             color: #212529;
         }
 
@@ -114,7 +106,8 @@
 
         .card-header {
             font-size: 16px;
-            font-weight: 700; /* Gras */
+            font-weight: 700;
+            /* Gras */
             color: #212529;
             margin-bottom: 20px;
         }
@@ -166,10 +159,10 @@
             </div>
             <div class="widget">
                 <div class="icon-text">
-                    <i class="ti ti-currency-bitcoin"></i>
-                    <span>Accès signaux (7)</span>
+                    <i class="ti ti-activity-heartbeat"></i> {{-- J'ai changé l'icône pour être plus pertinente --}}
+                    <span>Signaux (7 derniers jours)</span>
                 </div>
-                <div class="number">0</div>
+                <div class="number">{{ $signaux7DerniersJours }}</div>
             </div>
 
         </div>

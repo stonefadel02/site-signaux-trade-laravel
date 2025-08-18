@@ -52,6 +52,22 @@ class Souscription extends Model
         return $res;
     }
 
+    public function tempsRestantPourHumains(): string
+    {
+        return now()->diffForHumans($this->DateHeureFin, [
+            'syntax' => Carbon::DIFF_ABSOLUTE, // Enlève "dans" ou "il y a"
+            'parts' => 2, // Affiche les 2 unités les plus significatives (ex: 1 jour 4 heures)
+        ]);
+    }
+
+    public function isActive(): bool
+{
+    $now = now();
+    return $this->Status === 'ACTIVE' &&
+           $this->DateHeureDebut <= $now &&
+           $this->DateHeureFin >= $now;
+}
+
     public static function revenuMensuel()
     {
         $now = Carbon::now();
