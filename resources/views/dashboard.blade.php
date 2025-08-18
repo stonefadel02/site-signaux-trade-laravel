@@ -20,31 +20,33 @@
                             </span>
                         </div>
                         <div class="mt-4">
-            @php
-                // Calcul final et infaillible du pourcentage
-                $start = $souscription->DateHeureDebut->timestamp;
-                $end = $souscription->DateHeureFin->timestamp;
-                $now = now()->timestamp;
+                            @php
+                                // Calcul final et infaillible du pourcentage
+                                $start = $souscription->DateHeureDebut->timestamp;
+                                $end = $souscription->DateHeureFin->timestamp;
+                                $now = now()->timestamp;
 
-                $totalDuration = $end - $start;
-                $elapsedDuration = $now - $start;
-                
-                $progress = 0; // Par défaut à 0
-                if ($totalDuration > 0) {
-                    // On s'assure que le progrès est entre 0 et 100
-                    $progress = max(0, min(100, ($elapsedDuration / $totalDuration) * 100));
-                } elseif ($now >= $end) {
-                    $progress = 100; // Si l'abonnement est terminé, la barre est pleine
-                }
-            @endphp
-            <div class="relative h-2 w-full rounded-full bg-gray-200">
-                <div class="absolute left-0 top-0 h-2 rounded-full bg-red-500" style="width: {{ $progress }}%;"></div>
-            </div>
-            <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
-                <span>Expire dans :</span>
-                <span class="font-semibold text-gray-800">{{ $souscription->tempsRestantPourHumains() }}</span>
-            </div>
-        </div>
+                                $totalDuration = $end - $start;
+                                $elapsedDuration = $now - $start;
+
+                                $progress = 0; // Par défaut à 0
+                                if ($totalDuration > 0) {
+                                    // On s'assure que le progrès est entre 0 et 100
+    $progress = max(0, min(100, ($elapsedDuration / $totalDuration) * 100));
+} elseif ($now >= $end) {
+    $progress = 100; // Si l'abonnement est terminé, la barre est pleine
+                                }
+                            @endphp
+                            <div class="relative h-2 w-full rounded-full bg-gray-200">
+                                <div class="absolute left-0 top-0 h-2 rounded-full bg-red-500"
+                                    style="width: {{ $progress }}%;"></div>
+                            </div>
+                            <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
+                                <span>Expire dans :</span>
+                                <span
+                                    class="font-semibold text-gray-800">{{ $souscription->tempsRestantPourHumains() }}</span>
+                            </div>
+                        </div>
                     </div>
                 @else
                     <div class="rounded-lg bg-white p-6 text-center shadow-sm">
@@ -202,5 +204,3 @@
         })
     </script>
 @endsection
-
-@endsectiony
