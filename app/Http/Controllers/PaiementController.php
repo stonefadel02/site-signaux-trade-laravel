@@ -6,7 +6,7 @@ use App\Models\Paiement;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Routing\Controller;
-
+use Flutterwave\Facades\Flutterwave; //
 class PaiementController extends Controller
 {
     /**

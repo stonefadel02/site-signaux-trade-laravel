@@ -21,6 +21,6 @@ Route::middleware(['auth', 'role:Super-admin'])->group(function () {
 
     Route::post('/store', [SouscriptionController::class, 'store'])->name('souscription.store');
 
-    Route::get('/dashboard-a', [DashboardController::class, 'index'])->name('dashboard.index');
+    // Route::get('/dashboard-a', [DashboardController::class, 'index'])->name('dashboard.index');
 
 });

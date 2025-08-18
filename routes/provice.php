@@ -12,6 +12,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/abonnement', [MesAbonnementController::class, 'abonnement'])->name('abonnement');
     Route::get('/paiements/download/{id}/{format?}', [PaiementController::class, 'download'])
         ->name('payments.download');
-    Route::get('/dashboard', [SouscriptionController::class, 'dashboard'])->name('dashboard');
+    // Route::get('/dashboard', action: [SouscriptionController::class, 'dashboard'])->name('dashboard');
 
 });

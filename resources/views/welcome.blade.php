@@ -15,6 +15,7 @@
     {{-- <x-navbar /> --}}
 
     <main>
+            <x-public-navbar />
         {{-- On assemble la page en appelant chaque composant de section --}}
        <section id="accueil">
             <x-hero-section />

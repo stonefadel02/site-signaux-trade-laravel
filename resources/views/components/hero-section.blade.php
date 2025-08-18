@@ -8,7 +8,7 @@
      <div class="absolute inset-0 bg-black/40"></div>
 
      {{-- Conteneur du contenu, centré et au-dessus de la superposition --}}
-     <div class="relative z-10 mx-auto w-full max-w-6xl px-10 sm:px-6 lg:px-8">
+     <div class="relative pt-40 pb-10 z-10 mx-auto w-full max-w-6xl px-10 sm:px-6 lg:px-8">
          <div class="max-w-2xl">
              {{-- Titre principal --}}
              <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-[55px]">
