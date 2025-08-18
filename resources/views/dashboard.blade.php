@@ -1,4 +1,3 @@
-{{-- resources/views/dashboard.blade.php --}}
 @extends('layouts.app')
 
 @section('pageTitle', 'Dashboard')
@@ -203,3 +202,5 @@
         })
     </script>
 @endsection
+
+@endsectiony
