@@ -8,7 +8,7 @@
     <hr class="border-gray-300" />
 
     <div class="mt-4">
-      <button class="flex w-full items-center justify-start bg-[#4285F4] gap-1 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-[#040507]">
+      <button class="flex w-full items-center justify-start bg-[#4285F4] gap-1 rounded-md border border-gray-300  text-sm font-medium text-gray-700 shadow-sm transition-all hover:bg-[#040507]">
         <span class="py-2 ml-1 mt-1 mb-1 rounded px-3 bg-[#EFF0F1]">
           <img src="{{ asset('log/google-icon.svg') }}" alt="Google" class="h-5 w-5" />
         </span>
@@ -65,7 +65,7 @@
       </form>
 
       <p class="mt-2 text-[15px] text-[#B6B6B6]">
-        En cliquant sur "Créer un compte", vous acceptez nos Conditions d'utilisation
+        En cliquant sur "S'inscrire", vous acceptez nos Conditions d'utilisation
         et nos Conditions de licence. Dans notre Politique de confidentialité, nous expliquons comment nous traitons vos données personnelles et quels droits vous avez.
       </p>
 
