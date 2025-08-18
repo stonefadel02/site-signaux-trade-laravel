@@ -36,27 +36,59 @@
                             <div class="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-white/10">
                                 @switch($feature['icon'])
                                     @case('icons.repeat')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 11l4-4m0 0l-4-4m4 4H7a4 4 0 1 0 0 8h1.5M21 7h1.5a4 4 0 1 1 0 8H21m0-8v8" />
-                                        </svg>
+                                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="candleGradient" x1="0" y1="0" x2="0" y2="24" gradientUnits="userSpaceOnUse"> <stop stop-color="#FFB067"/><stop offset="1" stop-color="#F23D55"/> </linearGradient>
+  </defs>
+  <rect width="24" height="24" rx="6" fill="#0E0F12FF"/>
+  <path d="M6 3a1 1 0 0 1 .993.883l.007.117v1a2 2 0 0 1 1.995 1.85l.005.15v3a2 2 0 0 1-1.85 1.995l-.15.005v8a1 1 0 0 1-1.993.117l-.007-.117v-8a2 2 0 0 1-1.995-1.85l-.005-.15v-3a2 2 0 0 1 1.85-1.995l.15-.005v-1a1 1 0 0 1 1-1z" fill="url(#candleGradient)" />
+  <path d="M12 3a1 1 0 0 1 .993.883l.007.117v9a2 2 0 0 1 1.995 1.85l.005.15v3a2 2 0 0 1-1.85 1.995l-.15.005a1 1 0 0 1-1.993.117l-.007-.117l-.15-.005a2 2 0 0 1-1.844-1.838l-.006-.157v-3a2 2 0 0 1 1.85-1.995l.15-.005v-9a1 1 0 0 1 1-1z" fill="url(#candleGradient)" />
+  <path d="M18 3a1 1 0 0 1 .993.883l.007.117v1a2 2 0 0 1 1.995 1.85l.005.15v3a2 2 0 0 1-1.85 1.995l-.15.005v8a1 1 0 0 1-1.993.117l-.007-.117v-8a2 2 0 0 1-1.995-1.85l-.005-.15v-3a2 2 0 0 1 1.85-1.995l.15-.005v-1a1 1 0 0 1 1-1z" fill="url(#candleGradient)" />
+
+</svg>
+
+
                                     @break
 
                                     @case('icons.shield-check')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m1 2a8.1 8.1 0 0 1-4 1.5C8 18 5 14 5 10a7 7 0 0 1 7-7h3a7 7 0 0 1 7 7c0 4-3 8-6 8a7 7 0 0 1-4-1.5M9 10l-1 1 4 4 1-1" />
-                                        </svg>
+                                       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="24" height="24" rx="6" fill="#0060FF"/>
+  <path d="M17 7L15 9L12 6L9 9L7 7" stroke="url(#grad1)" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M7 17H17M17 17V10" stroke="url(#grad1)" stroke-width="2" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="grad1" x1="7" y1="7" x2="17" y2="17" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF5329"/>
+      <stop offset="1" stop-color="#FF5F2A"/>
+    </linearGradient>
+  </defs>
+</svg>
+
                                     @break
 
+                                    
                                     @case('icons.gem')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L5 12l7 10 7-10-7-10zm0 0v20" />
-                                        </svg>
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="24" height="24" rx="4" fill="#0047B3"/>
+  <path d="M10 9H14V13H10V9Z" fill="#0080FF"/>
+  <path d="M9 10L15 10" stroke="#0080FF" stroke-width="2" stroke-linecap="round"/>
+  <line x1="3" y1="20" x2="21" y2="20" stroke="#0080FF" stroke-width="2" stroke-dasharray="3 4"/>
+</svg>
+
                                     @break
 
                                     @case('icons.globe')
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zM12 12l2 2-2 2m0-4l-2 2 2 2" />
-                                        </svg>
+                                        <svg width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <path d="M7 19H17C18.1046 19 19 18.1046 19 17V7C19 5.89543 18.1046 5 17 5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19Z" stroke="url(#grad2)" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M11 13H13" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M9 11L15 11" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="grad2" x1="5" y1="5" x2="19" y2="19" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF56DE"/>
+      <stop offset="1" stop-color="#8312E1"/>
+    </linearGradient>
+  </defs>
+</svg>
+
                                     @break
                                 @endswitch
                             </div>
