@@ -7,7 +7,7 @@
       {{-- PREMIER BLOC : 30 SIGNAUX PAR JOUR --}}
       <div
         style="background-image: url('{{ asset('bg2.png') }}')"
-        class="rounded-[30px] bg-cover bg-center bg-no-repeat bg-[#1E2027] p-8 ring-1 ring-white/10 sm:p-10 lg:p-16"
+        class="rounded-[30px] bg-cover bg-center bg-no-repeat bg-[#1E2027] p-4 ring-1 ring-white/10 sm:p-10 lg:p-16"
       >
         <div class="grid grid-cols-1 items-center gap-12 py-5 lg:grid-cols-2 lg:gap-8">
           {{-- Colonne de gauche : Image du laptop --}}
@@ -39,7 +39,7 @@
       {{-- DEUXIÈME BLOC : ÉQUIPE QUALIFIÉE --}}
       <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-8">
         {{-- Colonne de gauche : Texte --}}
-        <div class="mx-20 text-center lg:text-left">
+        <div class="sm:mx-20 text-center lg:text-left">
           <h2 class="text-3xl font-bold tracking-tight text-white sm:text-[40px]">
             Une équipe qualifiée pour faire de vous
             <span class="text-[#009FF3]">un trader rentable</span>

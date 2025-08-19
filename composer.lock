@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d36d1c6a28c5f7b10f907bd827aae9c",
+    "content-hash": "c2942d44e9ee3b42722ca39cb7e5b8ce",
     "packages": [
         {
             "name": "abraham-flutterwave/laravel-payment",
@@ -3064,6 +3064,67 @@
                 "source": "https://github.com/Masterminds/html5-php/tree/2.10.0"
             },
             "time": "2025-07-25T09:04:22+00:00"
+        },
+        {
+            "name": "moneroo/moneroo-php",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MonerooHQ/moneroo-php.git",
+                "reference": "649c3c5fb618247a4e19adea9b88d5aa8a376f52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MonerooHQ/moneroo-php/zipball/649c3c5fb618247a4e19adea9b88d5aa8a376f52",
+                "reference": "649c3c5fb618247a4e19adea9b88d5aa8a376f52",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^7.7",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "axazara/php-cs": "^v0.1",
+                "fakerphp/faker": "^1.23",
+                "insolita/unused-scanner": "^2.4",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "phpunit/phpunit": "^9.6",
+                "roave/security-advisories": "dev-latest",
+                "spatie/ray": "^1.39"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Moneroo\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Axa Zara Core Dev",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This is simple PHP Package to interact with Moneroo API.",
+            "homepage": "https://docs.moneroo.io/",
+            "keywords": [
+                "AxaZara",
+                "laravel",
+                "mobile-money",
+                "moneroo",
+                "moneroo-laravel",
+                "moneroo.io",
+                "payment"
+            ],
+            "support": {
+                "issues": "https://github.com/MonerooHQ/moneroo-php/issues",
+                "source": "https://github.com/MonerooHQ/moneroo-php/tree/v0.1.0"
+            },
+            "time": "2024-03-21T16:37:09+00:00"
         },
         {
             "name": "monolog/monolog",

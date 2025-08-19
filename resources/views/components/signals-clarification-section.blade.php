@@ -26,7 +26,7 @@ $signalFeatures = [
                 </div>
 
                 {{-- Colonne de droite : Contenu texte et icônes --}}
-                <div class="mx-10 text-center lg:text-left">
+                <div class="sm:mx-10 text-center lg:text-left">
                     <h2 class="text-3xl font-bold tracking-tight text-white sm:text-[40px]">
                         Nos signaux de trading sont clairement définis
                     </h2>

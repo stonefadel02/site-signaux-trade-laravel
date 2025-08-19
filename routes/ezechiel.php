@@ -50,5 +50,6 @@ Route::middleware(['auth', 'role:Super-admin'])->group(function () {
     Route::post('/admin/souscriptions/{souscription}/desactiver', [SouscriptionController::class, 'deactivate'])->name('admin.souscriptions.deactivate');
     Route::resource('plans', PlanController::class);
 
+    
 
 });

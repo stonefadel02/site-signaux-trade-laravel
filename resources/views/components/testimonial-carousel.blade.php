@@ -8,18 +8,18 @@ $testimonials = [
         'role' => 'Étudiant',
         'imageSrc' => 'testi.png',
     ],
-    [
-        'quote' => "En tant que développeuse, mon temps est précieux. Les signaux de Triple7SignalsPerDay sont clairs, rapides à exécuter et surtout, rentables. L'interface est simple et efficace. Je recommande à 100% !",
-        'name' => 'Elodie K.',
-        'role' => 'Développeuse',
-        'imageSrc' => 'testi.png',
-    ],
-    [
-        'quote' => "J'étais sceptique au début, mais les résultats parlent d'eux-mêmes. L'abonnement mensuel a été remboursé en quelques jours. Une équipe de support réactive en plus. Vraiment top.",
-        'name' => 'Marc A.',
-        'role' => 'Entrepreneur',
-        'imageSrc' => 'testi.png',
-    ],
+    // [
+    //     'quote' => "En tant que développeuse, mon temps est précieux. Les signaux de Triple7SignalsPerDay sont clairs, rapides à exécuter et surtout, rentables. L'interface est simple et efficace. Je recommande à 100% !",
+    //     'name' => 'Elodie K.',
+    //     'role' => 'Développeuse',
+    //     'imageSrc' => 'testi.png',
+    // ],
+    // [
+    //     'quote' => "J'étais sceptique au début, mais les résultats parlent d'eux-mêmes. L'abonnement mensuel a été remboursé en quelques jours. Une équipe de support réactive en plus. Vraiment top.",
+    //     'name' => 'Marc A.',
+    //     'role' => 'Entrepreneur',
+    //     'imageSrc' => 'testi.png',
+    // ],
 ];
 @endphp
 
@@ -33,14 +33,14 @@ $testimonials = [
             ]);
         }
     }"
-    class="relative"
+    class="relative overflow-hidden"
 >
-    <div class="overflow-hidden" x-ref="viewport">
-        <div class="flex">
+    <div class="sm:overflow-hidden" x-ref="viewport">
+        <div class="sm:flex">
             @foreach ($testimonials as $testimonial)
                 {{-- Chaque slide --}}
-                <div class="relative min-w-0 w-full flex-shrink-0 flex-grow-0 pl-4">
-                    <figure class="relative h-full rounded-[30px] border-2 border-[#00AFFF] bg-[#12141D] p-8">
+                <div class="relative min-w-0 basis-full flex-shrink-0 flex-grow-0 pl-4">
+                    <figure class="relative  h-full rounded-[30px] border-2 border-[#00AFFF] bg-[#12141D] p-8">
                         {{-- Image de profil qui dépasse --}}
                         <div class="absolute top-14 left-8 -translate-y-1/2">
                             <img

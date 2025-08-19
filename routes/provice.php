@@ -12,6 +12,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/abonnement', [MesAbonnementController::class, 'abonnement'])->name('abonnement');
     Route::get('/paiements/download/{id}/{format?}', [PaiementController::class, 'download'])
         ->name('payments.download');
-    // Route::get('/dashboard', action: [SouscriptionController::class, 'dashboard'])->name('dashboard');
+    Route::middleware('auth')->group(function () {
+Route::post('/paiement/initier', [PaiementController::class, 'initierPaiement'])->name('paiement.initier');
+Route::get('/paiement/callback', [PaiementController::class, 'handleCallback'])->name('paiement.callback');
 
 });
+
+});
+Route::post('/paiement/webhook', [PaiementController::class, 'handleWebhook'])->name('paiement.webhook');

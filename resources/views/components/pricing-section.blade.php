@@ -44,7 +44,7 @@ $plans = [
 ];
 @endphp
 
-<section class="bg-[#12141D] py-20 sm:py-32">
+<section class="bg-[#12141D] py-10 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         {{-- Conteneur avec le fond #0D192F --}}
         <div class="rounded-3xl mx-auto  bg-[#0D192F] p-8 sm:p-12 lg:p-16">

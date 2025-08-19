@@ -38,7 +38,7 @@ $reasons = [
 ];
 @endphp
 
-<section class="bg-[#12141D] py-20 sm:py-10">
+<section class="bg-[#12141D] py-10">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         {{-- Titre de la section --}}
         <div class="mx-auto max-w-2xl text-center">

@@ -1,5 +1,5 @@
 {{-- resources/views/components/public-navbar.blade.php --}}
-<header x-data="{ isOpen: false }" class="fixed top-0 z-50 w-full bg-white shadow-sm">
+<header x-data="{ isOpen: false }" class=" w-full bg-white shadow-sm">
     <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 py-12 md:px-6 lg:px-8">
         {{-- Logo --}}
         <a href="{{ url('/') }}" class="flex items-center space-x-2">

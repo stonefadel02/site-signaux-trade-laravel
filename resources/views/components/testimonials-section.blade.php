@@ -11,13 +11,13 @@
                 <p class="mt-4 text-lg leading-8 text-gray-300">
                     Nos signaux de trading payants particulièrement appréciés par ceux
                     qui recherchent des signaux de trading rentables.
-</p >
+                </p>
             </x-animated-div>
 
-                {{-- Colonne de droite : Carrousel --}}
-                <x-animated-div :delay="150">
-                    <x-testimonial-carousel />
-                </x-animated-div>
+            {{-- Colonne de droite : Carrousel --}}
+            <x-animated-div :delay="150">
+                <x-testimonial-carousel />
+            </x-animated-div>
         </div>
     </div>
 </section>

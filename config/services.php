@@ -34,5 +34,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'moneroo' => [
+    'base_url' => env('MONEROO_BASE_URL', 'https://api.moneroo.io/'),
+    'secret'   => env('MONEROO_SECRET_KEY'),
+],
+
 
 ];
