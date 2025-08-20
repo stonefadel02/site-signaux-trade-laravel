@@ -34,12 +34,12 @@
             <div class="mt-16 grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
                 {{-- Colonne de gauche : Image --}}
                 <x-animated-div :delay="100" class="flex justify-center">
-                    <img src="{{ asset('headphones.png') }}" alt="Casque de support 3D" class="sm:w-80 max-w-sm" />
+                    <img src="{{ asset('headphones.png') }}" alt="Casque de support 3D" class="sm:w-80 w-56  max-w-sm" />
                 </x-animated-div>
 
                 {{-- Colonne de droite : Formulaire --}}
                 <x-animated-div :delay="250" class="w-full">
-                    <div class="rounded-[30px] bg-[#12141D] mx-10 p-10">
+                    <div class="rounded-[30px] bg-[#12141D] sm:mx-10 p-10">
                         <h3 class="text-lg font-semibold text-white">
                             Nous contacter
                         </h3>
@@ -67,7 +67,7 @@
                             </div>
                             <div>
                                 <button type="submit"
-                                    class="flex w-1/3 cursor-pointer justify-center rounded-[10px] bg-[#00AFFF] px-3.5 py-2.5 text-center text-sm font-semibold shadow-sm hover:bg-cyan-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500">
+                                    class="flex w-1/3 cursor-pointer justify-center rounded-[10px] bg-[#00AFFF] sm:px-3.5 px-6 py-2.5 text-center text-sm font-semibold shadow-sm hover:bg-cyan-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500">
                                     ENVOYER
                                 </button>
                             </div>
