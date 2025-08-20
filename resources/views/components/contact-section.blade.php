@@ -11,7 +11,7 @@
 <section class="bg-[#12141D] py-20 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         {{-- Conteneur principal avec le fond plus clair et coins arrondis --}}
-        <div class="rounded-3xl bg-[#0D192F] p-8 sm:p-12 lg:p-16">
+        <div class="rounded-3xl bg-[#0D192F] p-4 sm:p-12 lg:p-16">
             <x-animated-div class="mx-auto max-w-xl text-center">
                 <h2 class="mt-4 text-3xl text-center font-bold tracking-tight text-white sm:text-4xl">
                     Nous contacter
@@ -22,9 +22,9 @@
             <div class="mt-24 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($contactDetails as $index => $detail)
                     <x-animated-div :delay="$index * 150" class="">
-                        <div class="flex items-center justify-center gap-4">
-                            <img src="{{ asset($detail['icon_src']) }}" alt="" class="h-20 w-20">
-                            <label class="text-[20px] text-white">{{ $detail['text'] }}</label>
+                        <div class="flex sm:items-center sm:justify-center gap-4">
+                            <img src="{{ asset($detail['icon_src']) }}" alt="" class="sm:h-20 h-10 w-10 sm:w-20">
+                            <label class="sm:text-[20px] sm:mt-0 mt-1 text-white">{{ $detail['text'] }}</label>
                         </div>
                     </x-animated-div>
                 @endforeach
@@ -34,7 +34,7 @@
             <div class="mt-16 grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
                 {{-- Colonne de gauche : Image --}}
                 <x-animated-div :delay="100" class="flex justify-center">
-                    <img src="{{ asset('headphones.png') }}" alt="Casque de support 3D" class="w-80 max-w-sm" />
+                    <img src="{{ asset('headphones.png') }}" alt="Casque de support 3D" class="sm:w-80 max-w-sm" />
                 </x-animated-div>
 
                 {{-- Colonne de droite : Formulaire --}}

@@ -47,12 +47,12 @@ $plans = [
 <section class="bg-[#12141D] py-10 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
         {{-- Conteneur avec le fond #0D192F --}}
-        <div class="rounded-3xl mx-auto  bg-[#0D192F] p-8 sm:p-12 lg:p-16">
+        <div class="rounded-3xl mx-auto bg-[#0D192F] p-8 sm:p-12 lg:p-16">
             <x-animated-div class="mx-auto max-w-4xl text-center">
                 <h2 class="mx-auto text-center text-3xl font-bold tracking-tight text-white sm:text-[40px]">
                     Optez pour l’abonnement qui <br /> vous convient
                 </h2>
-                <p class="mt-4 text-[23px] text-center leading-8 text-gray-300">
+                <p class="mt-4 sm:text-[23px] text-center leading-8 text-gray-300">
                     Profitez dès maintenant de nos signaux de trading fiables <br /> à
                     partir des prix imbattables de 0,5 dollar.
                 </p>
