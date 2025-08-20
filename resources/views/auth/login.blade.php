@@ -12,7 +12,7 @@
             Connectez-vous à votre compte pour continuer.
     </p>
         <div class="mt-8">
-            <button class="flex w-full items-center justify-left bg-[#4285F4] gap-1 rounded-md border border-gray-300 bg-white  text-sm
+            <button class="flex w-full items-center justify-left bg-[#4285F4] gap-1 rounded-md border border-gray-300   text-sm
              font-medium text-gray-700 shadow-sm transition-all hover:bg-[#040507FF]">
                 <span class="py-2 ml-1 mt-1 mb-1 rounded-2 px-3 bg-[#EFF0F1FF]">
                 <img src="{{ asset('log/google-icon.svg') }}" alt="Google" class="h-5 w-5">

@@ -1,6 +1,6 @@
 <x-auth-layout>
     <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+        {{ __('Vous avez oublié votre mot de passe ? Aucun problème. Indiquez-nous simplement votre adresse e-mail et nous vous enverrons un lien de réinitialisation de mot de passe qui vous permettra d\'en choisir un nouveau.') }}
     </div>
 
     <!-- Session Status -->
@@ -17,10 +17,26 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+
+        
+    <div class="mt-4 flex items-center justify-between">
+        <div>
             <x-primary-button>
-                {{ __('Email Password Reset Link') }}
+                {{ __('Lien de réinitialisation du mot de passe par e-mail') }}
             </x-primary-button>
-        </div>
+         </div>
+
+              <a href="{{ route('login') }}" 
+            class="text-lg text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            {{ __('Se connecter') }}
+            </a>
+      
+
+    </div>
+
+
+  
+
+        
     </form>
 </x-auth-layout>
