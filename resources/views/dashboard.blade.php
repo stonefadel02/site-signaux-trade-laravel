@@ -185,7 +185,7 @@
                 setRemaining() {
                     const diff = new Date(this.expiry) - new Date();
                     if (diff < 0) {
-                        // S'arrête à zéro au lieu de devenir négatif
+                     
                         this.remaining = 0;
                         return;
                     }
