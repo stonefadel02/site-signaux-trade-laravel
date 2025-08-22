@@ -6,7 +6,7 @@
             <div
                 class="flex items-center justify-between p-4 border {{ $lastSouscription->Status === 'ACTIVE' ? 'border-green-400' : 'border-red-400' }} bg-green-100 rounded-lg w-full">
                 <div>
-                    <p class="text-sm text-gray-700">Statut de l’abonnement</p>
+                    <p class="text-sm text-gray-700">{{ __('subscription.status_box.subscription_status') }}</p>
                     <p class="text-lg font-semibold"> {{ $lastSouscription->Status }} </p>
                 </div>
                 @if ($lastSouscription->Status === 'ACTIVE')
@@ -24,7 +24,8 @@
             <!-- Carte 2 -->
             <div class="flex items-center justify-between p-4 border border-blue-400 bg-blue-100 rounded-lg w-full">
                 <div>
-                    <p class="text-sm text-blue-600">Plan {{ $lastSouscription->plan->Nom }}</p>
+                    <p class="text-sm text-blue-600">{{ __('subscription.status_box.plan') }}
+                        {{ $lastSouscription->plan->Nom }}</p>
                     <p class="text-lg font-bold">{{ $lastSouscription->plan->Prix }} {{ $lastSouscription->Devise }}</p>
                 </div>
                 <div class="text-blue-600 text-4xl font-bold">
@@ -48,8 +49,8 @@
     </div>
 @else
     <div class="bg-white p-4 border border-gray-300 rounded-lg">
-        <h5 class="text-lg font-semibold">Aucun abonnement actif</h5>
-        <p class="text-sm text-gray-700">Vous n'avez pas d'abonnement actif pour le moment</p>
+        <h5 class="text-lg font-semibold">{{ __('subscription.status_box.no_active') }}</h5>
+        <p class="text-sm text-gray-700">{{ __('subscription.status_box.no_active_sub') }}</p>
 
     </div>
 @endif

@@ -15,9 +15,19 @@ use App\Http\Controllers\SessionSignalController;
 use App\Http\Controllers\SouscriptionController;
 use App\Models\Signal;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['setlocale'])->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('welcome');
 });
+
+Route::post('/locale/{locale}', function (string $locale) {
+    if (!in_array($locale, ['fr', 'en'])) {
+        abort(400);
+    }
+    session(['app_locale' => $locale]);
+    return redirect()->back();
+})->name('locale.switch');
 
 Route::get('/support', function () {
     return view('support');
@@ -26,9 +36,9 @@ Route::get('/support', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-Route::get('/dashboard', DashboardController::class)
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');    
+    Route::get('/dashboard', DashboardController::class)
+        ->middleware(['auth', 'verified'])
+        ->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

@@ -306,7 +306,8 @@
 
                 <div class="status-box {{ $statusClasses[$status]['box'] }}">
                     <div class="status-text">
-                        <div style="font-size: 20px; color: #4f4f4f; margin-bottom: 7px;">Statut de l'abonnement</div>
+                        <div style="font-size: 20px; color: #4f4f4f; margin-bottom: 7px;">
+                            {{ __('subscription.status_box.subscription_status') }}</div>
                         <div style="font-weight: 600;">{{ $status }}</div>
                     </div>
                     <div class="status-icon {{ $statusClasses[$status]['icon'] }}">&#10003;</div>
@@ -315,7 +316,8 @@
 
                 <div class="plan-box">
                     <div class="plan-text">
-                        <div style="margin-bottom: 7px; font-size: 20px; color: #0c2dd5;">Plan
+                        <div style="margin-bottom: 7px; font-size: 20px; color: #0c2dd5;">
+                            {{ __('subscription.status_box.plan') }}
                             {{ $subscription->plan->Titre }}
                         </div>
                         <div style="font-weight: 600;">{{ $subscription->Montant }} {{ $subscription->Devise }}</div>
@@ -338,25 +340,25 @@
             <div class="footer-box mb-3">
                 <div>
 
-                    <div class="expire-text">Expire le :</div>
+                    <div class="expire-text">{{ __('subscription.status_box.expires_on') }}</div>
                     <div style="font-weight: 600;"> {{ $subscription->DateHeureFin }}</div>
                 </div>
                 <div>
                     <button class="btn-primary-custom" type="button"
                         onclick="window.location.href='{{ route('souscription.create') }}'">
-                        Renouveler
+                        {{ __('subscription.status_box.renew') }}
                     </button>
 
                     <button class="btn-outline-primary-custom" type="button"
                         onclick="window.location.href='{{ route('souscription.create') }}'">
-                        Changer de Plan
+                        {{ __('subscription.status_box.change_plan') }}
                     </button>
                 </div>
             </div>
         @else
             <div class="bg-white p-4 border border-gray-300 rounded-lg">
-                <h5>Aucun abonnement actif</h5>
-                <p class="text-sm text-gray-700">Vous n'avez pas d'abonnement actif pour le moment</p>
+                <h5>{{ __('subscription.status_box.no_active') }}</h5>
+                <p class="text-sm text-gray-700">{{ __('subscription.status_box.no_active_sub') }}</p>
 
             </div>
         @endif
@@ -367,10 +369,10 @@
             <div class="header d-flex align-items-center mb-4">
                 <i class="ti ti-currency-bitcoin p-4 text-5xl"></i>
 
-                <h2 class="mb-0">Mes Paiements</h2>
+                <h2 class="mb-0">{{ __('subscription.payments.title') }}</h2>
                 <div class="nav-links ml-auto d-flex gap-3">
                     <a href="#"><i class="ti ti-filter-pause"></i>
-                        Récents</a>
+                        {{ __('subscription.payments.recent') }}</a>
                 </div>
             </div>
 
@@ -407,7 +409,7 @@
                                 aria-haspopup="true" :aria-expanded="open.toString()"
                                 id="dropdownMenuButton{{ $paiement->id }}">
                                 <i class="ti ti-download"></i>
-                                Télécharger PDF
+                                {{ __('subscription.payments.download_pdf') }}
                             </button>
 
                             <ul x-show="open" x-transition
@@ -419,7 +421,7 @@
                                         target="_blank"
                                         class="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-black cursor-pointer"
                                         role="menuitem">
-                                        Format A4
+                                        {{ __('subscription.payments.format_a4') }}
                                     </a>
                                 </li>
                                 <li>
@@ -427,14 +429,14 @@
                                         target="_blank"
                                         class="block px-4 py-2 text-gray-700 hover:bg-blue-500 hover:text-black cursor-pointer"
                                         role="menuitem">
-                                        Format A6
+                                        {{ __('subscription.payments.format_a6') }}
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 @empty
-                    <p>Aucun paiement trouvé.</p>
+                    <p>{{ __('subscription.payments.none') }}</p>
                 @endforelse
             </div>
         </div>

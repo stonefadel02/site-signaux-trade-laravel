@@ -1,0 +1,51 @@
+<?php
+return [
+    'google_login' => 'Se connecter avec Google',
+    'or' => 'OU',
+    'login' => [
+        'title' => 'Authentification',
+        'subtitle' => 'Connectez-vous à votre compte pour continuer.',
+        'email' => 'Email',
+        'password' => 'Mot de passe',
+        'forgot' => 'Mot de passe oublié ?',
+        'remember' => 'Rester connecté(e)',
+        'submit' => 'Se connecter',
+        'no_account' => 'Pas encore de compte ?',
+        'register_link' => 'Inscrivez-vous',
+    ],
+    'register' => [
+        'title' => 'Inscription',
+        'subtitle' => "Vous voulez plus d'accès? Inscrivez-vous pour continuer.",
+        'name' => 'Nom',
+        'email' => 'Email',
+        'password' => 'Mot de passe',
+        'password_confirm' => 'Confirmer le mot de passe',
+        'submit' => "S'inscrire",
+        'terms_text' => "En cliquant sur \"S'inscrire\", vous acceptez nos Conditions d'utilisation et nos Conditions de licence. Dans notre Politique de confidentialité, nous expliquons comment nous traitons vos données personnelles et quels droits vous avez.",
+        'have_account' => 'Avez-vous un compte?',
+        'login_link' => 'Connectez-vous',
+    ],
+    'forgot' => [
+        'intro' => "Vous avez oublié votre mot de passe ? Aucun problème. Indiquez-nous simplement votre adresse e-mail et nous vous enverrons un lien de réinitialisation de mot de passe qui vous permettra d'en choisir un nouveau.",
+        'email' => 'Email',
+        'send_link' => 'Lien de réinitialisation du mot de passe par e-mail',
+        'back_login' => 'Se connecter',
+    ],
+    'reset' => [
+        'email' => 'Email',
+        'password' => 'Mot de passe',
+        'password_confirm' => 'Confirmer le mot de passe',
+        'submit' => 'Réinitialiser le mot de passe',
+    ],
+    'verify' => [
+        'intro' => "Merci de vous être inscrit ! Avant de commencer, pourriez-vous vérifier votre adresse e-mail en cliquant sur le lien que nous venons de vous envoyer ? Si vous n'avez pas reçu l'e-mail, nous serons ravis de vous en envoyer un autre.",
+        'resent' => "Un nouveau lien de vérification a été envoyé à l'adresse e-mail que vous avez fournie lors de votre inscription.",
+        'resend' => "Renvoyer l'e-mail de vérification",
+        'logout' => 'Se déconnecter',
+    ],
+    'confirm' => [
+        'intro' => "Zone sécurisée de l'application. Veuillez confirmer votre mot de passe avant de continuer.",
+        'password' => 'Mot de passe',
+        'submit' => 'Confirmer',
+    ],
+];

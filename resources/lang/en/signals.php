@@ -1,0 +1,36 @@
+<?php
+
+return [
+    'page_title_index' => 'My Signals',
+    'header_index' => 'Real-time Trading Signals',
+    'plan_signals_for' => 'Signals for your plan:',
+    'latest_intro' => 'Here are the latest available signals. Check back regularly for updates.',
+    'table' => [
+        'date' => 'Emission Date',
+        'session' => 'Session',
+        'pair' => 'Pair',
+        'direction' => 'Direction',
+        'entry' => 'Entry Price',
+        'take_profit' => 'Take Profit',
+        'stop_loss' => 'Stop Loss',
+        'action' => 'Action',
+    ],
+    'buy' => 'BUY',
+    'sell' => 'SELL',
+    'go' => 'GO !',
+    'none_available' => 'No signal available at the moment.',
+    'restricted_access' => 'Restricted Access',
+    'need_subscription' => 'You must have an active subscription to view the signals.',
+    'see_plans' => 'See our subscription plans',
+
+    'show_title' => 'View my signal',
+    'detail_header' => 'Signal Detail #',
+    'pair_asset' => 'Pair / Asset',
+    'duration' => 'Trade Duration',
+    'entry_price' => 'Entry Price',
+    'confidence' => 'Confidence',
+    'take_profit_tp' => 'Take Profit (TP)',
+    'stop_loss_sl' => 'Stop Loss (SL)',
+    'analyst_comment' => 'Analyst Comment',
+    'back_to_signals' => 'Back to signals',
+];

@@ -2,40 +2,17 @@
 
 {{-- On définit les données pour les 4 cartes directement dans la vue --}}
 @php
-$reasons = [
-    [
-        'name' => '21 signaux par jour',
-        'description' => [
-            '7 signaux matin, 7 après-midi, 7 soir',
-            'Tous postés en temps réel pour saisir les opportunités dès qu\'elles se présentent',
-        ],
-        'icon_src' => 'c1.png',
-    ],
-    [
-        'name' => 'Signaux de trading fiables',
-        'description' => [
-            'Fournis par des traders professionnels, sans automatisation.',
-            'Testés et validés pour chaque session de trading.',
-        ],
-        'icon_src' => 'c2.png',
-    ],
-    [
-        'name' => 'Flexibilité d’abonnement',
-        'description' => [
-            'Choisissez votre formule : journalière, hebdomadaire ou mensuelle.',
-            'Paiements sécurisés en USDT ou BTC.',
-        ],
-        'icon_src' => 'c3.png',
-    ],
-    [
-        'name' => 'Accessibilité internationale',
-        'description' => [
-            'Disponible en français et anglais.',
-            'Interface adaptée aux smartphones et ordinateurs (responsive design)',
-        ],
-        'icon_src' => 'c4.png',
-    ],
-];
+    $reasonsData = __('welcome.reasons.list');
+    // Merge icons while keeping translation content
+    $icons = ['c1.png', 'c2.png', 'c3.png', 'c4.png'];
+    $reasons = [];
+    foreach ($reasonsData as $idx => $row) {
+        $reasons[] = [
+            'name' => $row['name'],
+            'description' => $row['desc'],
+            'icon_src' => $icons[$idx] ?? 'c1.png',
+        ];
+    }
 @endphp
 
 <section class="bg-[#12141D] py-10">
@@ -43,15 +20,16 @@ $reasons = [
         {{-- Titre de la section --}}
         <div class="mx-auto max-w-2xl text-center">
             <h2 class="text-3xl font-bold tracking-tight text-white sm:text-[40px]">
-                Les mille et une raisons
+                {{ __('welcome.reasons.title') }}
             </h2>
             <p class="mt-4 text-[22px] font-bold leading-8 text-white">
-                d'acheter les signaux de trading avec Triple7SignalsPerDay
+                {{ __('welcome.reasons.subtitle') }}
             </p>
         </div>
 
         {{-- Grille des raisons --}}
-        <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:grid-cols-2 lg:mx-auto lg:max-w-2xl lg:grid-cols-2">
+        <div
+            class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:grid-cols-2 lg:mx-auto lg:max-w-2xl lg:grid-cols-2">
             @foreach ($reasons as $reason)
                 <div class="rounded-2xl bg-gradient-to-br from-[#1E2028]/0 to-[#1E2028] p-8">
                     <div class="gap-x-4 text-center">

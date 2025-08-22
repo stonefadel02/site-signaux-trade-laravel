@@ -9,7 +9,8 @@
                     @yield('pageTitle')
                 </h6>
             </div>
-            <div class="flex items-center justify-end  h-16">
+            <div class="flex items-center justify-end  h-16 gap-4">
+                @include('layouts.partials.lang-switcher')
                 <a title="Notifications" href="{{ route('notifications') }}">
                     <i class="ti ti-bell text-2xl text-gray-600  p-2 rounded-full bg-gray-100"></i>
                 </a>
@@ -34,7 +35,7 @@
 
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
+                                {{ __('profile.title') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->
@@ -44,7 +45,7 @@
                                 <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                    {{ __('Déconnexion') }}
+                                    {{ __('navigation.logout') }}
                                 </x-dropdown-link>
                             </form>
                         </x-slot>

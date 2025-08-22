@@ -6,11 +6,10 @@
             {{-- Colonne de gauche : Texte --}}
             <x-animated-div class="">
                 <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                    Témoignages
+                    {{ __('welcome.testimonials.title') }}
                 </h2>
                 <p class="mt-4 text-lg leading-8 text-gray-300">
-                    Nos signaux de trading payants particulièrement appréciés par ceux
-                    qui recherchent des signaux de trading rentables.
+                    {{ __('welcome.testimonials.paragraph') }}
                 </p>
             </x-animated-div>
 

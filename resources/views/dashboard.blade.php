@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('pageTitle', 'Dashboard')
+@section('pageTitle', __('dashboard.title'))
 
 @section('content')
     <div class="py-12">
@@ -11,7 +11,7 @@
                 @if ($souscription)
                     <div class="rounded-lg bg-white p-6 shadow-sm">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-lg font-semibold text-gray-800">Statut de l'abonnement</h3>
+                            <h3 class="text-lg font-semibold text-gray-800">{{ __('dashboard.subscription_status') }}</h3>
                             <span
                                 class="flex items-center gap-2 rounded-full {{ $souscription->isActive() ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }} px-3 py-1 text-xs font-semibold">
                                 <span
@@ -42,7 +42,7 @@
                                     style="width: {{ $progress }}%;"></div>
                             </div>
                             <div class="mt-2 flex items-center justify-between text-sm text-gray-500">
-                                <span>Expire dans :</span>
+                                <span>{{ __('dashboard.expires_in') }}</span>
                                 <span
                                     class="font-semibold text-gray-800">{{ $souscription->tempsRestantPourHumains() }}</span>
                             </div>
@@ -50,10 +50,10 @@
                     </div>
                 @else
                     <div class="rounded-lg bg-white p-6 text-center shadow-sm">
-                        <p class="text-gray-600">Vous n'avez aucun abonnement actif.</p>
+                        <p class="text-gray-600">{{ __('dashboard.no_active_subscription') }}</p>
                         <a href="#"
                             class="mt-4 inline-block rounded-md bg-cyan-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500">
-                            Voir les plans d'abonnement
+                            {{ __('dashboard.see_plans') }}
                         </a>
                     </div>
                 @endif
@@ -62,14 +62,14 @@
                 @if ($prochaineSession)
                     <div class="rounded-lg bg-white p-6 shadow-sm">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-lg font-semibold text-gray-800">Prochaine session de signaux</h3>
-                            <span class="text-sm font-medium text-gray-500">Prochaine session : <span
+                            <h3 class="text-lg font-semibold text-gray-800">{{ __('dashboard.next_session_title') }}</h3>
+                            <span class="text-sm font-medium text-gray-500">{{ __('dashboard.next_session_label') }} <span
                                     class="rounded-md bg-gray-200 px-2 py-1 text-gray-700">{{ $prochaineSession->Titre }}
                                     ({{ \Carbon\Carbon::parse($prochaineSession->HeureDebut)->format('H:i') }}
                                     GMT+0)</span></span>
                         </div>
                         <div class="mt-4 text-center" x-data="timer('{{ \Carbon\Carbon::parse($prochaineSession->HeureDebut)->tz('UTC')->toIso8601String() }}')" x-init="init()">
-                            <p class="text-sm text-gray-500">Temps restant :</p>
+                            <p class="text-sm text-gray-500">{{ __('dashboard.time_remaining') }}</p>
                             <p class="text-4xl font-bold tracking-wider text-gray-800">
                                 <span x-text="time().hours"></span>h
                                 <span x-text="time().minutes"></span>m
@@ -82,10 +82,10 @@
                 {{-- 3. Section : Accès aux signaux --}}
                 <div class="rounded-lg bg-white p-6 shadow-sm">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-semibold text-gray-800">Aperçu des derniers signaux</h3>
+                        <h3 class="text-lg font-semibold text-gray-800">{{ __('dashboard.latest_signals') }}</h3>
                         <a href="{{ route('signaux') }}"
                             class="flex items-center gap-2 rounded-md bg-cyan-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500">
-                            Voir tous les Signaux
+                            {{ __('dashboard.view_all_signals') }}
                             <i class="fa-solid fa-arrow-right h-4 w-4"></i>
                         </a>
                     </div>
@@ -98,19 +98,19 @@
                                             {{-- On utilise les mêmes entêtes que sur la page des signaux --}}
                                             <th scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                                Date d'émission</th>
+                                                {{ __('dashboard.date_emission') }}</th>
                                             <th scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                                Session</th>
+                                                {{ __('dashboard.session') }}</th>
                                             <th scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                                Paire</th>
+                                                {{ __('dashboard.pair') }}</th>
                                             <th scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                                Direction</th>
+                                                {{ __('dashboard.direction') }}</th>
                                             <th scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                                Action</th>
+                                                {{ __('dashboard.action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-200 bg-white">
@@ -125,13 +125,13 @@
                                                     {{ $signal->actif->Nom ?? 'N/A' }}</td>
                                                 <td
                                                     class="whitespace-nowrap px-6 py-4 text-sm font-semibold {{ $signal->Direction === 'BUY' ? 'text-green-600' : 'text-red-600' }}">
-                                                    {{ $signal->Direction === 'BUY' ? 'ACHAT' : 'VENTE' }}
+                                                    {{ $signal->Direction === 'BUY' ? __('dashboard.buy') : __('dashboard.sell') }}
                                                 </td>
                                                 <td class="whitespace-nowrap px-6 py-4 text-sm">
                                                     {{-- On lie le bouton GO! vers la page de détail du signal --}}
                                                     <a href="{{ route('signals.public.show', $signal) }}"
                                                         class="rounded-md bg-gray-800 px-4 py-1.5 text-white shadow-sm hover:bg-gray-700">
-                                                        GO !
+                                                        {{ __('dashboard.go') }}
                                                     </a>
                                                 </td>
                                             </tr>
@@ -139,9 +139,9 @@
                                             <tr>
                                                 <td colspan="5" class="px-6 py-4 text-center text-gray-500">
                                                     @if ($souscription)
-                                                        Aucun signal récent disponible.
+                                                        {{ __('dashboard.no_recent_signals') }}
                                                     @else
-                                                        Veuillez souscrire à un plan pour voir les signaux.
+                                                        {{ __('dashboard.subscribe_to_view') }}
                                                     @endif
                                                 </td>
                                             </tr>
@@ -159,10 +159,11 @@
                     <div class="flex items-center gap-4 rounded-lg bg-yellow-100 p-4 text-sm text-yellow-800">
                         <i class="fa-solid fa-triangle-exclamation h-6 w-6 flex-shrink-0 text-yellow-600"></i>
                         <p>
-                            <span class="font-semibold">Attention :</span> Votre abonnement expire dans
+                            <span class="font-semibold">{{ __('dashboard.alert_attention') }}</span>
+                            {{ __('dashboard.alert_expire_in') }}
                             {{-- On appelle la nouvelle méthode --}}
                             <span class="font-bold">{{ $souscription->tempsRestantPourHumains() }}</span> !
-                            Pensez à le renouveler.
+                            {{ __('dashboard.alert_renew') }}
                         </p>
                     </div>
                 @endif
@@ -185,7 +186,7 @@
                 setRemaining() {
                     const diff = new Date(this.expiry) - new Date();
                     if (diff < 0) {
-                     
+
                         this.remaining = 0;
                         return;
                     }

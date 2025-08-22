@@ -78,8 +78,10 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    // Langue par défaut de l'application. On passe à FR pour refléter l'état actuel.
+    'locale' => env('APP_LOCALE', 'fr'),
 
+    // Langue de repli (si une traduction manque)
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),

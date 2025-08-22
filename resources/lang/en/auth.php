@@ -1,0 +1,51 @@
+<?php
+return [
+    'google_login' => 'Sign in with Google',
+    'or' => 'OR',
+    'login' => [
+        'title' => 'Login',
+        'subtitle' => 'Sign in to your account to continue.',
+        'email' => 'Email',
+        'password' => 'Password',
+        'forgot' => 'Forgot password?',
+        'remember' => 'Keep me signed in',
+        'submit' => 'Sign in',
+        'no_account' => 'No account yet?',
+        'register_link' => 'Register',
+    ],
+    'register' => [
+        'title' => 'Register',
+        'subtitle' => 'Want more access? Create an account to continue.',
+        'name' => 'Name',
+        'email' => 'Email',
+        'password' => 'Password',
+        'password_confirm' => 'Confirm password',
+        'submit' => 'Sign up',
+        'terms_text' => 'By clicking "Sign up" you agree to our Terms of Use and License Terms. See our Privacy Policy for how we process your data and your rights.',
+        'have_account' => 'Already have an account?',
+        'login_link' => 'Sign in',
+    ],
+    'forgot' => [
+        'intro' => 'Forgot your password? No problem. Just tell us your email address and we will email you a password reset link.',
+        'email' => 'Email',
+        'send_link' => 'Email Password Reset Link',
+        'back_login' => 'Sign in',
+    ],
+    'reset' => [
+        'email' => 'Email',
+        'password' => 'Password',
+        'password_confirm' => 'Confirm Password',
+        'submit' => 'Reset Password',
+    ],
+    'verify' => [
+        'intro' => 'Thanks for signing up! Before getting started, could you verify your email address by clicking the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.',
+        'resent' => 'A new verification link has been sent to the email address you provided during registration.',
+        'resend' => 'Resend Verification Email',
+        'logout' => 'Log out',
+    ],
+    'confirm' => [
+        'intro' => 'This is a secure area of the application. Please confirm your password before continuing.',
+        'password' => 'Password',
+        'submit' => 'Confirm',
+    ],
+];
