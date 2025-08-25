@@ -97,6 +97,26 @@ return [
     'testimonials' => [
         'title' => 'Testimonials',
         'paragraph' => 'Our paid trading signals are especially appreciated by those seeking profitable trading insights.',
+        'list' => [
+                    [
+                    'quote' => "I'm blown away by the accuracy! Before Triple7SignalsPerDay, I spent hours analyzing charts with little success. Now, I follow the expert signals and my trades are much more profitable.",
+                    'name' => 'Alex METONOU',
+                    'role' => 'Student',
+                    'imageSrc' => 'testi.png',
+                    ],
+                    [
+                    'quote' => "As a developer, my time is valuable. Triple7SignalsPerDay's signals are clear, fast to execute, and above all, profitable. The interface is simple and efficient. I recommend it 100%!",
+                    'name' => 'Elodie K.',
+                    'role' => 'Developer',
+                    'imageSrc' => 'testi.png',
+                    ],
+                    [
+                    'quote' => "I was skeptical at first, but the results speak for themselves. The monthly subscription paid for itself in a few days. Plus, the support team is very responsive. Truly top-notch.",
+                    'name' => 'Marc A.',
+                    'role' => 'Entrepreneur',
+                    'imageSrc' => 'testi.png',
+                    ],
+        ],
     ],
     'pricing' => [
         'title_html' => 'Choose the subscription <br /> that suits you',

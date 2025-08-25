@@ -97,6 +97,26 @@ return [
     'testimonials' => [
         'title' => 'Témoignages',
         'paragraph' => 'Nos signaux de trading payants particulièrement appréciés par ceux qui recherchent des signaux de trading rentables.',
+        'list' => [
+            [
+                'quote' => "Je suis bluffé par la précision ! Avant Triple7SignalsPerDay, je passais des heures à analyser des Graphes sans grand succès. Maintenant, je suis les signaux des experts et mes opérations sont bien plus rentables.",
+                'name' => 'Alex METONOU',
+                'role' => 'Étudiant',
+                'imageSrc' => 'testi.png', // Gardez le même nom d'image pour toutes les langues
+            ],
+            [
+                'quote' => "En tant que développeuse, mon temps est précieux. Les signaux de Triple7SignalsPerDay sont clairs, rapides à exécuter et surtout, rentables. L'interface est simple et efficace. Je recommande à 100% !",
+                'name' => 'Elodie K.',
+                'role' => 'Développeuse',
+                'imageSrc' => 'testi.png',
+            ],
+            [
+                'quote' => "J'étais sceptique au début, mais les résultats parlent d'eux-mêmes. L'abonnement mensuel a été remboursé en quelques jours. Une équipe de support réactive en plus. Vraiment top.",
+                'name' => 'Marc A.',
+                'role' => 'Entrepreneur',
+                'imageSrc' => 'testi.png',
+            ],
+        ],
     ],
     'pricing' => [
         'title_html' => "Optez pour l’abonnement qui <br /> vous convient",
