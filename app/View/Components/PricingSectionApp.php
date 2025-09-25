@@ -22,8 +22,9 @@ class PricingSectionApp extends Component
      */
     public function render(): View|Closure|string
     {
+        $lastSouscription = auth()->user()->getActiveSouscription() ?? auth()->user()->getLastSouscription();
         $plans = Plan::where('Visibilite', 'PUBLIQUE')->get();
-        return view('components.pricing-section-app', compact('plans'));
+        return view('components.pricing-section-app', compact('plans', 'lastSouscription'));
 
     }
 }

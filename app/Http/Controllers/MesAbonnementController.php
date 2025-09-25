@@ -40,6 +40,11 @@ class MesAbonnementController extends Controller
 
     function index()
     {
+        // Met à jour le statut des souscriptions expirées
+        Souscription::where('DateHeureFin', '<', now())
+            ->where('Status', 'ACTIVE')
+            ->update(['Status' => 'EXPIRE']);
+        // Récupère la dernière souscription active ou la plus récente de l'utilisateur
         $lastSouscription = auth()->user()->getActiveSouscription() ?? auth()->user()->getLastSouscription();
         $souscriptions = Souscription::where('user_id', Auth::id())
             ->with('plan')

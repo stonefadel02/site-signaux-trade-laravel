@@ -37,10 +37,13 @@ class PlanController extends Controller
             'NombreDeSignaux' => 'required|integer',
             'AutresAvantages' => 'nullable|string',
             'Visibilite' => 'required|in:PUBLIQUE,PRIVEE',
+            'isPopular' => 'sometimes|in:on,off',
         ]);
         $validated['AutresAvantages'] = $request->AutresAvantages
             ? array_filter(array_map('trim', preg_split('/\r?\n/', $request->AutresAvantages)))
             : [];
+        $validated['isPopular'] = $request->has('isPopular') ? true : false;
+
         $plan = Plan::create($validated);
         return redirect()->route('plans.show', $plan)->with('success', 'Plan créé avec succès.');
     }
@@ -66,6 +69,7 @@ class PlanController extends Controller
      */
     public function update(Request $request, Plan $plan)
     {
+
         $validated = $request->validate([
             'Titre' => 'required|string|max:255',
             'Prix' => 'required|numeric',
@@ -74,10 +78,12 @@ class PlanController extends Controller
             'NombreDeSignaux' => 'required|integer',
             'AutresAvantages' => 'nullable|string',
             'Visibilite' => 'required|in:PUBLIQUE,PRIVEE',
+            'isPopular' => 'sometimes|in:on,off',
         ]);
         $validated['AutresAvantages'] = $request->AutresAvantages
             ? array_filter(array_map('trim', preg_split('/\r?\n/', $request->AutresAvantages)))
             : [];
+        $validated['isPopular'] = $request->has('isPopular') ? true : false;
         $plan->update($validated);
         return redirect()->route('plans.show', $plan)->with('success', 'Plan modifié avec succès.');
     }

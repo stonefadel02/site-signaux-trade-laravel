@@ -69,6 +69,12 @@
                             Privée</option>
                     </select>
                 </div>
+                <div class="flex items-center">
+                    <input type="checkbox" name="isPopular" id="isPopular"
+                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                        {{ old('isPopular', $plan->isPopular) ? 'checked' : '' }}>
+                    <label for="isPopular" class="ml-2 block text-sm text-gray-900">Mettre en avant ce plan</label>
+                </div>
                 <div class="flex gap-2 mt-6">
                     <button type="submit"
                         class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">Enregistrer</button>

@@ -6,3 +6,7 @@
 .modal {
     @apply backdrop-blur-md;
 }
+
+.swal2-center.swal2-backdrop-show {
+    backdrop-filter: blur(5px);
+}

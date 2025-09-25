@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('souscription_id')->nullable()->references('id')->on('souscriptions')->onDelete('cascade');
+            $table->foreignId('plan_id')->nullable()->references('id')->on('plans')->nullOnDelete()->cascadeOnUpdate();
             $table->decimal('Montant', 10, 4);
             $table->string('Devise');
             $table->string('ModeDePaiement');
@@ -21,6 +22,9 @@ return new class extends Migration {
             $table->enum('Status', ['PENDING', 'COMPLETED', 'FAILED'])->default('PENDING');
             $table->string('TransactionId')->nullable();
             $table->text('Details')->nullable();
+            $table->string('gateway_payment_id')->nullable();
+            $table->string('switch_mode')->nullable();
+
             $table->timestamps();
         });
     }

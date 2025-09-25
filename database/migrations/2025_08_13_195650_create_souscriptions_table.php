@@ -20,6 +20,8 @@ return new class extends Migration {
             $table->dateTime('DateHeureFin');
             $table->enum("Status", ['ACTIVE', 'INACTIVE', 'EXPIRE'])->default('ACTIVE');
             $table->string('AccessCode')->nullable();
+            $table->boolean('isPopular')->default(false);
+
             $table->timestamps();
         });
     }

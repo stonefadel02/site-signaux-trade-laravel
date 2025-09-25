@@ -18,7 +18,7 @@ class PaiementController extends Controller
     public function __construct()
     {
         $this->secret_key = env('MONEROO_SECRET_KEY');
-        $this->base_url   = rtrim(env('MONEROO_API_URL', 'https://api.moneroo.com/v1'), '/') . '/';
+        $this->base_url = rtrim(env('MONEROO_API_URL', 'https://api.moneroo.com/v1'), '/') . '/';
     }
 
     /**
@@ -26,7 +26,15 @@ class PaiementController extends Controller
      */
     public function initierPaiement(Request $request)
     {
-        $request->validate(['plan_id' => 'required|exists:plans,id']);
+        // dd($request->all());
+
+        $request->validate([
+            'plan_id' => 'required|exists:plans,id',
+            "first_name" => "required|string|max:255",
+            "last_name" => "required|string|max:255",
+            "email_name" => "required|email|max:255",
+            "switch_mode" => "nullable|string|in:immediate,scheduled",
+        ]);
         $plan = Plan::findOrFail($request->plan_id);
         $user = Auth::user();
 
@@ -38,19 +46,34 @@ class PaiementController extends Controller
             'ModeDePaiement' => 'MONEROO',
             'DateHeurePaiement' => now(),
             'Status' => 'PENDING',
-            'Details' => json_encode(['plan_id' => $plan->id])
+            'plan_id' => $plan->id,
+            'Details' => json_encode(['plan_id' => $plan->id]),
+            'souscription_id' => null,
+            "switch_mode" => $request->switch_mode ?? "scheduled",
         ]);
 
         // Appel API Moneroo
-        $response = Http::withToken($this->secret_key)
-            ->acceptJson()
-            ->post($this->base_url . 'payments', [
-                'amount'      => $paiement->Montant,
-                'currency'    => $paiement->Devise,
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $this->secret_key,
+            'Accept' => 'application/json'
+        ])
+            ->post("https://api.moneroo.io/v1/payments/initialize", [
+                'amount' => $plan->Prix,
+                'currency' => $plan->Devise ?? 'USD',
                 'description' => "Abonnement - " . $plan->Titre,
-                'return_url'  => route('paiement.callback'),
+                'return_url' => route('paiement.callback'),
                 'webhook_url' => route('paiement.webhook'),
-                'metadata'    => ['local_payment_id' => $paiement->id],
+                'metadata' => [
+                    'local_payment_id' => $paiement->id,
+                    'user_id' => $user->id,
+                    'plan_id' => $plan->id,
+                ],
+                'customer' => [
+                    'email' => $request->email_name,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                ],
             ]);
 
         if ($response->failed()) {
@@ -72,22 +95,43 @@ class PaiementController extends Controller
      */
     public function handleCallback(Request $request)
     {
-        $status     = $request->get('status');
-        $paymentId  = $request->get('paymentId');
+        $status = $request->get('status');
+        $paymentId = $request->get('paymentId');
 
-        $paiement = Paiement::where('gateway_payment_id', $paymentId)->first();
+        $paiement = Paiement::where('gateway_payment_id', $paymentId)->firstOrFail();
+        // Appel API Moneroo
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $this->secret_key,
+            'Accept' => 'application/json'
+        ])
+            ->get("https://api.moneroo.io/v1/payments/{$paymentId}/verify");
+        // dd($response->json());
+        $resp = $response->json();
+        if ($response->failed()) {
+            Log::error('Erreur API Moneroo : ' . $response->body());
+            return redirect()->route('mon-abonnement')->with('error', 'Impossible de vérifier le paiement.');
+        } elseif (
+            $response->successful()
+            && $resp['data']['status'] === 'success'
+            && $resp['data']['amount'] >= $paiement->Montant
+            && $resp['data']['currency']["code"] === $paiement->Devise
+        ) {
+            $paiement->update(['Status' => 'COMPLETED', "Details" => ($resp)]);
+            try {
 
-        if ($paiement) {
-            $paiement->Status = $status === 'paid' ? 'COMPLETED' : 'FAILED';
-            $paiement->save();
+                $paiement->activerSouscription();
+                return redirect()->route('mon-abonnement')->with('success', 'Paiement réussi 🎉');
+            } catch (\Throwable $th) {
+                Log::error('Erreur lors de l\'activation de la souscription : ' . $th->getMessage());
+                return redirect()->route('mon-abonnement')->with('error', 'Erreur lors de l\'activation de la souscription. Veuillez contacter le support.');
 
-            if ($status === 'paid') {
-                $this->activerAbonnement($paiement);
-                return redirect()->route('dashboard')->with('success', 'Paiement réussi 🎉');
             }
-        }
 
-        return redirect()->route('dashboard')->with('error', 'Le paiement a échoué.');
+        }
+        // erreur
+        Log::error('Erreur de paiement : ' . $resp['data']['status']);
+        return redirect()->route('mon-abonnement')->with('error', 'Le paiement a échoué.');
     }
 
     /**
@@ -95,7 +139,7 @@ class PaiementController extends Controller
      */
     public function handleWebhook(Request $request)
     {
-        $payload   = $request->getContent();
+        $payload = $request->getContent();
         $signature = $request->header('X-Moneroo-Signature');
 
         $expected = hash_hmac('sha256', $payload, $this->secret_key);
@@ -108,7 +152,7 @@ class PaiementController extends Controller
         Log::info('Webhook Moneroo reçu', $event);
 
         $paymentId = $event['data']['id'] ?? null;
-        $status    = $event['data']['status'] ?? null;
+        $status = $event['data']['status'] ?? null;
 
         if ($paymentId && $status) {
             $paiement = Paiement::where('gateway_payment_id', $paymentId)->first();
