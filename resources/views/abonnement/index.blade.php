@@ -42,8 +42,7 @@
                                     {{ __('subscription.table.plan') }}</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
                                     {{ __('subscription.table.amount') }}</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
-                                    {{ __('subscription.table.currency') }}</th>
+
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
                                     {{ __('subscription.table.start') }}</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
@@ -59,8 +58,9 @@
                             @forelse($souscriptions as $souscription)
                                 <tr>
                                     <td class="px-4 py-2">{{ $souscription->plan_id }}</td>
-                                    <td class="px-4 py-2">{{ $souscription->Montant }}</td>
-                                    <td class="px-4 py-2">{{ $souscription->Devise }}</td>
+                                    <td class="px-4 py-2">{{ money($souscription->Montant) }} {{ $souscription->Devise }}
+                                    </td>
+
                                     <td class="px-4 py-2">{{ $souscription->DateHeureDebut }}</td>
                                     <td class="px-4 py-2">{{ $souscription->DateHeureFin }}</td>
                                     <td class="px-4 py-2">

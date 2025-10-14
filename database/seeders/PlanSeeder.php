@@ -28,6 +28,7 @@ class PlanSeeder extends Seeder
                 "Devise" => "USD",
                 "DureeEnJours" => 7,
                 "NombreDeSignaux" => 210,
+                "isPopular" => true,
                 "AutresAvantages" => '["Accès illimité pendant 7 jours", "Support prioritaire"]'
             ],
             [

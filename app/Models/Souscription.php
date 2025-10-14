@@ -40,16 +40,7 @@ class Souscription extends Model
     }
     function isValid(): bool
     {
-        $dateNow = now();
-        $res = $this->Status === 'ACTIVE' &&
-            $this->DateHeureDebut <= $dateNow &&
-            $this->DateHeureFin >= $dateNow;
-        // if (!$res && $this->Status != 'ACTIVE') {
-        //     $this->Status = 'EXPIRED';
-        //     $this->save();
-        // }
-
-        return $res;
+        return $this->isActive();
     }
 
     public function tempsRestantPourHumains(): string
@@ -61,12 +52,17 @@ class Souscription extends Model
     }
 
     public function isActive(): bool
-{
-    $now = now();
-    return $this->Status === 'ACTIVE' &&
-           $this->DateHeureDebut <= $now &&
-           $this->DateHeureFin >= $now;
-}
+    {
+        $now = now();
+        $rep = $this->Status === 'ACTIVE' &&
+            $this->DateHeureDebut <= $now &&
+            $this->DateHeureFin >= $now;
+        if (!$rep && $this->Status == 'ACTIVE') {
+            $this->Status = 'EXPIRED';
+            $this->save();
+        }
+        return $rep;
+    }
 
     public static function revenuMensuel()
     {

@@ -14,6 +14,7 @@ class Plan extends Model
         'NombreDeSignaux',
         'AutresAvantages',
         'Visibilite',
+        'isPopular',
     ];
 
     protected $casts = [
@@ -21,6 +22,7 @@ class Plan extends Model
         'Prix' => 'decimal:4',
         'DureeEnJours' => 'integer',
         'NombreDeSignaux' => 'integer',
+        'isPopular' => 'boolean',
     ];
     public function getFrequence()
     {
