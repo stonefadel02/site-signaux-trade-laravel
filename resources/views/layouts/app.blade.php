@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="cryptomus" content="867a8382" />
+    <meta name="cryptomus" content="059aa8e4" />
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
